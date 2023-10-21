@@ -4,7 +4,7 @@
 
 @layer base {
 	body {
-		@apply bg-web-dark;
+		@apply bg-steel-blue-950;
 	}
 }
 @layer utilities {
