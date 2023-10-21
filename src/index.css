@@ -2,12 +2,27 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer utilities {
+	.after {
+		content: "";
+	}
+	.absCenter {
+		@apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute;
+	}
+	.gridLayout {
+		@apply grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout;
+	}
+}
+@layer components {
+}
+
 @layer base {
 	body {
 		@apply bg-steel-blue-950;
 	}
-}
-@layer utilities {
-}
-@layer components {
+	*,
+	*::after,
+	*::before {
+		@apply m-0 p-0 box-border;
+	}
 }
