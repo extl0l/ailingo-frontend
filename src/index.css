@@ -14,6 +14,9 @@
 	}
 }
 @layer components {
+	.rootLayout {
+		@apply grid grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout grid-rows-[min-content_1fr_min-content];
+	}
 }
 
 @layer base {
