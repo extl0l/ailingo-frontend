@@ -1,13 +1,20 @@
 import Logo from "../shared/Logo";
+import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 const MainNavigation = () => {
 	return (
-		<div>
+		<nav className="flex justify-between">
 			<div>
 				<Logo />
 			</div>
-			<div>logowanie</div>
-		</div>
+			<div>
+				<input type="text" placeholder="Szukaj..." />
+			</div>
+			<div className="flex gap-8">
+				<PlusCircleIcon className="w-9" />
+				<div>logowanie</div>
+			</div>
+		</nav>
 	);
 };
 

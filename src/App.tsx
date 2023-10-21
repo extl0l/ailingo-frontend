@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
 import HomePage from "./layout/HomePage";
+import MainNavigation from "./components/Navigation/index";
 
 // TODO: Implement loader() for routing
 
@@ -44,7 +45,10 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-	return <RouterProvider router={router} />;
+	return <>
+		<MainNavigation />
+		<RouterProvider router={router} />
+	</>
 };
 
 export default App;
