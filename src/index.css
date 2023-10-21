@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 @layer base {
+	body {
+		@apply bg-web-dark;
+	}
 }
 @layer utilities {
 }
