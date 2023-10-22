@@ -1,5 +1,5 @@
 import React, { HTMLAttributes } from "react";
-import { cn } from "../../../utils/tailwind";
+import { cn } from "../../utils/tailwind";
 
 export type PanelProps = {
 	children: React.ReactNode;
