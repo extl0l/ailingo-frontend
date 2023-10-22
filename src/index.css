@@ -21,7 +21,7 @@
 
 @layer base {
 	body {
-		@apply bg-theme-blue-primary;
+		@apply bg-theme-blue-primary h-full;
 	}
 	*,
 	*::after,
@@ -33,9 +33,6 @@
 		@apply h-full;
 	}
 	html {
-		@apply h-full;
-	}
-	body {
 		@apply h-full;
 	}
 }
