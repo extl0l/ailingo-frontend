@@ -15,17 +15,27 @@
 }
 @layer components {
 	.rootLayout {
-		@apply grid grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout grid-rows-[min-content_1fr_min-content];
+		@apply grid grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout grid-rows-[63px_1fr_min-content];
 	}
 }
 
 @layer base {
 	body {
-		@apply bg-steel-blue-950;
+		@apply bg-theme-blue-primary;
 	}
 	*,
 	*::after,
 	*::before {
 		@apply m-0 p-0 box-border;
+	}
+
+	#root {
+		@apply h-full;
+	}
+	html {
+		@apply h-full;
+	}
+	body {
+		@apply h-full;
 	}
 }

@@ -3,7 +3,7 @@ import { PlusCircleIcon } from "@heroicons/react/24/outline";
 
 const MainNavigation = () => {
 	return (
-		<nav className="flex justify-between col-[full-start/full-end] px-4 py-3 top-0 fixefd">
+		<nav className="flex justify-between col-[full-start/full-end] px-4 py-3 top-0 fixed w-full border-b-theme-blue-secondary text-theme-font-light">
 			<div>
 				<Logo />
 			</div>

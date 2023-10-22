@@ -2,9 +2,11 @@ import { Outlet } from "react-router-dom";
 import MainNavigation from "../components/Navigation";
 const RootLayout = () => {
 	return (
-		<div className="rootLayout">
+		<div className="rootLayout h-full">
 			<MainNavigation />
-			<Outlet />
+			<main className="col-[center-start/center-end] row-[2/3]">
+				<Outlet />
+			</main>
 		</div>
 	);
 };

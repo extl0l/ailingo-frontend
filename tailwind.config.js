@@ -26,6 +26,10 @@ export default {
 					950: "#192038",
 				},
 				theme: {
+					font: {
+						light: "#f6f7fb",
+						dark: "#1a1d28",
+					},
 					blue: {
 						primary: "#0a092d",
 						secondary: "#2e3856",
