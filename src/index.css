@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+	font-family: HurmeGeometricSans;
+	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans.otf")
+		format("opentype");
+}
+
 @layer utilities {
 	.after {
 		content: "";
@@ -24,6 +30,7 @@
 
 @layer base {
 	body {
+		font-family: "HurmeGeometricSans";
 		@apply bg-theme-blue-primary h-full;
 	}
 	*,
