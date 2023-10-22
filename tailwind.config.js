@@ -28,7 +28,7 @@ export default {
 				theme: {
 					font: {
 						light: "#f6f7fb",
-						dark: "#1a1d28",
+						dark: "#282e3e",
 					},
 					blue: {
 						primary: "#0a092d",

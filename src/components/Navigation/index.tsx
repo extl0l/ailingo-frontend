@@ -1,18 +1,18 @@
 import Logo from "../shared/Logo";
 
 import AddCours from "./AddCours";
+import User from "./Auth";
 
 const MainNavigation = () => {
 	return (
-		<nav className="flex items-center justify-between col-[full-start/full-end] px-7 py-3 top-0 fixed w-full border-b-theme-blue-secondary text-theme-font-light">
+		<nav className="flex items-center justify-between col-[full-start/full-end] px-7 py-2.5 top-0 fixed w-full  text-theme-font-light border-b border-b-theme-blue-secondary">
 			<Logo />
-
-			<div>
-				<input type="text" placeholder="Szukaj..." />
-			</div>
-			<div className="flex gap-8 items-center">
+			<div>{/* <input type="text" placeholder="Szukaj..." /> */}</div>
+			{/* //? Implement search input? */}
+			<div className="flex gap-5 items-center">
 				<AddCours />
-				<div>logowanie</div>
+				{/* TODO: Render AddCours button only when user is logged in. ! Clerk */}
+				<User />
 			</div>
 		</nav>
 	);
