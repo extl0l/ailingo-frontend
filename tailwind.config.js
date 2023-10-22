@@ -25,6 +25,17 @@ export default {
 					900: "#263354",
 					950: "#192038",
 				},
+				theme: {
+					blue: {
+						primary: "#0a092d",
+						secondary: "#2e3856",
+						tertiary: "#4255ff",
+						light: "#edefff",
+					},
+					yellow: {
+						primary: "#ffcd1f",
+					},
+				},
 			},
 		},
 	},
