@@ -17,6 +17,9 @@
 	.rootLayout {
 		@apply grid grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout grid-rows-[63px_1fr_min-content];
 	}
+	.link-active {
+		@apply after:bg-theme-blue-pitch after:h-1 after:w-full after:absolute after:bottom-0.5 after:rounded-t-full after:left-0 after after:transition;
+	}
 }
 
 @layer base {

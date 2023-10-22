@@ -35,6 +35,7 @@ export default {
 						secondary: "#2e3856",
 						tertiary: "#4255ff",
 						light: "#edefff",
+						pitch: "#a8b1ff",
 					},
 					yellow: {
 						primary: "#ffcd1f",

@@ -6,11 +6,15 @@ const LINKS = [
 		name: "Home",
 		href: "/",
 	},
+	{
+		name: "Your Courses",
+		href: "/courses",
+	},
 ];
 
 const index = () => {
 	return (
-		<ul>
+		<ul className="h-full space-x-6">
 			{LINKS.map((link) => (
 				<Link key={link.href} {...link} />
 			))}

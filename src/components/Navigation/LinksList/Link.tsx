@@ -6,7 +6,17 @@ type Props = {
 };
 
 const Link = ({ href, name }: Props) => {
-	return <NavLink to={href}>{name}</NavLink>;
+	return (
+		<NavLink
+			className={({ isActive }) =>
+				`h-full px-1  py-5 relative transition after:opacity-0 hover:after:opacity-100 link-active ${
+					isActive ? "after:opacity-100" : ""
+				}`
+			}
+			to={href}>
+			{name}
+		</NavLink>
+	);
 };
 
 export default Link;
