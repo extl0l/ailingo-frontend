@@ -1,7 +1,9 @@
+import Button from "../shared/Button";
 import Logo from "../shared/Logo";
 import AddCours from "./AddCours";
 import User from "./Auth";
 import LinksList from "./LinksList";
+import { Link } from "react-router-dom";
 
 const MainNavigation = () => {
 	return (
@@ -13,6 +15,11 @@ const MainNavigation = () => {
 			<div>{/* <input type="text" placeholder="Szukaj..." /> */}</div>
 			{/* //? Implement search input? */}
 			<div className="flex gap-5 items-center">
+				<Link to="/cours">
+					<Button variant={"premium"}>Ulepsz: 7-dniowa wersja premium</Button>
+					<Button variant={"import"}>Importuj</Button>
+					<Button variant={"blue"}>Stwórz</Button>
+				</Link>
 				<AddCours />
 				{/* TODO: Render AddCours button only when user is logged in. ! Clerk */}
 				<User />

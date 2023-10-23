@@ -12,6 +12,12 @@ export default {
 					"[full-start] minmax(15px,1fr)  [center-start] repeat(8,[col-start] minmax(min-content,152px) [col-end]) [center-end] minmax(15px,1fr) [full-end]",
 			},
 			colors: {
+				"buttons":{
+					"blue": "#4255ff"
+				},
+				"text":{
+					"waikawa": "#282e3e"
+				},
 				"steel-blue": {
 					50: "#f4f9fb",
 					100: "#e9f3f6",

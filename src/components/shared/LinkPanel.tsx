@@ -21,7 +21,7 @@ const LinkPanel = ({
 			className={cn(
 				"panel",
 				animate &&
-					"transition hover:transition after:opacity-0 hover:after:opacity-100 hover:link-active",
+				"transition hover:transition after:opacity-0 hover:after:opacity-100 hover:link-active",
 				props.className
 			)}>
 			{children}
