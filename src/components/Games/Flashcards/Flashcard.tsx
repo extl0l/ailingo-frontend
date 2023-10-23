@@ -1,7 +1,11 @@
-import React from "react";
+import { type FlashCard } from "../../../types/Flashcard";
 
-const Flashcard = () => {
-	return <div>Flashcard</div>;
+type Props = {
+	flashcard: FlashCard;
+};
+
+const Flashcard = ({ flashcard }: Props) => {
+	return <div>{flashcard.word}</div>;
 };
 
 export default Flashcard;
