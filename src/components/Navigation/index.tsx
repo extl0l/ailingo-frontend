@@ -1,29 +1,21 @@
 import Logo from "../shared/Logo";
-import ProfilePictureIcon from "./ProfilePictureIcon";
-import { PlusCircleIcon } from "@heroicons/react/24/outline";
-import LoginButton from "./LoginButton";
-import SearchInput from "./SearchInput";
-
-//TODO: Add <Link>s to elements
+import AddCours from "./AddCours";
+import User from "./Auth";
+import LinksList from "./LinksList";
 
 const MainNavigation = () => {
 	return (
-		<nav className="flex justify-between h-16 border-b border-b-gray-800 p-6">
-			<div className="flex gap-9 self-center">
+		<nav className="flex items-center justify-between col-[full-start/full-end] px-7 top-0 fixed w-full  text-theme-font-light border-b border-b-theme-blue-secondary">
+			<div className="flex gap-8 items-center h-full py-3">
 				<Logo />
-				<a href="/" className="text-white self-center">Strona główna</a>
+				<LinksList />
 			</div>
-			<div className="self-center">
-				<SearchInput />
-			</div>
-			<div className="flex gap-8 self-center">
-				<PlusCircleIcon className="w-9 text-yellow-300 self-center" />
-				<div className="self-center">
-					<ProfilePictureIcon />
-				</div>
-				<div className="self-center">
-					<LoginButton />
-				</div>
+			<div>{/* <input type="text" placeholder="Szukaj..." /> */}</div>
+			{/* //? Implement search input? */}
+			<div className="flex gap-5 items-center">
+				<AddCours />
+				{/* TODO: Render AddCours button only when user is logged in. ! Clerk */}
+				<User />
 			</div>
 		</nav>
 	);

@@ -3,6 +3,14 @@ export default {
 	content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
 	theme: {
 		extend: {
+			gridTemplateColumns: {
+				defaultLayout:
+					"[full-start] minmax(50px,1fr) [center-start] repeat(8,[col-start] minmax(min-content,152px) [col-end]) [center-end] minmax(50px,1fr) [full-end]",
+				smallLayout:
+					"[full-start] minmax(30px,1fr)  [center-start] repeat(8,[col-start] minmax(min-content,152px) [col-end]) [center-end] minmax(30px,1fr) [full-end]",
+				mobileLayout:
+					"[full-start] minmax(15px,1fr)  [center-start] repeat(8,[col-start] minmax(min-content,152px) [col-end]) [center-end] minmax(15px,1fr) [full-end]",
+			},
 			colors: {
 				"steel-blue": {
 					50: "#f4f9fb",
@@ -32,6 +40,22 @@ export default {
 				},
 				
 				
+				theme: {
+					font: {
+						light: "#f6f7fb",
+						dark: "#282e3e",
+					},
+					blue: {
+						primary: "#0a092d",
+						secondary: "#2e3856",
+						tertiary: "#4255ff",
+						light: "#edefff",
+						pitch: "#a8b1ff",
+					},
+					yellow: {
+						primary: "#ffcd1f",
+					},
+				},
 			},
 		},
 	},
