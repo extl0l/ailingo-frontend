@@ -1,4 +1,4 @@
-import React, { HTMLAttributes } from "react";
+import { type HTMLAttributes } from "react";
 import { cn } from "../../utils/tailwind";
 import { Link } from "react-router-dom";
 

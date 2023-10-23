@@ -1,6 +1,7 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
 import HomePage from "./layout/HomePage";
+import Flashcards from "./layout/Games/Flashcards";
 
 // TODO: Implement loader() for routing
 
@@ -35,7 +36,7 @@ const router = createBrowserRouter([
 
 	{
 		path: "/:courseId/flashcards",
-		element: <div>Flashcards</div>,
+		element: <Flashcards />,
 	},
 	{
 		path: "/:courseId/test",

@@ -5,7 +5,7 @@ import LinksList from "./LinksList";
 
 const MainNavigation = () => {
 	return (
-		<nav className="flex items-center justify-between col-[full-start/full-end] px-7  top-0 fixed w-full  text-theme-font-light border-b border-b-theme-blue-secondary">
+		<nav className="flex items-center justify-between col-[full-start/full-end] px-7 top-0 fixed w-full  text-theme-font-light border-b border-b-theme-blue-secondary">
 			<div className="flex gap-8 items-center h-full py-3">
 				<Logo />
 				<LinksList />
