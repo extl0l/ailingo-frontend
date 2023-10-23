@@ -1,7 +1,8 @@
-import { HTMLAttributes } from "react";
-import { FlashCard } from "../../../types/Flashcard";
+import { type HTMLAttributes } from "react";
+import { type FlashCard } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
 import Flashcard from "./Flashcard";
+import FlashcardOptions from "./FlashcardOptions";
 
 type Props = {
 	flashcards: FlashCard[];
@@ -13,10 +14,13 @@ const FlashcardsGame = ({
 	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
 	return (
-		<div className={cn("", className)} {...props}>
+		<div
+			className={cn("col-[center-start/center-end] h-full", className)}
+			{...props}>
 			{flashcards.map((flashcard, index) => (
 				<Flashcard key={`flashcard-${index}`} flashcard={flashcard} />
 			))}
+			<FlashcardOptions />
 		</div>
 	);
 };

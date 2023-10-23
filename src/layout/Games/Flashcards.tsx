@@ -13,9 +13,9 @@ const DUMMY_FLASHCARDS = [
 
 const Flashcards = () => {
 	return (
-		<main className="rootLayout">
+		<main className="rootLayout h-full">
 			<FlashcardsMenu />
-			<FlashcardsGame flashcards={DUMMY_FLASHCARDS}/>
+			<FlashcardsGame flashcards={DUMMY_FLASHCARDS} />
 		</main>
 	);
 };
