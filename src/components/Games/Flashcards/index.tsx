@@ -15,7 +15,10 @@ const FlashcardsGame = ({
 }: Props & HTMLAttributes<HTMLDivElement>) => {
 	return (
 		<div
-			className={cn("col-[center-start/center-end] h-full", className)}
+			className={cn(
+				"col-[center-start/center-end] h-full flex flex-col",
+				className
+			)}
 			{...props}>
 			{flashcards.map((flashcard, index) => (
 				<Flashcard key={`flashcard-${index}`} flashcard={flashcard} />

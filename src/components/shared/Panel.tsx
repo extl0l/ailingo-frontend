@@ -10,7 +10,7 @@ const Panel = ({
 	...props
 }: PanelProps & HTMLAttributes<HTMLDivElement>) => {
 	return (
-		<div className={cn("panel", props.className)} {...props}>
+		<div {...props} className={cn("panel", props.className)}>
 			{children}
 		</div>
 	);

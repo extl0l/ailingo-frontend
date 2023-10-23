@@ -7,9 +7,9 @@ type Props = {
 
 const Flashcard = ({ flashcard }: Props) => {
 	return (
-		<div className="text-theme-font-light">
-			<Panel>{flashcard.word}</Panel>
-			<Panel>{flashcard.translation}</Panel>
+		<div className="text-theme-font-light flex-1">
+			<Panel className="h-full">{flashcard.word}</Panel>
+			<Panel className="h-full">{flashcard.translation}</Panel>
 		</div>
 	);
 };

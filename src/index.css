@@ -135,7 +135,7 @@
 		@apply after:bg-theme-blue-pitch after:h-1 after:w-full after:absolute after:bottom-0.5 after:rounded-t-full after:left-0 after after:transition;
 	}
 	.panel {
-		@apply bg-theme-blue-secondary p-4 shadow-sm relative;
+		@apply bg-theme-blue-secondary p-4 shadow-sm relative rounded-xl;
 	}
 }
 
