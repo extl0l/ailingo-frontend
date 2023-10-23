@@ -1,5 +1,5 @@
 const Logo = () => {
-	return <div>Logo</div>;
+	return <img src="/src/assets/logo.png" alt="logo" />;
 };
 
 export default Logo;

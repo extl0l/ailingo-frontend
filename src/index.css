@@ -4,7 +4,7 @@
 
 @layer base {
 	body {
-		@apply bg-steel-blue-950;
+		@apply bg-black-rock-950;
 	}
 }
 @layer utilities {
