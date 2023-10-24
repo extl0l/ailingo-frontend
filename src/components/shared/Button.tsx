@@ -4,36 +4,28 @@ import { forwardRef, ButtonHTMLAttributes } from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const buttonVariants = cva(
-	"inline-flex items-center justify-center rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 dark:hover:bg-slate-800 dark:hover:text-slate-100 disabled:opacity-50 dark:focus:ring-slate-400 disabled:pointer-events-none dark:focus:ring-offset-slate-900 data-[state=open]:bg-slate-100 dark:data-[state=open]:bg-slate-800",
+	"inline-flex px-3.5 py-1.5 items-center justify-center rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50  disabled:pointer-events-none  data-[state=open]:bg-slate-100",
 	{
 		variants: {
 			variant: {
-				default:
-					"bg-slate-900 text-white hover:bg-slate-700 dark:bg-slate-50 dark:text-slate-900",
-				destructive: "bg-red-500 text-white hover:bg-red-600 dark:hover:bg-red-600",
-				outline:
-					"bg-transparent border border-slate-200 hover:bg-slate-100 dark:border-slate-700 dark:text-slate-100",
-				subtle:
-					"bg-slate-100 text-slate-900 hover:bg-slate-200 dark:bg-slate-700 dark:text-slate-100",
-				ghost:
-					"bg-transparent dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent",
-				link:
-					"bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 dark:text-slate-300 hover:bg-transparent dark:hover:bg-transparent",
-				blue: "bg-theme-tertiary",
-				import: "border-2 border-gray-500",
-				premium: "bg-yellow-500 text-theme-font-dark",
-				round:
-					"rounded-full border-2 border-gray-500 h-10 w-10 p-1 items-center justify-center",
+				outline: "border border-slate-200 hover:bg-slate-100",
+				fill: "border-none",
 			},
-			size: {
-				default: "h-10 py-2 px-4",
-				sm: "h-9 px-2 rounded-md",
-				lg: "h-11 px-8 rounded-md",
+			rounded: {
+				full: "rounded-full",
+				md: "rounded-md",
+				none: "rounded-none",
+			},
+			buttonStyle: {
+				yellow: "bg-theme-yellow-primary text-theme-font-dark",
+				blue: "bg-theme-blue-tertiary text-theme-font-light",
+				transparent: "bg-transparent text-theme-font-light",
 			},
 		},
 		defaultVariants: {
-			variant: "default",
-			size: "default",
+			variant: "outline",
+			rounded: "md",
+			buttonStyle: "transparent",
 		},
 	}
 );
@@ -43,10 +35,10 @@ export interface ButtonProps
 		VariantProps<typeof buttonVariants> {}
 
 const Button = forwardRef<HTMLButtonElement, ButtonProps>(
-	({ className, children, variant, size, ...props }, ref) => {
+	({ className, children, variant, rounded, buttonStyle, ...props }, ref) => {
 		return (
 			<button
-				className={cn(buttonVariants({ variant, size, className }))}
+				className={cn(buttonVariants({ variant, rounded, buttonStyle, className }))}
 				ref={ref}
 				{...props}>
 				{children}
