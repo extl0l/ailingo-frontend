@@ -4,11 +4,11 @@ import { forwardRef, ButtonHTMLAttributes } from "react";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const buttonVariants = cva(
-	"inline-flex px-3.5 py-1.5 items-center justify-center rounded-md transition-colors focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 disabled:opacity-50  disabled:pointer-events-none  data-[state=open]:bg-slate-100",
+	"inline-flex transition hover:transition px-3.5 py-1.5 items-center justify-center rounded-md transition-colors focus:outline-none disabled:opacity-50  disabled:pointer-events-none  data-[state=open]:bg-slate-100",
 	{
 		variants: {
 			variant: {
-				outline: "border border-slate-200 hover:bg-slate-100",
+				outline: "border-2 border-theme-blue-ghost hover:bg-theme-font-dark",
 				fill: "border-none",
 			},
 			rounded: {

@@ -142,7 +142,8 @@
 		perspective: 3000px;
 	}
 	.flashcard-side {
-		@apply overflow-hidden absolute top-0 left-0 h-full w-full transition flex justify-center items-center text-3xl;
+		@apply overflow-hidden absolute top-0 left-0 h-full w-full transition flex justify-center items-center text-3xl shadow-none;
+		box-shadow: -4px 17px 63px -37px rgba(66, 68, 90, 1);
 		transition-duration: 0.3s;
 		backface-visibility: hidden;
 	}

@@ -14,6 +14,7 @@ export default {
 				mobileLayout:
 					"[full-start] minmax(15px,1fr)  [center-start] repeat(8,[col-start] minmax(min-content,152px) [col-end]) [center-end] minmax(15px,1fr) [full-end]",
 			},
+
 			colors: {
 				"steel-blue": {
 					50: "#f4f9fb",
@@ -53,9 +54,16 @@ export default {
 						tertiary: "#4255ff",
 						light: "#edefff",
 						pitch: "#a8b1ff",
+						ghost: "#586380",
 					},
 					yellow: {
 						primary: "#ffcd1f",
+					},
+					red: {
+						primary: "#d05700",
+					},
+					green: {
+						primary: "#18ae79",
 					},
 				},
 			},
