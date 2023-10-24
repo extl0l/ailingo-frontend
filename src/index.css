@@ -143,6 +143,7 @@
 	}
 	.flashcard-side {
 		@apply overflow-hidden absolute top-0 left-0 h-full w-full transition flex justify-center items-center text-3xl;
+		transition-duration: 0.3s;
 		backface-visibility: hidden;
 	}
 }

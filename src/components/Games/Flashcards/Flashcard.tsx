@@ -20,11 +20,11 @@ const Flashcard = ({ flashcard }: Props) => {
 	return (
 		<div className="flashcard" onClick={switchSides}>
 			<Panel
-				className={cn("flashcard-side", isFront ? "rotate-x-0" : "-rotate-x-180")}>
+				className={cn("flashcard-side", isFront ? "rotate-x-0" : "rotate-x-180")}>
 				{flashcard.word}
 			</Panel>
 			<Panel
-				className={cn("flashcard-side", isFront ? "rotate-x-180" : "rotate-x-0")}>
+				className={cn("flashcard-side", isFront ? "-rotate-x-180" : "rotate-x-0")}>
 				{flashcard.translation}
 			</Panel>
 		</div>
