@@ -137,6 +137,14 @@
 	.panel {
 		@apply bg-theme-blue-secondary p-4 shadow-sm relative rounded-xl;
 	}
+	.flashcard {
+		@apply text-theme-font-light flex-1 relative max-w-5xl mx-auto w-full;
+		perspective: 3000px;
+	}
+	.flashcard-side {
+		@apply overflow-hidden absolute top-0 left-0 h-full w-full transition flex justify-center items-center text-3xl;
+		backface-visibility: hidden;
+	}
 }
 
 @layer base {

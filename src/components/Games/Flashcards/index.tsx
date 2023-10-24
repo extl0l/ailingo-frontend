@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { type HTMLAttributes } from "react";
 import { type FlashCard } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
@@ -13,6 +14,25 @@ const FlashcardsGame = ({
 	className,
 	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
+	const [currentFlashcard, setCurrentFlashcard] = useState(0);
+
+	const nextFlashcard = () => {
+		console.log(currentFlashcard);
+		if (currentFlashcard < flashcards.length - 1) {
+			console.log("NEXT");
+			setCurrentFlashcard((prevState) => prevState + 1);
+		}
+	};
+
+	const previousFlashcard = () => {
+		console.log(currentFlashcard);
+		if (currentFlashcard > 0) {
+			console.log("PREV");
+
+			setCurrentFlashcard((prevState) => prevState - 1);
+		}
+	};
+
 	return (
 		<div
 			className={cn(
@@ -20,10 +40,12 @@ const FlashcardsGame = ({
 				className
 			)}
 			{...props}>
-			{flashcards.map((flashcard, index) => (
-				<Flashcard key={`flashcard-${index}`} flashcard={flashcard} />
-			))}
-			<FlashcardOptions />
+			<Flashcard flashcard={flashcards[currentFlashcard]} />
+
+			<FlashcardOptions
+				nextFlashcard={nextFlashcard}
+				previousFlashcard={previousFlashcard}
+			/>
 		</div>
 	);
 };

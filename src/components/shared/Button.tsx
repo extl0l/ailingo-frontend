@@ -19,9 +19,9 @@ export const buttonVariants = cva(
                     "bg-transparent dark:bg-transparent hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-slate-100 dark:hover:text-slate-100 data-[state=open]:bg-transparent dark:data-[state=open]:bg-transparent",
                 link:
                     "bg-transparent dark:bg-transparent underline-offset-4 hover:underline text-slate-900 dark:text-slate-300 hover:bg-transparent dark:hover:bg-transparent",
-                blue: "bg-buttons-blue",
+                blue: "bg-theme-tertiary",
                 import: "border-2 border-gray-500",
-                premium: "bg-yellow-500 text-text-waikawa",
+                premium: "bg-yellow-500 text-theme-font-dark",
                 round: "rounded-full border-2 border-gray-500 h-10 w-10 p-1 items-center justify-center",
             },
             size: {

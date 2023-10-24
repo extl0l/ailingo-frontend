@@ -1,4 +1,6 @@
+import { useState } from "react";
 import { type FlashCard } from "../../../types/Flashcard";
+import { cn } from "../../../utils/tailwind";
 import Panel from "../../shared/Panel";
 
 type Props = {
@@ -6,10 +8,26 @@ type Props = {
 };
 
 const Flashcard = ({ flashcard }: Props) => {
+	const [isFront, setIsFront] = useState(true);
+
+	const switchSides = () => {
+		setIsFront((prevState) => !prevState);
+	};
+
+	useKeyPress("ArrowRight", () => {
+		console.log("XD");
+	});
+
 	return (
-		<div className="text-theme-font-light flex-1">
-			<Panel className="h-full">{flashcard.word}</Panel>
-			<Panel className="h-full">{flashcard.translation}</Panel>
+		<div className="flashcard" onClick={switchSides}>
+			<Panel
+				className={cn("flashcard-side", isFront ? "rotate-x-0" : "-rotate-x-180")}>
+				{flashcard.word}
+			</Panel>
+			<Panel
+				className={cn("flashcard-side", isFront ? "rotate-x-180" : "rotate-x-0")}>
+				{flashcard.translation}
+			</Panel>
 		</div>
 	);
 };
