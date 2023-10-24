@@ -44,16 +44,12 @@ const router = createBrowserRouter([
 	},
 	{
 		path: "/login",
-		element: <div>Login</div>
-	}
+		element: <div>Login</div>,
+	},
 ]);
 
 const App = () => {
-	return (
-		<>
-			<RouterProvider router={router} />
-		</>
-	);
+	return <RouterProvider router={router} />;
 };
 
 export default App;
