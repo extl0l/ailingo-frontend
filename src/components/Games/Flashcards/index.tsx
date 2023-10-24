@@ -6,49 +6,48 @@ import Flashcard from "./Flashcard";
 import FlashcardOptions from "./FlashcardOptions";
 
 type Props = {
-  flashcards: FlashCard[];
+	flashcards: FlashCard[];
 };
 
 const FlashcardsGame = ({
-  flashcards,
-  className,
-  ...props
+	flashcards,
+	className,
+	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
-  const [currentFlashcard, setCurrentFlashcard] = useState(0);
+	const [currentFlashcard, setCurrentFlashcard] = useState(0);
 
-  const nextFlashcard = () => {
-    console.log(currentFlashcard);
-    if (currentFlashcard < flashcards.length - 1) {
-      console.log("NEXT");
-      setCurrentFlashcard((prevState) => prevState + 1);
-    }
-  };
+	const nextFlashcard = () => {
+		console.log(currentFlashcard);
+		if (currentFlashcard < flashcards.length - 1) {
+			console.log("NEXT");
+			setCurrentFlashcard((prevState) => prevState + 1);
+		}
+	};
 
-  const previousFlashcard = () => {
-    console.log(currentFlashcard);
-    if (currentFlashcard > 0) {
-      console.log("PREV");
+	const previousFlashcard = () => {
+		console.log(currentFlashcard);
+		if (currentFlashcard > 0) {
+			console.log("PREV");
 
-      setCurrentFlashcard((prevState) => prevState - 1);
-    }
-  };
+			setCurrentFlashcard((prevState) => prevState - 1);
+		}
+	};
 
-  return (
-    <div
-      className={cn(
-        "col-[center-start/center-end] h-full flex flex-col",
-        className,
-      )}
-      {...props}
-    >
-      <Flashcard flashcard={flashcards[currentFlashcard]} />
+	return (
+		<div
+			className={cn(
+				"col-[center-start/center-end] h-full flex flex-col",
+				className
+			)}
+			{...props}>
+			<Flashcard flashcard={flashcards[currentFlashcard]} />
 
-      <FlashcardOptions
-        nextFlashcard={nextFlashcard}
-        previousFlashcard={previousFlashcard}
-      />
-    </div>
-  );
+			<FlashcardOptions
+				nextFlashcard={nextFlashcard}
+				previousFlashcard={previousFlashcard}
+			/>
+		</div>
+	);
 };
 
 export default FlashcardsGame;
