@@ -15,7 +15,7 @@ const Flashcard = ({ flashcard }: Props) => {
 		setIsFront((prevState) => !prevState);
 	};
 
-	useKeyPress(" ");
+	useKeyPress(" ", () => switchSides());
 
 	return (
 		<div className="flashcard" onClick={switchSides}>
