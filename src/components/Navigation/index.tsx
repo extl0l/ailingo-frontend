@@ -16,6 +16,7 @@ const MainNavigation = () => {
 			{/* //? Implement search input? */}
 			<div className="flex gap-5 items-center">
 				<Link to="/cours">
+					<Button variant={"round"}>V</Button>
 					<Button variant={"premium"}>Ulepsz: 7-dniowa wersja premium</Button>
 					<Button variant={"import"}>Importuj</Button>
 					<Button variant={"blue"}>Stwórz</Button>

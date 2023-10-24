@@ -22,6 +22,7 @@ export const buttonVariants = cva(
                 blue: "bg-buttons-blue",
                 import: "border-2 border-gray-500",
                 premium: "bg-yellow-500 text-text-waikawa",
+                round: "rounded-full border-2 border-gray-500 h-10 w-10 p-1 items-center justify-center",
             },
             size: {
                 default: "h-10 py-2 px-4",
