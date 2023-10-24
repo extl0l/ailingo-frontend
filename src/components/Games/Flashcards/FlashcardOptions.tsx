@@ -1,5 +1,3 @@
-// import Button from "../../shared/Button";
-
 import Button from "../../shared/Button";
 import { XMarkIcon, CheckIcon } from "@heroicons/react/24/solid";
 type Props = {
