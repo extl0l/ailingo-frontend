@@ -11,7 +11,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.0.18",
-    "@uidotdev/usehooks": "^2.4.0",
+    "@uidotdev/usehooks": "^2.4.1",
     "autoprefixer": "^10.4.16",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.0.0",

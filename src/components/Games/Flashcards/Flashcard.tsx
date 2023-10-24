@@ -14,10 +14,12 @@ const Flashcard = ({ flashcard }: Props) => {
 		setIsFront((prevState) => !prevState);
 	};
 
-	// TODO: Move classes into file css cuz codexandbox cant read them from there lmao
+	useKeyPress("ArrowRight", () => {
+		console.log("XD");
+	});
 
 	return (
-		<div className="flashcard max-w-5xl mx-auto w-full" onClick={switchSides}>
+		<div className="flashcard" onClick={switchSides}>
 			<Panel
 				className={cn("flashcard-side", isFront ? "rotate-x-0" : "-rotate-x-180")}>
 				{flashcard.word}
