@@ -17,14 +17,19 @@ const FlashcardsGame = ({
   const [currentFlashcard, setCurrentFlashcard] = useState(0);
 
   const nextFlashcard = () => {
+    console.log(currentFlashcard);
     if (currentFlashcard < flashcards.length - 1) {
-      setCurrentFlashcard((prevState) => prevState++);
+      console.log("NEXT");
+      setCurrentFlashcard((prevState) => prevState + 1);
     }
   };
 
   const previousFlashcard = () => {
+    console.log(currentFlashcard);
     if (currentFlashcard > 0) {
-      setCurrentFlashcard((prevState) => prevState--);
+      console.log("PREV");
+
+      setCurrentFlashcard((prevState) => prevState - 1);
     }
   };
 

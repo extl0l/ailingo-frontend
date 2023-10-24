@@ -3,21 +3,21 @@ import FlashcardsMenu from "../../components/Games/Flashcards/FlashcardsMenu";
 import { FlashCard } from "../../types/Flashcard";
 
 const DUMMY_FLASHCARDS = [
-	{ examples: ["lubie piwo"], translation: "Beer", word: "Piwo" },
-	// {
-	// 	examples: ["woda jest w kranie", "woda w oceanie"],
-	// 	translation: "Water",
-	// 	word: "Woda",
-	// },
+  { examples: ["lubie piwo"], translation: "Beer", word: "Piwo" },
+  {
+    examples: ["woda jest w kranie", "woda w oceanie"],
+    translation: "Water",
+    word: "Woda",
+  },
 ] as FlashCard[];
 
 const Flashcards = () => {
-	return (
-		<main className="rootLayout h-full">
-			<FlashcardsMenu />
-			<FlashcardsGame flashcards={DUMMY_FLASHCARDS} />
-		</main>
-	);
+  return (
+    <main className="rootLayout h-full">
+      <FlashcardsMenu />
+      <FlashcardsGame flashcards={DUMMY_FLASHCARDS} />
+    </main>
+  );
 };
 
 export default Flashcards;
