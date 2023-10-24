@@ -2,6 +2,7 @@ import { useState } from "react";
 import { type FlashCard } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
 import Panel from "../../shared/Panel";
+import useKeyPress from "../../../hooks/useKeyPress";
 
 type Props = {
 	flashcard: FlashCard;
@@ -14,9 +15,7 @@ const Flashcard = ({ flashcard }: Props) => {
 		setIsFront((prevState) => !prevState);
 	};
 
-	useKeyPress("ArrowRight", () => {
-		console.log("XD");
-	});
+	useKeyPress(" ");
 
 	return (
 		<div className="flashcard" onClick={switchSides}>
