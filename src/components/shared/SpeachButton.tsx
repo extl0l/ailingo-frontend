@@ -1,9 +1,14 @@
+import { cn } from "../../utils/tailwind";
 import Button from "./Button";
 import { SpeakerWaveIcon } from "@heroicons/react/24/solid";
 
-const SpeachButton = () => {
+type Props = {
+	className: string;
+};
+
+const SpeachButton = ({ className }: Props) => {
 	return (
-		<Button>
+		<Button className={cn("", className)}>
 			<SpeakerWaveIcon />
 		</Button>
 	);

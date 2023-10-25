@@ -126,6 +126,15 @@
 	.gridLayout {
 		@apply grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout;
 	}
+	.no-scrollbar::-webkit-scrollbar {
+		display: none;
+	}
+
+	/* Hide scrollbar for IE, Edge and Firefox */
+	.no-scrollbar {
+		-ms-overflow-style: none; /* IE and Edge */
+		scrollbar-width: none; /* Firefox */
+	}
 }
 @layer components {
 	.rootLayout {
@@ -142,7 +151,7 @@
 		perspective: 3000px;
 	}
 	.flashcard-side {
-		@apply overflow-hidden absolute top-0 left-0 h-full w-full transition flex justify-center items-center text-3xl shadow-none;
+		@apply overflow-hidden absolute top-0 left-0 h-full w-full transition shadow-none p-0;
 		box-shadow: -4px 17px 63px -37px rgba(66, 68, 90, 1);
 		transition-duration: 0.3s;
 		backface-visibility: hidden;
