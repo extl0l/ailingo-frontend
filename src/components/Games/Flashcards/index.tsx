@@ -40,7 +40,10 @@ const FlashcardsGame = ({
 				className
 			)}
 			{...props}>
-			<Flashcard flashcard={flashcards[currentFlashcard]} />
+			<Flashcard
+				flashcard={flashcards[currentFlashcard]}
+				key={`flashcard-${currentFlashcard}`}
+			/>
 
 			<FlashcardOptions
 				nextFlashcard={nextFlashcard}
