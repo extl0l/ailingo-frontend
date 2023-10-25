@@ -2,6 +2,7 @@ import Logo from "../shared/Logo";
 import AddCours from "./AddCours";
 import User from "./Auth";
 import LinksList from "./LinksList";
+import Input from "../shared/Input";
 
 const MainNavigation = () => {
 	return (
@@ -10,7 +11,7 @@ const MainNavigation = () => {
 				<Logo />
 				<LinksList />
 			</div>
-			<div>{/* <input type="text" placeholder="Szukaj..." /> */}</div>
+			<div><Input/></div>
 			{/* //? Implement search input? */}
 			<div className="flex gap-5 items-center">
 				<AddCours />
