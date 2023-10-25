@@ -22,7 +22,11 @@ const Flashcard = ({ flashcard }: Props) => {
 		<div className="flashcard no-scrollbar">
 			<Panel
 				className={cn("flashcard-side", isFront ? "rotate-x-0" : "rotate-x-180")}>
-				<SpeachButton className="absolute top-10 right-10" />
+				<SpeachButton
+					className="absolute top-10 right-10"
+					language="pl-PL"
+					wordToRead={flashcard.word}
+				/>
 				<div
 					className="w-full h-full  text-3xl flex justify-center items-center"
 					onClick={switchSides}>
@@ -31,7 +35,11 @@ const Flashcard = ({ flashcard }: Props) => {
 			</Panel>
 			<Panel
 				className={cn("flashcard-side", isFront ? "-rotate-x-180" : "rotate-x-0")}>
-				<SpeachButton className="absolute top-10 right-10" />
+				<SpeachButton
+					className="absolute top-10 right-10"
+					language="en-US"
+					wordToRead={flashcard.translation}
+				/>
 				<div
 					className="w-full h-full  text-3xl flex justify-center items-center"
 					onClick={switchSides}>
