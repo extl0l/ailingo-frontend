@@ -2,6 +2,7 @@ import { cn } from "../../utils/tailwind";
 import Button from "./Button";
 import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
 import { useSpeechSynthesis } from "react-speech-kit";
+import Tooltip from "./Tooltip";
 
 export type Language =
 	| "en-US"
@@ -55,15 +56,20 @@ const SpeachButton = ({
 	};
 
 	return (
-		<Button
-			className={cn("aspect-square border-none p-2", className)}
-			rounded="full"
-			variant="outline"
-			onClick={() => speakText(wordToRead, language)}>
-			<SpeakerWaveIcon
-				className={cn("min-w-[18px] min-h-[18px]", iconClassName)}
-			/>
-		</Button>
+		<Tooltip
+			content={
+				supported ? "Read text." : "Your browser doesn't support this feature"
+			}>
+			<Button
+				className={cn("aspect-square border-none p-2", className)}
+				rounded="full"
+				variant="outline"
+				onClick={() => speakText(wordToRead, language)}>
+				<SpeakerWaveIcon
+					className={cn("min-w-[18px] min-h-[18px]", iconClassName)}
+				/>
+			</Button>
+		</Tooltip>
 	);
 };
 

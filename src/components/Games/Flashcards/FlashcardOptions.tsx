@@ -9,14 +9,16 @@ type Props = {
 const FlashcardOptions = ({ nextFlashcard, previousFlashcard }: Props) => {
 	return (
 		<div className="flex items-center w-full justify-center gap-16 mt-4 mb-5">
-			<Button
-				variant="outline"
-				rounded="full"
-				onClick={previousFlashcard}
-				className="p-1.5">
-				<XMarkIcon className="w-8 h-8 fill-theme-red-primary" />
-			</Button>
-			<Tooltip content="XDDD">
+			<Tooltip content="I don't know">
+				<Button
+					variant="outline"
+					rounded="full"
+					onClick={previousFlashcard}
+					className="p-1.5">
+					<XMarkIcon className="w-8 h-8 fill-theme-red-primary" />
+				</Button>
+			</Tooltip>
+			<Tooltip content="I know">
 				<Button
 					onClick={nextFlashcard}
 					variant="outline"
