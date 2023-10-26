@@ -29,7 +29,12 @@ const inputVariants = cva(
 			black: "text-black",
 		}
 	},
-	defaultVariants: {},
+	defaultVariants: {
+		rounded: "full",
+		width: "large",
+		border: "none",
+		textColor: "white",
+	},
 });
 
 
