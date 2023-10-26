@@ -7,7 +7,9 @@ const inputVariants = cva(
 	variants: {
 		"rounded": {
 			full: "rounded-full",
+			large: "rounded-lg",
 			md: "rounded-md",
+			small: "rounded-sm",
 			none: "rounded-none",
 		},
 		"width": {
@@ -17,7 +19,11 @@ const inputVariants = cva(
 			small: "w-30",
 			none: "w-0",
 		},
-
+		"border": {
+			blue: "border-theme-blue-tertiary border",
+			white: "border-white border",
+			none: "border-none",
+		}
 	},
 	defaultVariants: {},
 });
@@ -30,9 +36,9 @@ export interface InputProps
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-	({ className, rounded, width, ...props }, ref) => {
+	({ className, rounded, width, border, ...props }, ref) => {
 		return (
-			<input type="text" className={cn(inputVariants({ rounded, width }), className)}
+			<input type="text" className={cn(inputVariants({ rounded, width, border }), className)}
 				ref={ref} {...props} />
 		);
 
