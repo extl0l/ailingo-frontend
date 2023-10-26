@@ -11,7 +11,7 @@ const MainNavigation = () => {
 				<Logo />
 				<LinksList />
 			</div>
-			<div><Input rounded={"full"} /></div>
+			<div><Input rounded={"full"} width="large" /></div>
 			{/* //? Implement search input? */}
 			<div className="flex gap-5 items-center">
 				<AddCours />
