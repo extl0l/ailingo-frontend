@@ -11,9 +11,9 @@ const MainNavigation = () => {
 				<Logo />
 				<LinksList />
 			</div>
-			<div><Input /></div>
+			<div><Input height="normal" /></div>
 			{/* //? Implement search input? */}
-			<div className="flex gap-5 items-center">
+			<div className="flex gap-5 items-center ">
 				<AddCours />
 				{/* TODO: Render AddCours button only when user is logged in. ! Clerk */}
 				<User />
