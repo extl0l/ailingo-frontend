@@ -23,6 +23,10 @@ const inputVariants = cva(
 			blue: "border-theme-blue-tertiary border",
 			white: "border-white border",
 			none: "border-none",
+		},
+		"textColor": {
+			white: "text-white",
+			black: "text-black",
 		}
 	},
 	defaultVariants: {},
@@ -36,9 +40,9 @@ export interface InputProps
 }
 
 const Input = forwardRef<HTMLInputElement, InputProps>(
-	({ className, rounded, width, border, ...props }, ref) => {
+	({ className, rounded, width, border, textColor, ...props }, ref) => {
 		return (
-			<input type="text" className={cn(inputVariants({ rounded, width, border }), className)}
+			<input type="text" className={cn(inputVariants({ rounded, width, border, textColor }), className)}
 				ref={ref} {...props} />
 		);
 
