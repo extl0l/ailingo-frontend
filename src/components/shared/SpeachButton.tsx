@@ -2,24 +2,7 @@ import { cn } from "../../utils/tailwind";
 import Button from "./Button";
 import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
 import Tooltip from "./Tooltip";
-
-export type Language =
-	| "en-US"
-	| "pl-PL"
-	| "de-DE"
-	| "en-GB"
-	| "fr-FR"
-	| "hi-IN"
-	| "id-ID"
-	| "it-IT"
-	| "ja-JP"
-	| "ko-KR"
-	| "nl-NL"
-	| "pt-BR"
-	| "ru-RU"
-	| "zh-CN"
-	| "zh-HK"
-	| "zh-TW";
+import { Language, useSpeechSynthesis } from "../../hooks/useSpeechSynthesis";
 
 type Props = {
 	wordToRead: string;
@@ -28,7 +11,7 @@ type Props = {
 	iconClassName?: string;
 };
 
-const SpeachButton = ({
+const SpeechButton = ({
 	className,
 	iconClassName,
 	language,
@@ -37,27 +20,30 @@ const SpeachButton = ({
 	const { speak, speaking, supported, voices } = useSpeechSynthesis();
 
 	const selectVoiceByLanguage = (language: string) => {
-		const selectedVoice = voices.find((voice) => voice.lang.startsWith(language));
-		return selectedVoice;
+		return voices.find((voice) => voice.lang.startsWith(language));
 	};
 
 	const speakText = (text: string, language: string) => {
-		if (supported && !speaking) {
-			const selectedVoice = selectVoiceByLanguage(language);
-			if (selectedVoice) {
-				const utterance = new SpeechSynthesisUtterance(text);
-				utterance.voice = selectedVoice;
-				speak(utterance);
-			} else {
-				console.error(`Voice for language ${language} not found.`);
-			}
+		if (!supported || speaking) {
+			return;
 		}
+
+		const selectedVoice = selectVoiceByLanguage(language);
+
+		if (!selectVoiceByLanguage) {
+			console.error(`Voice for language ${language} not found.`);
+			return;
+		}
+
+		speak(text, {
+			voice: selectedVoice,
+		});
 	};
 
 	return (
 		<Tooltip
 			content={
-				supported ? "Read text." : "Your browser doesn't support this feature."
+				supported ? "Read text." : "Your browser doesn't support this feature"
 			}>
 			<Button
 				className={cn("aspect-square border-none p-2", className)}
@@ -72,4 +58,4 @@ const SpeachButton = ({
 	);
 };
 
-export default SpeachButton;
+export default SpeechButton;
