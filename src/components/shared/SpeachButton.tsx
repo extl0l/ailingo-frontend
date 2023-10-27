@@ -1,7 +1,6 @@
 import { cn } from "../../utils/tailwind";
 import Button from "./Button";
 import { SpeakerWaveIcon } from "@heroicons/react/24/outline";
-import { useSpeechSynthesis } from "react-speech-kit";
 import Tooltip from "./Tooltip";
 
 export type Language =
@@ -58,7 +57,7 @@ const SpeachButton = ({
 	return (
 		<Tooltip
 			content={
-				supported ? "Read text." : "Your browser doesn't support this feature"
+				supported ? "Read text." : "Your browser doesn't support this feature."
 			}>
 			<Button
 				className={cn("aspect-square border-none p-2", className)}
