@@ -4,6 +4,7 @@ import { type FlashCard } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
 import Flashcard from "./Flashcard";
 import FlashcardOptions from "./FlashcardOptions";
+import { useLocalStorage } from "@uidotdev/usehooks";
 
 type Props = {
 	flashcards: FlashCard[];
@@ -15,6 +16,10 @@ const FlashcardsGame = ({
 	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
 	const [currentFlashcard, setCurrentFlashcard] = useState(0);
+	const [courseProgress, setCourseProgress] = useLocalStorage(
+		"coursesProgress",
+		[]
+	);
 
 	const nextFlashcard = () => {
 		console.log(currentFlashcard);
