@@ -1,5 +1,5 @@
 import Logo from "../shared/Logo";
-import AddCours from "./AddCours";
+import AddCourse from "./AddCourse";
 import User from "./Auth";
 import LinksList from "./LinksList";
 import Input from "../shared/Input";
@@ -14,7 +14,7 @@ const MainNavigation = () => {
 			<div><Input height="normal" /></div>
 			{/* //? Implement search input? */}
 			<div className="flex gap-5 items-center ">
-				<AddCours />
+				<AddCourse />
 				{/* TODO: Render AddCours button only when user is logged in. ! Clerk */}
 				<User />
 			</div>
