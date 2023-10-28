@@ -8,25 +8,10 @@ const CreateCourse = () => {
     const [phraseLanguage, setPhraseLanguage] = useState("");
     const [definitionsLanguage, setDefinitionsLanguage] = useState("");
 
-    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newTitle = e.target.value;
-        setTitle(newTitle);
-        console.log(title);
-    }
-    const handleDescriptionChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newDescription = e.target.value;
-        setDescription(newDescription);
-        console.log(description);
-    }
-    const handlePhraseLangChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newPhraseLang = e.target.value;
-        setPhraseLanguage(newPhraseLang);
-        console.log(phraseLanguage);
-    }
-    const handleDefinitionLangChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const newDefinitionLang = e.target.value;
-        setDefinitionsLanguage(newDefinitionLang);
-        console.log(definitionsLanguage);
+    const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setStateFunction: (newValue: string) => void) => {
+        const newValue = e.target.value;
+        setStateFunction(newValue);
+        console.log(newValue);
     }
 
     return (
@@ -36,10 +21,10 @@ const CreateCourse = () => {
                 <Button buttonStyle={"blue"}>Create</Button>
             </div>
             <div className="inputs grid">
-                <Input placeholder={"Enter title"} rounded={"large"} onChange={handleTitleChange} />
-                <Input placeholder={"Enter description"} rounded={"large"} height="md" onChange={handleDescriptionChange} />
-                <Input placeholder={"Phrase language"} rounded={"large"} onChange={handlePhraseLangChange} />
-                <Input placeholder={"Definitions language"} rounded={"large"} onChange={handleDefinitionLangChange} />
+                <Input placeholder={"Enter title"} rounded={"large"} onChange={(e) => handleInputChange(e, setTitle)} />
+                <Input placeholder={"Enter description"} rounded={"large"} height="md" onChange={(e) => handleInputChange(e, setDescription)} />
+                <Input placeholder={"Phrase language"} rounded={"large"} onChange={(e) => handleInputChange(e, setPhraseLanguage)} />
+                <Input placeholder={"Definitions language"} rounded={"large"} onChange={(e) => handleInputChange(e, setDefinitionsLanguage)} />
             </div>
         </form>
     )
