@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
 import HomePage from "./layout/HomePage";
 import Flashcards from "./layout/Games/Flashcards";
-import CreateCourse from "./components/Course";
+import CreateCourse from "./components/Course/index";
 
 // TODO: Implement loader() for routing
 
