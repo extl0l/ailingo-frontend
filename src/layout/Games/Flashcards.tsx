@@ -1,15 +1,16 @@
 import FlashcardsGame from "../../components/Games/Flashcards";
 import FlashcardsMenu from "../../components/Games/Flashcards/FlashcardsMenu";
-import { FlashCard } from "../../types/Flashcard";
+import { Flashcard } from "../../types/Flashcard";
 
 const DUMMY_FLASHCARDS = [
-	{ examples: ["lubie piwo"], translation: "Beer", word: "Piwo" },
+	{ examples: ["lubie piwo"], translation: "Beer", word: "Piwo", id: "1qf" },
 	{
+		id: "253",
 		examples: ["woda jest w kranie", "woda w oceanie"],
 		translation: "Water",
 		word: "Woda",
 	},
-] as FlashCard[];
+] as Flashcard[];
 
 const Flashcards = () => {
 	return (

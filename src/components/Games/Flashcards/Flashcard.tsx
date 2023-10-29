@@ -1,12 +1,12 @@
 import { useState } from "react";
-import { type FlashCard } from "../../../types/Flashcard";
+import { type Flashcard as FlashcardType } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
 import Panel from "../../shared/Panel";
 import useKeyPress from "../../../hooks/useKeyPress";
 import SpeachButton from "../../shared/SpeachButton";
 
 type Props = {
-	flashcard: FlashCard;
+	flashcard: FlashcardType;
 };
 
 const Flashcard = ({ flashcard }: Props) => {
