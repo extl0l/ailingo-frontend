@@ -4,12 +4,9 @@ import Flashcard from "./Flashcard";
 import FlashcardOptions from "./FlashcardOptions";
 import Button from "../../shared/Button";
 import Panel from "../../shared/Panel";
+import { Props } from "./FlowMode";
 
-type Props = {
-	flashcards: FlashcardType[];
-};
-
-const FlowMode = ({ flashcards }: Props) => {
+export const FlowMode = ({ flashcards }: Props) => {
 	const [knownFlashcards, setKnownFlashcards] = useState<string[]>([]);
 	const [currentFlashcard, setCurrentFlashcard] = useState(0);
 	const [round, setRound] = useState(0);
@@ -31,20 +28,18 @@ const FlowMode = ({ flashcards }: Props) => {
 	const markFlashcardAsKnown = (id: string) => {
 		setKnownFlashcards((flashcardIds) => [...new Set([...flashcardIds, id])]); // Delete duplicates
 
-		setCurrentFlashcard((flashcard) => flashcard + 1);
+		console.log(flashcardsToLearn, knownFlashcards);
 
 		if (flashcardsToLearn.length <= knownFlashcards.length + 1) {
 			setIsGameRunning(false);
 		}
+
+		setCurrentFlashcard((flashcard) => flashcard + 1);
 	};
 
 	const goBack = () => {
 		if (currentFlashcard !== 0) {
 			setCurrentFlashcard((flashcard) => flashcard - 1);
-			const flashcardToUndo = flashcardsToLearn[currentFlashcard - 1];
-			setKnownFlashcards((flashcardIds) =>
-				flashcardIds.filter((flashcardId) => flashcardId !== flashcardToUndo.id)
-			);
 		}
 	};
 
@@ -62,6 +57,13 @@ const FlowMode = ({ flashcards }: Props) => {
 	const nextRound = () => {
 		setRound((prevRound) => prevRound + 1);
 	};
+
+	console.log(
+		round,
+		currentFlashcard,
+		flashcardsToLearn.length,
+		flashcardsToLearn
+	);
 
 	if (!isGameRunning) {
 		return (
@@ -106,5 +108,3 @@ const FlowMode = ({ flashcards }: Props) => {
 		</>
 	);
 };
-
-export default FlowMode;
