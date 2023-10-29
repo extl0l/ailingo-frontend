@@ -3,6 +3,7 @@ import { type Flashcard as FlashcardType } from "../../../types/Flashcard";
 import Flashcard from "./Flashcard";
 import FlashcardOptions from "./FlashcardOptions";
 import Button from "../../shared/Button";
+import Panel from "../../shared/Panel";
 
 type Props = {
 	flashcards: FlashcardType[];
@@ -15,6 +16,7 @@ const FlowMode = ({ flashcards }: Props) => {
 	const [flashcardsToLearn, setFlashcardsToLearn] = useState<FlashcardType[]>(
 		[]
 	);
+	const [isGameRunning, setIsGameRunning] = useState(true);
 
 	useEffect(() => {
 		const flashcardsToLearn = flashcards.filter(
@@ -23,10 +25,16 @@ const FlowMode = ({ flashcards }: Props) => {
 
 		setFlashcardsToLearn(flashcardsToLearn);
 		setCurrentFlashcard(0);
-	}, [round, flashcards, knownFlashcards]);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [round, flashcards, isGameRunning]);
 
 	const markFlashcardAsKnown = (id: string) => {
 		setKnownFlashcards((flashcardIds) => [...flashcardIds, id]);
+
+		if (flashcardsToLearn.length <= knownFlashcards.length + 1) {
+			setIsGameRunning(false);
+		}
+
 		setCurrentFlashcard((flashcard) => flashcard + 1);
 	};
 
@@ -41,6 +49,7 @@ const FlowMode = ({ flashcards }: Props) => {
 	};
 
 	const restartGame = () => {
+		setIsGameRunning(true);
 		setKnownFlashcards([]);
 		setRound(0);
 		setCurrentFlashcard(0);
@@ -50,26 +59,29 @@ const FlowMode = ({ flashcards }: Props) => {
 		setRound((prevRound) => prevRound + 1);
 	};
 
-	console.log(
-		round,
-		currentFlashcard,
-		flashcardsToLearn.length,
-		flashcardsToLearn
-	);
-
-	if (flashcardsToLearn.length === 0) {
+	if (!isGameRunning) {
 		return (
-			<div className="text-white">
-				GUT GEMACHT <Button onClick={restartGame}>Try again</Button>
-			</div>
+			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_rgba(66,68,90,1)]">
+				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-font-light">
+					<span className="text-3xl">GUT GEMACHT!</span>
+					<Button onClick={restartGame} variant="outline" className="text-lg py-2">
+						Try again
+					</Button>
+				</div>
+			</Panel>
 		);
 	}
 
 	if (currentFlashcard === flashcardsToLearn.length) {
 		return (
-			<div className="text-white">
-				NEXT ROUND <Button onClick={nextRound}>Next round</Button>
-			</div>
+			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_rgba(66,68,90,1)]">
+				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-font-light">
+					<span className="text-3xl">NEXT ROUND</span>
+					<Button onClick={nextRound} variant="outline" className="text-lg py-2">
+						Next round
+					</Button>
+				</div>
+			</Panel>
 		);
 	}
 
