@@ -1,13 +1,14 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { type HTMLAttributes } from "react";
-import { type FlashCard } from "../../../types/Flashcard";
+import { type Flashcard as FlashcardInfo } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
 import Flashcard from "./Flashcard";
 import FlashcardOptions from "./FlashcardOptions";
-import { useLocalStorage } from "@uidotdev/usehooks";
+// import useCourseProgress from "../../../hooks/useCourseProgress";
+import { useParams } from "react-router-dom";
 
 type Props = {
-	flashcards: FlashCard[];
+	flashcards: FlashcardInfo[];
 };
 
 const FlashcardsGame = ({
@@ -16,10 +17,14 @@ const FlashcardsGame = ({
 	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
 	const [currentFlashcard, setCurrentFlashcard] = useState(0);
-	const [courseProgress, setCourseProgress] = useLocalStorage(
-		"coursesProgress",
-		[]
-	);
+
+	const { courseId } = useParams();
+
+	console.log(courseId);
+
+	// useCourseProgress(courseId!);
+
+	useEffect(() => {}, []);
 
 	const nextFlashcard = () => {
 		console.log(currentFlashcard);
