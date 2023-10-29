@@ -19,7 +19,6 @@ const CreateCourse = () => {
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setStateFunction: (newValue: string) => void) => {
         const newValue = e.target.value;
         setStateFunction(newValue);
-        console.log(newValue);
     }
 
     const handleFormChange = (index: number, event: React.ChangeEvent<HTMLInputElement>) => {
@@ -36,13 +35,9 @@ const CreateCourse = () => {
 
     const removePrompt = (event: FormEvent, index: number) => {
         event.preventDefault();
-        console.log(prompts.length);
-        console.log(prompts + "\n---------------");
         const data = [...prompts];
         data.splice(index, 1);
         setPrompts(data);
-        console.log(prompts.length);
-        console.log(prompts + "\n-------------------------------");
     }
 
     const handleEnterKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
