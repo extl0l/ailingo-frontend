@@ -1,12 +1,12 @@
-import { useState } from "react";
 import { type HTMLAttributes } from "react";
-import { type FlashCard } from "../../../types/Flashcard";
+import { type Flashcard as FlashcardInfo } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
-import Flashcard from "./Flashcard";
-import FlashcardOptions from "./FlashcardOptions";
+
+import { useParams } from "react-router-dom";
+import FlowMode from "./FlowMode";
 
 type Props = {
-	flashcards: FlashCard[];
+	flashcards: FlashcardInfo[];
 };
 
 const FlashcardsGame = ({
@@ -14,24 +14,9 @@ const FlashcardsGame = ({
 	className,
 	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
-	const [currentFlashcard, setCurrentFlashcard] = useState(0);
+	const { courseId } = useParams();
 
-	const nextFlashcard = () => {
-		console.log(currentFlashcard);
-		if (currentFlashcard < flashcards.length - 1) {
-			console.log("NEXT");
-			setCurrentFlashcard((prevState) => prevState + 1);
-		}
-	};
-
-	const previousFlashcard = () => {
-		console.log(currentFlashcard);
-		if (currentFlashcard > 0) {
-			console.log("PREV");
-
-			setCurrentFlashcard((prevState) => prevState - 1);
-		}
-	};
+	console.log(courseId);
 
 	return (
 		<div
@@ -40,15 +25,7 @@ const FlashcardsGame = ({
 				className
 			)}
 			{...props}>
-			<Flashcard
-				flashcard={flashcards[currentFlashcard]}
-				key={`flashcard-${currentFlashcard}`}
-			/>
-
-			<FlashcardOptions
-				nextFlashcard={nextFlashcard}
-				previousFlashcard={previousFlashcard}
-			/>
+			<FlowMode flashcards={flashcards} />
 		</div>
 	);
 };
