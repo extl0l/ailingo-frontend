@@ -39,18 +39,18 @@ const FlowMode = ({ flashcards }: Props) => {
 		defaultStorageState
 	);
 
-	console.log(
-		knownFlashcards,
-		currentFlashcard,
-		round,
-		flashcardsToLearn,
-		learnedFlashcardsPerRound,
-		isMiddleRound
-	);
-
 	const controllRoundEnd = () => {
 		if (currentFlashcard === flashcardsToLearn.length - 1) {
 			setIsMiddleRound(true);
+
+			const toSave = {
+				currentFlashcard: 0,
+				knownFlashcards,
+				learnedFlashcardsPerRound: [...learnedFlashcardsPerRound, 0],
+				round: round + 1,
+			} as CourseProgress;
+
+			setCourseProgress(toSave);
 		}
 	};
 
@@ -92,6 +92,18 @@ const FlowMode = ({ flashcards }: Props) => {
 		setIsEndScreen(true);
 		setIsMiddleRound(false);
 		setIsGameRunning(false);
+
+		const toSave = {
+			currentFlashcard: 0,
+			knownFlashcards,
+			learnedFlashcardsPerRound: [
+				...learnedFlashcardsPerRound.slice(0, -1),
+				learnedFlashcardsPerRound[learnedFlashcardsPerRound.length - 1] + 1,
+			],
+			round: round + 1,
+		} as CourseProgress;
+
+		setCourseProgress(toSave);
 	};
 
 	const markFlashcardAsKnown = (id: string) => {
@@ -102,7 +114,7 @@ const FlowMode = ({ flashcards }: Props) => {
 		controllRoundEnd();
 		setCurrentFlashcard((flashcard) => flashcard + 1);
 
-		const isGameFinished = knownFlashcards.length + 1 >= flashcardsToLearn.length;
+		const isGameFinished = knownFlashcards.length >= flashcardsToLearn.length;
 
 		if (isGameFinished) {
 			endGameHandler();
@@ -122,28 +134,25 @@ const FlowMode = ({ flashcards }: Props) => {
 		setCurrentFlashcard(0);
 		setLearnedFlashcardsPerRound([0]);
 
-		syncFlahcardsToLearn(flashcards);
-
 		setCourseProgress(defaultStorageState);
+
+		syncFlahcardsToLearn(flashcards);
 
 		setIsEndScreen(false);
 		setIsGameRunning(true);
 	};
 
 	useEffect(() => {
-		if (courseProgress.round === 0) {
-			return;
-		}
-
 		syncFlahcardsToLearn(flashcards);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMiddleRound, isGameRunning]);
 
 	useEffect(() => {
-		//TODO:  Sync with localstorage
-
 		if (courseProgress.round !== 0) {
-			//TODO
+			setKnownFlashcards(courseProgress.knownFlashcards);
+			setCurrentFlashcard(courseProgress.currentFlashcard);
+			setRound(courseProgress.round);
+			setLearnedFlashcardsPerRound(courseProgress.learnedFlashcardsPerRound);
 		}
 
 		setIsGameRunning(true);
