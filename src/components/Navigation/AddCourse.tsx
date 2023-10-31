@@ -1,6 +1,6 @@
 import { PlusCircleIcon } from "@heroicons/react/24/solid";
 import { Link } from "react-router-dom";
-const AddCours = () => {
+const AddCourse = () => {
 	return (
 		<Link to={"/courses/new"} className="relative w-11">
 			<PlusCircleIcon className="w-full fill-theme-blue-tertiary z-10 absolute  left-0 top-0 -translate-y-1/2" />
@@ -9,4 +9,4 @@ const AddCours = () => {
 	);
 };
 
-export default AddCours;
+export default AddCourse;
