@@ -1,5 +1,6 @@
 export type CourseProgress = {
-	id: string;
-	currentFlashcard: number; //? uuid
-	knownWords: number[]; //? uuid
+	knownFlashcards: string[];
+	currentFlashcard: number;
+	round: number;
+	learnedFlashcardsPerRound: number[];
 };

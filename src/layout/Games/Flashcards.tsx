@@ -10,6 +10,12 @@ const DUMMY_FLASHCARDS = [
 		translation: "Water",
 		word: "Woda",
 	},
+	{
+		id: "123",
+		examples: ["Mydło  myje"],
+		translation: "Soap",
+		word: "Mydło",
+	},
 ] as Flashcard[];
 
 const Flashcards = () => {
