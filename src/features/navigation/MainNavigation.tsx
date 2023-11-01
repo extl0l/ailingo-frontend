@@ -3,7 +3,7 @@ import {NavigationLinks} from './components/NavigationLinks.tsx';
 
 export const MainNavigation = () => {
   return (
-      <header>
+      <header className="flex justify-between">
         <UserDetails/>
         <NavigationLinks/>
       </header>
