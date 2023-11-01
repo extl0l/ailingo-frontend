@@ -19,6 +19,8 @@ const DUMMY_FLASHCARDS = [
 ] as Flashcard[];
 
 const Flashcards = () => {
+	//TODO:  clear unused local storage
+
 	return (
 		<main className="grid gridLayout grid-rows-[80px_1fr] h-full">
 			<FlashcardsMenu />
