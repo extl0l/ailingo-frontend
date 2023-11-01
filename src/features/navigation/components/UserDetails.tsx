@@ -1,4 +1,4 @@
-import {useClerk, useUser} from '@clerk/clerk-react';
+import {useClerk, UserButton, useUser} from '@clerk/clerk-react';
 import {useMemo} from 'react';
 import Avatar from 'boring-avatars';
 import IconExperiencePoints
@@ -25,8 +25,9 @@ export const UserDetails = () => {
 
   return (
       <div className="flex items-center gap-4">
-        <UserAvatar url={user?.imageUrl} name={displayName}
-                    onClick={handleUserAvatarClick}/>
+        {user
+            ? <SignedInUserButton/>
+            : <SignedOutUserButton onClick={handleUserAvatarClick}/>}
         <div className="font-medium">
           <p className="text-2xl">
             {displayName}
@@ -40,36 +41,36 @@ export const UserDetails = () => {
   );
 };
 
-interface UserAvatarProps {
-  url?: string;
+const SignedInUserButton = () => {
+  return (
+      <UserButton
+          appearance={{
+            elements: {
+              userButtonTrigger: 'w-16 h-16',
+              avatarBox: 'w-16 h-16 bg-blue-500',
+            },
+          }}
+      />
+  );
+};
+
+interface AnonymousUserButtonProps {
   onClick?: () => void;
-  name?: string;
 }
 
-const UserAvatar = (props: UserAvatarProps) => {
+const SignedOutUserButton = (props: AnonymousUserButtonProps) => {
   return (
       <button
           className="w-16 h-16 rounded-full overflow-hidden"
           onClick={props.onClick}>
-        {
-          props.url
-              ? <img className="w-full h-full" src={props.url} alt=""/>
-              : <BlankAvatar name={props.name}/>
-        }
+        <Avatar
+            size={64}
+            variant="beam"
+            name="Anonymous"
+            colors={['#60B99A', '#F1EFA5', '#D3CE3D', '#F77825', '#554236']}
+            square
+        />
       </button>
   );
 };
 
-interface BlankAvatarProps {
-  name?: string;
-}
-
-const BlankAvatar = ({name = 'Anonymous'}: BlankAvatarProps) => {
-  return <Avatar
-      size={64}
-      variant="beam"
-      name={name}
-      colors={['#60B99A', '#F1EFA5', '#D3CE3D', '#F77825', '#554236']}
-      square
-  />;
-};
