@@ -3,6 +3,7 @@ import RootLayout from "./layout/RootLayout";
 import HomePage from "./layout/HomePage";
 import Flashcards from "./layout/Games/Flashcards";
 import CreateCourse from "./components/Course/index";
+import AuthProvider from "./components/Auth/AuthProvider";
 
 // TODO: Implement loader() for routing
 
@@ -50,7 +51,11 @@ const router = createBrowserRouter([
 ]);
 
 const App = () => {
-	return <RouterProvider router={router} />;
+	return (
+		<AuthProvider>
+			<RouterProvider router={router} />
+		</AuthProvider>
+	);
 };
 
 export default App;
