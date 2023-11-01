@@ -62,9 +62,20 @@ export default {
 					red: {
 						primary: "#d05700",
 					},
-					green: {
-						primary: "#18ae79",
-					},
+          // NEW THEME
+          brown: {
+            light: 'hsla(23, 22%, 27%, 1)',
+          },
+          green: {
+            primary: '#18ae79', // TODO: Remove after the revamp is finished
+            light: 'hsla(159, 39%, 55%, 1)',
+          },
+          lime: {
+            light: 'hsla(58, 63%, 53%, 1)',
+          },
+          orange: {
+            light: 'hsla(24, 93%, 56%, 1)',
+          },
 				},
 			},
 		},

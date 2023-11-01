@@ -1,18 +1,10 @@
 import {Link} from 'react-router-dom';
+import {UserDetails} from './components/UserDetails.tsx';
 
 export const MainNavigation = () => {
   return (
       <header>
-        <div>
-          <button>
-            <img src="" alt="User avatar"/>
-          </button>
-          <div>
-            <p>Marcus</p>
-            <p>5921 XP</p>
-          </div>
-        </div>
-
+        <UserDetails/>
         <nav>
           <ul>
             <li>
