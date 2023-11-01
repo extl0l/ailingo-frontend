@@ -3,6 +3,7 @@ import RootLayout from "./layout/RootLayout";
 import HomePage from "./layout/HomePage";
 import Flashcards from "./layout/Games/Flashcards";
 import CreateCourse from "./components/Course/index";
+import {ClerkProvider} from '@clerk/clerk-react';
 
 // TODO: Implement loader() for routing
 
@@ -49,8 +50,17 @@ const router = createBrowserRouter([
 	},
 ]);
 
+const clerkPublishableKey = import.meta.env.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
+if (!clerkPublishableKey) {
+  throw 'Missing VITE_REACT_APP_CLERK_PUBLISHABLE_KEY';
+}
+
 const App = () => {
-	return <RouterProvider router={router} />;
+  return (
+      <ClerkProvider publishableKey={clerkPublishableKey}>
+        <RouterProvider router={router}/>
+      </ClerkProvider>
+  );
 };
 
 export default App;
