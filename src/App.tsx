@@ -3,8 +3,8 @@ import RootLayout from "./layout/RootLayout";
 import Flashcards from "./layout/Games/Flashcards";
 import CreateCourse from "./components/Course/index";
 import { ClerkProvider } from "@clerk/clerk-react";
-import { HomePage } from "./pages/HomePage.tsx";
-import { LibraryLayout } from "./pages/LibraryLayout.tsx";
+import { HomePage } from "./features/home/HomePage.tsx";
+import { LibraryLayout } from "./features/library/LibraryLayout.tsx";
 
 // TODO: Implement loader() for routing
 const router = createBrowserRouter([
