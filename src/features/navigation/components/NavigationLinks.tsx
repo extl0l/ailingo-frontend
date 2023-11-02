@@ -13,6 +13,14 @@ const defaultNavigationLinks: NavigationLink[] = [
   { to: "/chats", title: "Chats" },
 ];
 
+const isActiveRoute = (
+  currentPathname: string,
+  routeLinkTo: string,
+): boolean => {
+  if (currentPathname === routeLinkTo) return true;
+  return currentPathname.startsWith(`${routeLinkTo}/`);
+};
+
 export const NavigationLinks = () => {
   const location = useLocation();
 
@@ -23,7 +31,7 @@ export const NavigationLinks = () => {
           <li key={link.to}>
             <StyledNavigationLink
               link={link}
-              isActive={location.pathname === link.to}
+              isActive={isActiveRoute(location.pathname, link.to)}
             />
           </li>
         ))}
