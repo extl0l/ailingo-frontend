@@ -1,18 +1,12 @@
+import {StudySetDetails} from '../models/StudySetDetails.ts';
+
 export interface LargeStudySetCardProps {
   studySet: StudySetDetails;
   description?: string;
   learnedWords: number;
 }
 
-export interface StudySetDetails {
-  readonly id: string;
-  title: string;
-  icon: string;
-  color: string;
-  totalWords: number;
-}
-
-export const LargeStudySetCard = (props: LargeStudySetCardProps) => {
+export const FeaturedStudySetCard = (props: LargeStudySetCardProps) => {
   const {title, color, icon, totalWords} = props.studySet;
   const {description, learnedWords} = props;
 
@@ -66,7 +60,7 @@ const ProgressBar = (props: ProgressBarProps) => {
         <div
             className="w-full h-4 rounded-full opacity-20 absolute top-1/2 left-0 -translate-y-1/2"
             style={{backgroundColor: props.color}}/>
-        <div className="h-6 rounded-full"
+        <div className="h-6 rounded-full min-w-[1.5rem]"
              style={{backgroundColor: props.color, width: `${percentage}%`}}/>
       </div>
   );
