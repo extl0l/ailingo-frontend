@@ -1,9 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
-import HomePage from "./layout/HomePage";
 import Flashcards from "./layout/Games/Flashcards";
 import CreateCourse from "./components/Course/index";
 import {ClerkProvider} from '@clerk/clerk-react';
+import {HomePage} from './pages/HomePage.tsx';
 
 // TODO: Implement loader() for routing
 
@@ -12,7 +12,6 @@ const router = createBrowserRouter([
 		path: "/",
 		element: <RootLayout />,
 		children: [
-			{ index: true, element: <HomePage /> },
 			{
 				path: "courses",
 				element: <div>Course list</div>,
@@ -35,6 +34,10 @@ const router = createBrowserRouter([
 		path: "/:courseId",
 		element: <div>Learning methods list</div>,
 	},
+      {
+        index: true,
+        element: <HomePage/>,
+      },
 
 	{
 		path: "/:courseId/flashcards",
