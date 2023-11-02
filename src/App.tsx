@@ -4,6 +4,7 @@ import Flashcards from "./layout/Games/Flashcards";
 import CreateCourse from "./components/Course/index";
 import { ClerkProvider } from "@clerk/clerk-react";
 import { HomePage } from "./pages/HomePage.tsx";
+import { LibraryLayout } from "./pages/LibraryLayout.tsx";
 
 // TODO: Implement loader() for routing
 const router = createBrowserRouter([
@@ -17,7 +18,21 @@ const router = createBrowserRouter([
       },
       {
         path: "library",
-        element: <div>Course list</div>,
+        element: <LibraryLayout />,
+        children: [
+          {
+            index: true,
+            element: <h1>My sets</h1>,
+          },
+          {
+            path: "starred",
+            element: <h1>Starred sets</h1>,
+          },
+          {
+            path: "recent",
+            element: <h1>Recent</h1>,
+          },
+        ],
       },
       {
         path: "courses/:courseId",
