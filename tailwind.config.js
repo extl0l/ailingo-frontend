@@ -76,6 +76,10 @@ export default {
           orange: {
             light: 'hsla(24, 93%, 56%, 1)',
           },
+					background: {
+						light: 'hsla(57,76%,95%,1)',
+						'light-variant': 'hsla(58, 73%, 90%, 1)',
+					}
 				},
 			},
 		},
