@@ -52,12 +52,15 @@ const StudySetCardDetails = (props: StudySetCardDetailsProps) => {
     ? "text-theme-background-light"
     : "text-theme-brown-light";
 
+  const authorTextOpacity = featured ? "opacity-75" : "opacity-50";
+
   return (
     <div className={cn("flex items-center gap-2.5", textColor)}>
       <Cover icon={icon} color={color} featured={featured} />
       <div>
         <p className="text-xl">{title}</p>
-        <p className="opacity-75 mt-0.5">by Unknown user</p>
+        {/*TODO: Use the actual user*/}
+        <p className={authorTextOpacity}>by Unknown user</p>
       </div>
     </div>
   );

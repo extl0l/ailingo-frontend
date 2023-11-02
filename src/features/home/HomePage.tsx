@@ -1,30 +1,19 @@
+import { StudySetCard } from "../_shared/components/StudySetCard.tsx";
+import IconFurniture from "../navigation/assets/search.svg";
 import { SectionWrapper } from "./components/SectionWrapper.tsx";
-import SomeIcon from "../navigation/assets/keyboard_double_arrow_up_FILL0_wght400_GRAD0_opsz24.svg";
-import { FeaturedStudySetCard } from "./components/FeaturedStudySetCard.tsx";
-import { StudySetCard } from "./components/StudySetCard.tsx";
 
-const continueLearningStudySets = [
+const featured = [
   {
-    id: "su-3",
+    id: "sts-03",
     title: "Home furnishings",
-    color: "#554236",
-    icon: SomeIcon,
-    author: "Furnitea",
-    aiGenerated: false,
-    totalWords: 140,
-    learnedWords: 53,
-    description: "Studied 2h ago",
+    icon: IconFurniture,
+    color: "hsla(22,22%,27%,1)",
   },
   {
-    id: "su-1",
+    id: "sts-01",
     title: "At the airport",
-    color: "#D3CE3D",
-    icon: SomeIcon,
-    author: "AI-r",
-    aiGenerated: false,
-    totalWords: 154,
-    learnedWords: 130,
-    description: "Studied this morning",
+    icon: IconFurniture,
+    color: "hsla(58, 63%, 53%, 1)",
   },
 ];
 
@@ -32,42 +21,35 @@ const sections = [
   {
     title: "Suggested",
     description: 'Recently studied "Home furnishings"',
-    cards: [
+    sets: [
       {
-        id: "su-0",
+        id: "sts-00",
         title: "Gardening",
-        color: "#60B99A",
-        icon: SomeIcon,
-        author: "",
-        aiGenerated: true,
-        totalWords: 110,
+        // description: "Taking care of plants. But in English.",
+        icon: IconFurniture,
+        color: "hsla(159, 39%, 55%, 1)",
+        // phraseLanguage: "en-US",
+        // definitionLanguage: "pl-PL",
+        // words: [],
+        // authorId: "usr-01",
       },
       {
-        id: "su-1",
+        id: "sts-01",
         title: "At the airport",
-        color: "#D3CE3D",
-        icon: SomeIcon,
-        author: "AI-r",
-        aiGenerated: false,
-        totalWords: 154,
+        icon: IconFurniture,
+        color: "hsla(58, 63%, 53%, 1)",
       },
       {
-        id: "su-2",
-        title: "Fix your car",
-        color: "#F77825",
-        icon: SomeIcon,
-        author: "Descend",
-        aiGenerated: false,
-        totalWords: 48,
+        id: "sts-02",
+        title: "Biking in the suburbs",
+        icon: IconFurniture,
+        color: "hsla(24, 93%, 56%, 1)",
       },
       {
-        id: "su-3",
+        id: "sts-03",
         title: "Home furnishings",
-        color: "#554236",
-        icon: SomeIcon,
-        author: "Furnitea",
-        aiGenerated: false,
-        totalWords: 140,
+        icon: IconFurniture,
+        color: "hsla(22,22%,27%,1)",
       },
     ],
   },
@@ -77,15 +59,18 @@ export const HomePage = () => {
   return (
     <div className="relative bg-gradient-to-b from-theme-background-light-variant from-[10rem] to-transparent to-[10rem]">
       <main className="grid grid-cols-2 gap-2.5 max-w-3xl mx-auto px-8">
-        {/*Continue-learning sets*/}
-        {continueLearningStudySets && (
+        {/*Featured sets*/}
+        {featured && (
           <SectionWrapper title={"Continue learning"}>
-            {continueLearningStudySets.map((card) => (
-              <FeaturedStudySetCard
-                key={card.id}
-                studySet={card}
-                description={card.description}
-                learnedWords={card.learnedWords}
+            {featured.map((set) => (
+              <StudySetCard
+                key={set.id}
+                studySet={set}
+                progress={{
+                  totalWords: 1234,
+                  learnedWords: 987,
+                }}
+                featured
               />
             ))}
           </SectionWrapper>
@@ -97,8 +82,8 @@ export const HomePage = () => {
             title={section.title}
             description={section.description}
           >
-            {section.cards.map((card) => (
-              <StudySetCard key={card.id} studySet={card} />
+            {section.sets.map((set) => (
+              <StudySetCard key={set.id} studySet={set} />
             ))}
           </SectionWrapper>
         ))}

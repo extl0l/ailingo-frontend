@@ -1,5 +1,5 @@
 export interface StudySet {
-  // readonly id: string;
+  readonly id: string;
   title: string;
   // description: string;
 
