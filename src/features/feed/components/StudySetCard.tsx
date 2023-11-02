@@ -1,4 +1,5 @@
 import {StudySetDetails} from '../models/StudySetDetails.ts';
+import {StudySetCover} from './StudySetCover.tsx';
 
 export interface StudySetCardProps {
   studySet: StudySetDetails;
@@ -10,12 +11,10 @@ export const StudySetCard = (props: StudySetCardProps) => {
   return (
       <article
           className="w-full p-3 rounded-xl font-medium bg-theme-background-light-variant flex items-center text-theme-brown-light gap-3">
-        <div
-            className="w-20 h-20 rounded-xl flex items-center justify-center"
-            style={{backgroundColor: color}}
-        >
-          <img className="w-10 h-10" src={icon} alt=""/>
-        </div>
+        <StudySetCover className="text-theme-background-light-variant"
+                       backgroundColor={color}
+                       iconUrl={icon}/>
+
         <div>
           <p className="text-xl">{title}</p>
           {

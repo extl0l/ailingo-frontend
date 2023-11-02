@@ -1,4 +1,5 @@
 import {StudySetDetails} from '../models/StudySetDetails.ts';
+import {StudySetCover} from './StudySetCover.tsx';
 
 export interface LargeStudySetCardProps {
   studySet: StudySetDetails;
@@ -25,20 +26,16 @@ export const FeaturedStudySetCard = (props: LargeStudySetCardProps) => {
           }}
       >
         <div className="flex gap-3 items-center mb-3">
-          <div
-              className="w-20 h-20 rounded-xl flex items-center justify-center"
-              style={{
-                backgroundColor: foregroundColor,
-              }}
-          >
-            <img className="w-10 h-10" src={icon} alt=""/>
-          </div>
+          <StudySetCover iconUrl={icon}
+                         foregroundColor={backgroundColor}
+                         backgroundColor={foregroundColor}/>
           <div>
             <p className="text-xl">{title}</p>
             <p className="opacity-75">{description}</p>
           </div>
         </div>
-        <ProgressBar max={totalWords} value={learnedWords}
+        <ProgressBar max={totalWords}
+                     value={learnedWords}
                      color={foregroundColor}/>
         <p className="mt-1 ml-1 opacity-75">{learnedWords} of {totalWords} {wordsPlural}</p>
       </article>
