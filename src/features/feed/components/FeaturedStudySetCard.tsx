@@ -1,5 +1,5 @@
-import {StudySetDetails} from '../models/StudySetDetails.ts';
-import {StudySetCover} from './StudySetCover.tsx';
+import { StudySetDetails } from "../models/StudySetDetails.ts";
+import { StudySetCover } from "./StudySetCover.tsx";
 
 export interface LargeStudySetCardProps {
   studySet: StudySetDetails;
@@ -8,37 +8,43 @@ export interface LargeStudySetCardProps {
 }
 
 export const FeaturedStudySetCard = (props: LargeStudySetCardProps) => {
-  const {title, color, icon, totalWords} = props.studySet;
-  const {description, learnedWords} = props;
+  const { title, color, icon, totalWords } = props.studySet;
+  const { description, learnedWords } = props;
 
-  const wordsPlural = totalWords === 1 ? 'word' : 'words';
+  const wordsPlural = totalWords === 1 ? "word" : "words";
 
   // TODO: Adjust colors automatically
   const backgroundColor = color;
-  const foregroundColor = 'hsla(57, 76%, 95%, 1)';
+  const foregroundColor = "hsla(57, 76%, 95%, 1)";
 
   return (
-      <article
-          className="w-full p-3 rounded-xl font-medium"
-          style={{
-            backgroundColor: backgroundColor,
-            color: foregroundColor,
-          }}
-      >
-        <div className="flex gap-3 items-center mb-3">
-          <StudySetCover iconUrl={icon}
-                         foregroundColor={backgroundColor}
-                         backgroundColor={foregroundColor}/>
-          <div>
-            <p className="text-xl">{title}</p>
-            <p className="opacity-75">{description}</p>
-          </div>
+    <article
+      className="w-full p-3 rounded-xl font-medium"
+      style={{
+        backgroundColor: backgroundColor,
+        color: foregroundColor,
+      }}
+    >
+      <div className="flex gap-3 items-center mb-3">
+        <StudySetCover
+          iconUrl={icon}
+          foregroundColor={backgroundColor}
+          backgroundColor={foregroundColor}
+        />
+        <div>
+          <p className="text-xl">{title}</p>
+          <p className="opacity-75">{description}</p>
         </div>
-        <ProgressBar max={totalWords}
-                     value={learnedWords}
-                     color={foregroundColor}/>
-        <p className="mt-1 ml-1 opacity-75">{learnedWords} of {totalWords} {wordsPlural}</p>
-      </article>
+      </div>
+      <ProgressBar
+        max={totalWords}
+        value={learnedWords}
+        color={foregroundColor}
+      />
+      <p className="mt-1 ml-1 opacity-75">
+        {learnedWords} of {totalWords} {wordsPlural}
+      </p>
+    </article>
   );
 };
 
@@ -53,13 +59,16 @@ const ProgressBar = (props: ProgressBarProps) => {
   const percentage = clamp(0, 1, rawProgress) * 100;
 
   return (
-      <div className="w-full relative">
-        <div
-            className="w-full h-4 rounded-full opacity-20 absolute top-1/2 left-0 -translate-y-1/2"
-            style={{backgroundColor: props.color}}/>
-        <div className="h-6 rounded-full min-w-[1.5rem]"
-             style={{backgroundColor: props.color, width: `${percentage}%`}}/>
-      </div>
+    <div className="w-full relative">
+      <div
+        className="w-full h-4 rounded-full opacity-20 absolute top-1/2 left-0 -translate-y-1/2"
+        style={{ backgroundColor: props.color }}
+      />
+      <div
+        className="h-6 rounded-full min-w-[1.5rem]"
+        style={{ backgroundColor: props.color, width: `${percentage}%` }}
+      />
+    </div>
   );
 };
 

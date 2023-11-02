@@ -5,5 +5,5 @@ export interface StudySetDetails {
   color: string;
   totalWords: number;
   author: string;
-  aiGenerated: boolean
+  aiGenerated: boolean;
 }
