@@ -1,13 +1,10 @@
 import { ClerkProvider } from "@clerk/clerk-react";
-import { useNavigate } from "react-router-dom";
 
 type Props = {
 	children: React.ReactNode;
 };
 
 const AuthProvider = ({ children }: Props) => {
-	const navigate = useNavigate();
-
 	const clerkPublishableKey = import.meta.env
 		.VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
 
@@ -16,11 +13,7 @@ const AuthProvider = ({ children }: Props) => {
 	}
 
 	return (
-		<ClerkProvider
-			navigate={(to) => navigate(to)}
-			publishableKey={clerkPublishableKey}>
-			{children}
-		</ClerkProvider>
+		<ClerkProvider publishableKey={clerkPublishableKey}>{children}</ClerkProvider>
 	);
 };
 
