@@ -16,6 +16,7 @@
 		"@uidotdev/usehooks": "^2.4.1",
 		"autoprefixer": "^10.4.16",
 		"axios": "^1.6.0",
+		"boring-avatars": "^1.10.1",
 		"class-variance-authority": "^0.7.0",
 		"clsx": "^2.0.0",
 		"postcss": "^8.4.31",
@@ -35,6 +36,7 @@
 		"eslint": "^8.45.0",
 		"eslint-plugin-react-hooks": "^4.6.0",
 		"eslint-plugin-react-refresh": "^0.4.3",
+		"prettier": "^3.0.3",
 		"tailwindcss-3d": "^1.0.2",
 		"typescript": "^5.0.2",
 		"vite": "^4.4.5"

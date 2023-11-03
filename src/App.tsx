@@ -1,13 +1,12 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
-import HomePage from "./layout/HomePage";
 import Flashcards from "./layout/Games/Flashcards";
 import CreateCourse from "./components/Course/index";
 import AuthProvider from "./components/Auth/AuthProvider";
 import { SignIn, SignUp } from "@clerk/clerk-react";
+import { HomePage } from "./features/home/HomePage";
 
 // TODO: Implement loader() for routing
-
 const router = createBrowserRouter([
 	{
 		path: "/",
@@ -59,6 +58,12 @@ const router = createBrowserRouter([
 		element: <SignUp routing="path" path="/sign-up" />,
 	},
 ]);
+
+const clerkPublishableKey = import.meta.env
+  .VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
+if (!clerkPublishableKey) {
+  throw "Missing VITE_REACT_APP_CLERK_PUBLISHABLE_KEY";
+}
 
 const App = () => {
 	return (
