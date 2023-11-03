@@ -1,5 +1,11 @@
+import { useNavigate } from "react-router-dom";
+
 const AuthHandler = () => {
-	const signinHandler = () => {};
+	const navigate = useNavigate();
+
+	const signinHandler = () => {
+		navigate("/sign-in");
+	};
 	return (
 		<>
 			<button

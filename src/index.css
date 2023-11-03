@@ -2,177 +2,172 @@
 @tailwind components;
 @tailwind utilities;
 
-/* HurmeGeometricSans */
+/*!* HurmeGeometricSans *!*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Hairline.otf")
-		format("opentype");
-	font-weight: 100;
-	font-style: normal;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Hairline.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 100;*/
+/*	font-style: normal;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-HairlineItalic.otf")
-		format("opentype");
-	font-weight: 100;
-	font-style: italic;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-HairlineItalic.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 100;*/
+/*	font-style: italic;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Thin.otf")
-		format("opentype");
-	font-weight: 200;
-	font-style: normal;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Thin.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 200;*/
+/*	font-style: normal;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-ThinItalic.otf")
-		format("opentype");
-	font-weight: 200;
-	font-style: italic;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-ThinItalic.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 200;*/
+/*	font-style: italic;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Light.otf")
-		format("opentype");
-	font-weight: 300;
-	font-style: normal;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Light.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 300;*/
+/*	font-style: normal;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-LightItalic.otf")
-		format("opentype");
-	font-weight: 300;
-	font-style: italic;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-LightItalic.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 300;*/
+/*	font-style: italic;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2.otf")
-		format("opentype");
-	font-weight: 400;
-	font-style: normal;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 400;*/
+/*	font-style: normal;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Italic.otf")
-		format("opentype");
-	font-weight: 400;
-	font-style: italic;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Italic.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 400;*/
+/*	font-style: italic;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-SemiBold.otf")
-		format("opentype");
-	font-weight: 500;
-	font-style: normal;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-SemiBold.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 500;*/
+/*	font-style: normal;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-SemiBoldItalic.otf")
-		format("opentype");
-	font-weight: 500;
-	font-style: italic;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-SemiBoldItalic.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 500;*/
+/*	font-style: italic;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Bold.otf")
-		format("opentype");
-	font-weight: 700;
-	font-style: normal;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Bold.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 700;*/
+/*	font-style: normal;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-BoldItalic.otf")
-		format("opentype");
-	font-weight: 700;
-	font-style: italic;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-BoldItalic.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 700;*/
+/*	font-style: italic;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Black.otf")
-		format("opentype");
-	font-weight: 900;
-	font-style: normal;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-Black.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 900;*/
+/*	font-style: normal;*/
+/*}*/
 
-@font-face {
-	font-family: "HurmeGeometricSans";
-	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-BlackItalic.otf")
-		format("opentype");
-	font-weight: 900;
-	font-style: italic;
-}
+/*@font-face {*/
+/*	font-family: "HurmeGeometricSans";*/
+/*	src: url("assets/fonts/HurmeGeometricSans/HurmeGeometricSans2-BlackItalic.otf")*/
+/*		format("opentype");*/
+/*	font-weight: 900;*/
+/*	font-style: italic;*/
+/*}*/
 
-@layer utilities {
-	.after {
-		content: "";
-	}
-	.absCenter {
-		@apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute;
-	}
-	.gridLayout {
-		@apply grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout;
-	}
-	.no-scrollbar::-webkit-scrollbar {
-		display: none;
-	}
+/*@layer utilities {*/
+/*	.after {*/
+/*		content: "";*/
+/*	}*/
+/*	.absCenter {*/
+/*		@apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute;*/
+/*	}*/
+/*	.gridLayout {*/
+/*		@apply grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout;*/
+/*	}*/
+/*	.no-scrollbar::-webkit-scrollbar {*/
+/*		display: none;*/
+/*	}*/
 
-	/* Hide scrollbar for IE, Edge and Firefox */
-	.no-scrollbar {
-		-ms-overflow-style: none; /* IE and Edge */
-		scrollbar-width: none; /* Firefox */
-	}
-}
-@layer components {
-	.rootLayout {
-		@apply grid grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout grid-rows-[63px_1fr_min-content];
-	}
-	.link-active {
-		@apply after:bg-theme-blue-pitch after:h-1 after:w-full after:absolute after:bottom-0.5 after:rounded-t-full after:left-0 after after:transition;
-	}
-	.panel {
-		@apply bg-theme-blue-secondary p-4 shadow-sm relative rounded-xl;
-	}
-	.flashcard {
-		@apply text-theme-font-light flex-1 relative max-w-5xl mx-auto w-full;
-		perspective: 3000px;
-	}
-	.flashcard-side {
-		@apply overflow-hidden absolute top-0 left-0 h-full w-full transition shadow-none p-0;
-		box-shadow: -4px 17px 63px -37px rgba(66, 68, 90, 1);
-		transition-duration: 0.3s;
-		backface-visibility: hidden;
-	}
-}
+/*	!* Hide scrollbar for IE, Edge and Firefox *!*/
+/*	.no-scrollbar {*/
+/*		-ms-overflow-style: none; !* IE and Edge *!*/
+/*		scrollbar-width: none; !* Firefox *!*/
+/*	}*/
+/*}*/
+/*@layer components {*/
+/*	.rootLayout {*/
+/*		@apply grid grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout grid-rows-[63px_1fr_min-content];*/
+/*	}*/
+/*	.link-active {*/
+/*		@apply after:bg-theme-blue-pitch after:h-1 after:w-full after:absolute after:bottom-0.5 after:rounded-t-full after:left-0 after after:transition;*/
+/*	}*/
+/*	.panel {*/
+/*		@apply bg-theme-blue-secondary p-4 shadow-sm relative rounded-xl;*/
+/*	}*/
+/*	.flashcard {*/
+/*		@apply text-theme-font-light flex-1 relative max-w-5xl mx-auto w-full;*/
+/*		perspective: 3000px;*/
+/*	}*/
+/*	.flashcard-side {*/
+/*		@apply overflow-hidden absolute top-0 left-0 h-full w-full transition shadow-none p-0;*/
+/*		box-shadow: -4px 17px 63px -37px rgba(66, 68, 90, 1);*/
+/*		transition-duration: 0.3s;*/
+/*		backface-visibility: hidden;*/
+/*	}*/
+/*}*/
 
 @layer base {
-	body {
-		font-family: "HurmeGeometricSans";
-		@apply bg-theme-blue-primary h-full;
-	}
-	*,
-	*::after,
-	*::before {
-		@apply m-0 p-0 box-border;
-	}
+    *,
+    *::before,
+    *::after {
+        @apply m-0 p-0 box-border;
+    }
 
-	#root {
-		@apply h-full;
-	}
-	html {
-		@apply h-full;
-	}
+    html,
+    body,
+    #root {
+        @apply h-full;
+    }
 }

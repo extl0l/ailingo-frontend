@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import RootLayout from "./layout/RootLayout";
 import Flashcards from "./layout/Games/Flashcards";
 import CreateCourse from "./components/Course/index";
-import { ClerkProvider } from "@clerk/clerk-react";
+import AuthProvider from "./components/Auth/AuthProvider";
 import { HomePage } from "./features/home/HomePage.tsx";
 import { LibraryLayout } from "./features/library/LibraryLayout.tsx";
 import { MySetsPage } from "./features/library/MySetsPage.tsx";
@@ -70,17 +70,11 @@ const router = createBrowserRouter([
   },
 ]);
 
-const clerkPublishableKey = import.meta.env
-  .VITE_REACT_APP_CLERK_PUBLISHABLE_KEY;
-if (!clerkPublishableKey) {
-  throw "Missing VITE_REACT_APP_CLERK_PUBLISHABLE_KEY";
-}
-
 const App = () => {
   return (
-    <ClerkProvider publishableKey={clerkPublishableKey}>
+    <AuthProvider>
       <RouterProvider router={router} />
-    </ClerkProvider>
+    </AuthProvider>
   );
 };
 
