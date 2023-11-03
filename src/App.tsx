@@ -6,6 +6,8 @@ import { ClerkProvider } from "@clerk/clerk-react";
 import { HomePage } from "./features/home/HomePage.tsx";
 import { LibraryLayout } from "./features/library/LibraryLayout.tsx";
 import { MySetsPage } from "./features/library/MySetsPage.tsx";
+import { StarredSetsPage } from "./features/library/StarredSetsPage.tsx";
+import { RecentlyStudiedPage } from "./features/library/RecentlyStudiedPage.tsx";
 
 // TODO: Implement loader() for routing
 const router = createBrowserRouter([
@@ -27,11 +29,11 @@ const router = createBrowserRouter([
           },
           {
             path: "starred",
-            element: <h1>Starred sets</h1>,
+            element: <StarredSetsPage />,
           },
           {
             path: "recent",
-            element: <h1>Recent</h1>,
+            element: <RecentlyStudiedPage />,
           },
         ],
       },
