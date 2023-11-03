@@ -14,14 +14,7 @@ const router = createBrowserRouter([
 		element: <RootLayout />,
 		children: [
 			{ index: true, element: <HomePage /> },
-			{
-				path: "sign-in",
-				element: <SignIn routing="path" path="/sign-in" />,
-			},
-			{
-				path: "sign-up",
-				element: <SignUp routing="path" path="/sign-up" />,
-			},
+
 			{
 				path: "courses",
 				element: <div>Course list</div>,
@@ -56,6 +49,14 @@ const router = createBrowserRouter([
 	{
 		path: "/login",
 		element: <div>Login</div>,
+	},
+	{
+		path: "sign-in",
+		element: <SignIn routing="path" path="/sign-in" />,
+	},
+	{
+		path: "sign-up",
+		element: <SignUp routing="path" path="/sign-up" />,
 	},
 ]);
 

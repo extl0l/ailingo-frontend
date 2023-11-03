@@ -1,11 +1,11 @@
-import { useState } from "react";
 import Profile from "./Profile";
 import AuthHandler from "./AuthHandler";
+import { useAuth } from "@clerk/clerk-react";
 
 const User = () => {
-	const [isLoggedIn] = useState(false); //* Only for testing without clerk
+	const { isSignedIn } = useAuth();
 
-	return <div>{isLoggedIn ? <Profile /> : <AuthHandler />}</div>;
+	return <div>{isSignedIn ? <Profile /> : <AuthHandler />}</div>;
 };
 
 export default User;
