@@ -1,6 +1,7 @@
 import { StudySet } from "../models/StudySet.tsx";
 import { cn } from "../../../utils/tailwind.ts";
 import { CSSProperties, useMemo } from "react";
+import { Glyph } from "./Glyph.tsx";
 
 export interface StudySetCardProps {
   studySet: StudySet;
@@ -83,15 +84,7 @@ const Cover = (props: CoverProps) => {
       className="w-20 h-20 rounded-xl flex items-center justify-center bg-theme-background-light text-theme-background-light-variant"
       style={style}
     >
-      <span
-        className="block w-10 h-10 bg-current"
-        style={{
-          WebkitMask: `url(${props.icon}) center center no-repeat`,
-          mask: `url(${props.icon}) center center no-repeat`,
-          WebkitMaskSize: "contain",
-          maskSize: "contain",
-        }}
-      />
+      <Glyph src={props.icon} />
     </div>
   );
 };
