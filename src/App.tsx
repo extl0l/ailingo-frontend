@@ -4,6 +4,7 @@ import HomePage from "./layout/HomePage";
 import Flashcards from "./layout/Games/Flashcards";
 import CreateCourse from "./components/Course/index";
 import AuthProvider from "./components/Auth/AuthProvider";
+import { SignIn, SignUp } from "@clerk/clerk-react";
 
 // TODO: Implement loader() for routing
 
@@ -13,6 +14,14 @@ const router = createBrowserRouter([
 		element: <RootLayout />,
 		children: [
 			{ index: true, element: <HomePage /> },
+			{
+				path: "sign-in",
+				element: <SignIn routing="path" path="/sign-in" />,
+			},
+			{
+				path: "sign-up",
+				element: <SignUp routing="path" path="/sign-up" />,
+			},
 			{
 				path: "courses",
 				element: <div>Course list</div>,
