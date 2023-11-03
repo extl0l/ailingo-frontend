@@ -1,6 +1,9 @@
 import { CreateNewStudySetCard } from "./components/NewStudySetCard.tsx";
 import IconFurniture from "../navigation/assets/search.svg";
 import { StudySetCard } from "../_shared/components/StudySetCard.tsx";
+import { Glyph } from "../_shared/components/Glyph.tsx";
+
+import IconSortDescending from "./assets/arrow_upward_alt_FILL0_wght400_GRAD0_opsz40.svg";
 
 const mySets = [
   {
@@ -32,9 +35,15 @@ const mySets = [
 export const MySetsPage = () => {
   return (
     <>
-      <h1 className="font-medium text-theme-brown-light text-2xl col-span-full mt-6">
-        Created by me
-      </h1>
+      <div className="col-span-full mt-6 flex justify-between items-end">
+        <h1 className="font-medium text-theme-brown-light text-2xl">
+          Created by me
+        </h1>
+        <button className="flex items-center gap-0.5 font-medium">
+          Recent
+          <Glyph src={IconSortDescending} width="1.5rem" height="1.5rem" />
+        </button>
+      </div>
       <CreateNewStudySetCard />
       {mySets.map((studySet) => (
         <StudySetCard key={studySet.id} studySet={studySet} />
