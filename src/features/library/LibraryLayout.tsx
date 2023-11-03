@@ -9,7 +9,9 @@ export const LibraryLayout = () => {
           <LibraryNavigation />
         </div>
       </div>
-      <Outlet />
+      <main className="max-w-3xl mx-auto px-8 grid grid-cols-2 gap-3">
+        <Outlet />
+      </main>
     </>
   );
 };
