@@ -14,7 +14,7 @@ interface GlyphProps {
 export const Glyph = (props: GlyphProps) => {
   return (
     <span
-      className="block w-10 h-10 bg-current"
+      className="block w-10 h-10 bg-current flex-shrink-0"
       style={{
         WebkitMask: `url(${props.src}) center center no-repeat`,
         mask: `url(${props.src}) center center no-repeat`,

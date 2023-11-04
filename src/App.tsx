@@ -8,6 +8,7 @@ import { LibraryLayout } from "./features/library/LibraryLayout.tsx";
 import { MySetsPage } from "./features/library/MySetsPage.tsx";
 import { StarredSetsPage } from "./features/library/StarredSetsPage.tsx";
 import { RecentlyStudiedPage } from "./features/library/RecentlyStudiedPage.tsx";
+import { StudySetDetailsPage } from "./features/studyset/StudySetDetailsPage.tsx";
 
 // TODO: Implement loader() for routing
 const router = createBrowserRouter([
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
             element: <RecentlyStudiedPage />,
           },
         ],
+      },
+      {
+        path: "sets/:studySetId",
+        element: <StudySetDetailsPage />,
       },
       {
         path: "courses/:courseId",
