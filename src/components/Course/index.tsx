@@ -49,14 +49,14 @@ const CreateCourse = () => {
     }
 
     const validateEverything = () => {
-        return (validateForm() || !validatePrompts());
+        return (!validateForm() && validatePrompts());
     }
 
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
 
         trimPrompts();
-        if (validateEverything()) {
+        if (!validateEverything()) {
             alert("Please fill in all the prompts");
             return;
         }
