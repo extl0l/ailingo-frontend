@@ -81,9 +81,19 @@ const CreateCourse = () => {
         }
     }
 
+    const phraseAndDefinitionIsEmpty = (index: number) => {
+        const data = [...prompts]
+        return (data[index].phrase === '' || data[index].definition === '');
+    }
+
     const handleAutoGenerateSentence = (event: FormEvent, index: number) => {
         event.preventDefault();
         const data = [...prompts];
+
+        if (phraseAndDefinitionIsEmpty(index)) {
+            return;
+        }
+
         data[index].sentence = "This is a sentence"; //replace with actual generated sentence
         setPrompts(data);
     }
