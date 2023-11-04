@@ -34,9 +34,33 @@ const CreateCourse = () => {
         })
     }
 
+    const validatePrompts = () => {
+        let valid = true;
+        prompts.forEach(prompt => {
+            if (prompt.phrase === '' || prompt.definition === '') {
+                valid = false;
+            }
+        })
+        return valid;
+    }
+
+    const validateForm = () => {
+        return (title === '' || description === '' || phraseLanguage === '' || definitionsLanguage === '');
+    }
+
+    const validateEverything = () => {
+        return (validateForm() || !validatePrompts());
+    }
+
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
+
         trimPrompts();
+        if (validateEverything()) {
+            alert("Please fill in all the prompts");
+            return;
+        }
+
         const data = { title, description, phraseLanguage, definitionsLanguage, prompts };
         console.table(data)
     }
