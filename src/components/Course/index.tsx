@@ -1,18 +1,18 @@
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import { FormEvent, useState } from "react";
-import { TrashIcon } from "@heroicons/react/24/solid";
+import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
 
 const CreateCourse = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [phraseLanguage, setPhraseLanguage] = useState("");
     const [definitionsLanguage, setDefinitionsLanguage] = useState("");
-    const [prompts, setPrompts] = useState([{ phrase: '', definition: '' }]);
+    const [prompts, setPrompts] = useState([{ phrase: '', definition: '', sentence: '' }]);
 
     const addPrompt = (event: FormEvent) => {
         event.preventDefault();
-        const newPrompt = { phrase: '', definition: '' }
+        const newPrompt = { phrase: '', definition: '', sentence: '' }
         setPrompts([...prompts, newPrompt]);
     }
 
@@ -31,13 +31,14 @@ const CreateCourse = () => {
         prompts.forEach(prompt => {
             prompt.phrase = prompt.phrase.trim();
             prompt.definition = prompt.definition.trim();
+            prompt.sentence = prompt.sentence.trim();
         })
     }
 
     const validatePrompts = () => {
         let valid = true;
         prompts.forEach(prompt => {
-            if (prompt.phrase === '' || prompt.definition === '') {
+            if (prompt.phrase === '' || prompt.definition === '' || prompt.sentence === '') {
                 valid = false;
             }
         })
@@ -103,6 +104,8 @@ const CreateCourse = () => {
                         <div key={index} className="flex flex-col lg:flex-row h-auto lg:h-20 items-center justify-between mb-2 panel lg:w-auto my-28 md:my-0 gap-1">
                             <Input className="w-11/12 lg:w-96 mx-2" placeholder={"Enter phrase"} name="phrase" rounded={"large"} border={"white"} value={prompt.phrase} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
                             <Input className="w-11/12 lg:w-96 mx-2" placeholder={"Enter definition"} name="definition" rounded={"large"} border={"white"} value={prompt.definition} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
+                            <Input className="w-11/12 lg:w-96 mx-2" placeholder={"Sentence"} name="sentence" rounded={"large"} border={"white"} value={prompt.sentence} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
+                            <Button buttonStyle={"yellow"}><PlusCircleIcon className="w-w h-6" /></Button>
                             <Button buttonStyle={"transparent"} className="w-24 sm:w-16 bg-red-500 border-none" onClick={(event) => { if (prompts.length > 1) { removePrompt(event, index) } }}><TrashIcon className="w-5 h-6" /></Button>
                         </div>
                     ))}
