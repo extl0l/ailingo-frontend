@@ -5,64 +5,55 @@ import { Glyph } from "../_shared/components/Glyph.tsx";
 import IconSortDescending from "./assets/arrow_upward_alt_FILL0_wght400_GRAD0_opsz40.svg";
 import { useMutation } from "@tanstack/react-query";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useAuth } from "@clerk/clerk-react";
+import { Language, StudySet } from "../_shared/models/StudySet.ts";
+import { backendClient } from "../_shared/api/backendClient.ts";
 
-const mySets = [
+const DUMMY_MY_SETS: StudySet[] = [
   {
     id: "sts-00",
-    title: "Gardening",
+    name: "Gardening",
     icon: IconFurniture,
     color: "hsla(159, 39%, 55%, 1)",
-  },
-  {
-    id: "sts-01",
-    title: "At the airport",
-    icon: IconFurniture,
-    color: "hsla(58, 63%, 53%, 1)",
-  },
-  {
-    id: "sts-02",
-    title: "Biking in the suburbs",
-    icon: IconFurniture,
-    color: "hsla(24, 93%, 56%, 1)",
-  },
-  {
-    id: "sts-03",
-    title: "Home furnishings",
-    icon: IconFurniture,
-    color: "hsla(22,22%,27%,1)",
+    author: {
+      id: "au-123",
+      imageUrl: "",
+      username: "test-test",
+    },
+    phraseLanguage: "en-US",
+    definitionLanguage: "pl-PL",
   },
 ];
 
-interface StudySetCreatedPayload {
+interface StudySetCreateRequest {
+  name: string;
+  description: string;
+  phraseLanguage: Language;
+  definitionLanguage: Language;
+}
+
+interface StudySetCreatedResponse {
   createdId: number;
 }
 
 export const MySetsPage = () => {
   const navigate = useNavigate();
-
   const { getToken } = useAuth();
 
-  const mutation = useMutation<StudySetCreatedPayload>({
+  const mutation = useMutation<StudySetCreatedResponse>({
     mutationFn: async () => {
-      const response = await axios.post(
-        `https://ailingo-backend.azurewebsites.net/study-sets`,
-        {
-          name: "string",
-          description: "string",
-          phraseLanguage: "en-US",
-          definitionLanguage: "pl-PL",
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${await getToken()}`,
-          },
-        },
-      );
+      const emptyStudySet: StudySetCreateRequest = {
+        name: "Unnamed set",
+        description: "A brief overview of the set content",
+        phraseLanguage: "en-US",
+        definitionLanguage: "pl-PL",
+      };
+      const response = await backendClient.post("/study-sets", emptyStudySet, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
       return response.data;
     },
-    onSuccess: (createdStudySet: StudySetCreatedPayload) => {
+    onSuccess: (createdStudySet: StudySetCreatedResponse) => {
       navigate(`/sets/${createdStudySet.createdId}`);
     },
     onError: (error) => {
@@ -89,7 +80,8 @@ export const MySetsPage = () => {
         onClick={handleNewStudySetClick}
         disabled={mutation.isPending}
       />
-      {mySets.map((studySet) => (
+      {/*TODO: Get all my sets*/}
+      {DUMMY_MY_SETS.map((studySet) => (
         <StudySetCard key={studySet.id} studySet={studySet} />
       ))}
     </>
