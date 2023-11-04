@@ -1,4 +1,4 @@
-import { StudySet } from "../models/StudySet.tsx";
+import { StudySet } from "../models/StudySet.ts";
 import { cn } from "../../../utils/tailwind.ts";
 import { CSSProperties, useMemo } from "react";
 import { Glyph } from "./Glyph.tsx";
@@ -15,7 +15,7 @@ export interface StudySetProgress {
 }
 
 export const StudySetCard = (props: StudySetCardProps) => {
-  const { title, icon, color } = props.studySet;
+  const { name, icon, color } = props.studySet;
 
   return (
     <article
@@ -23,7 +23,7 @@ export const StudySetCard = (props: StudySetCardProps) => {
       style={props.featured ? { backgroundColor: color } : {}}
     >
       <StudySetCardDetails
-        title={title}
+        title={name}
         icon={icon}
         color={color}
         featured={props.featured}
