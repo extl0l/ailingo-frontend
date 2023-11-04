@@ -108,8 +108,12 @@ const CreateCourse = () => {
                                 <Input className="w-full" placeholder={"Enter definition"} name="definition" rounded={"large"} border={"white"} value={prompt.definition} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
                                 <Input className="lg:col-span-2 w-full" placeholder={"Sentence"} name="sentence" rounded={"large"} border={"white"} value={prompt.sentence} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
                             </div>
-                            <Button buttonStyle={"yellow"} className="w-24 sm:w-16 mx-1"><PlusCircleIcon className="w-w h-6" /></Button>
-                            <Button buttonStyle={"transparent"} className="w-24 sm:w-16 bg-red-500 border-none" onClick={(event) => { if (prompts.length > 1) { removePrompt(event, index) } }}><TrashIcon className="w-5 h-6" /></Button>
+                            <Tooltip content="Auto generate sentence">
+                                <Button buttonStyle={"yellow"} className="w-24 sm:w-16 mx-1"><PlusCircleIcon className="w-w h-6" /></Button>
+                            </Tooltip>
+                            <Tooltip content="Discard flashcard">
+                                <Button buttonStyle={"transparent"} className="w-24 sm:w-16 bg-red-500 border-none" onClick={(event) => { if (prompts.length > 1) { removePrompt(event, index) } }}><TrashIcon className="w-5 h-6" /></Button>
+                            </Tooltip>
                         </div>
                     ))}
                 </div>
