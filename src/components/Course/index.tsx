@@ -17,7 +17,7 @@ const CreateCourse = () => {
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setStateFunction: (newValue: string) => void) => {
-        const newValue = e.target.value;
+        const newValue = e.target.value.trim();
         setStateFunction(newValue);
     }
 
@@ -27,10 +27,18 @@ const CreateCourse = () => {
         setPrompts(data);
     }
 
+    const trimPrompts = () => {
+        prompts.forEach(prompt => {
+            prompt.phrase = prompt.phrase.trim();
+            prompt.definition = prompt.definition.trim();
+        })
+    }
+
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
+        trimPrompts();
         const data = { title, description, phraseLanguage, definitionsLanguage, prompts };
-        console.log(data)
+        console.table(data)
     }
 
     const removePrompt = (event: FormEvent, index: number) => {
@@ -69,7 +77,7 @@ const CreateCourse = () => {
                 <div className="space-y-2 w-3/4 m-auto">
                     {prompts.map((prompt, index) => (
                         <div key={index} className="flex flex-col lg:flex-row h-auto lg:h-20 items-center justify-between mb-2 panel lg:w-auto my-28 md:my-0 gap-1">
-                            <Input className="w-11/12 lg:w-96 mx-2" placeholder={"Enter phrase"} name="phrase" rounded={"large"} border={"white"} value={prompt.phrase} onChange={event => handleFormChange(index, event)} />
+                            <Input className="w-11/12 lg:w-96 mx-2" placeholder={"Enter phrase"} name="phrase" rounded={"large"} border={"white"} value={prompt.phrase} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
                             <Input className="w-11/12 lg:w-96 mx-2" placeholder={"Enter definition"} name="definition" rounded={"large"} border={"white"} value={prompt.definition} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
                             <Button buttonStyle={"transparent"} className="w-24 sm:w-16 bg-red-500 border-none" onClick={(event) => { if (prompts.length > 1) { removePrompt(event, index) } }}><TrashIcon className="w-5 h-6" /></Button>
                         </div>
