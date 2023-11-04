@@ -11,6 +11,7 @@ import {
 } from "./features/library/MySetsPage.tsx";
 import { StarredSetsPage } from "./features/library/StarredSetsPage.tsx";
 import { RecentlyStudiedPage } from "./features/library/RecentlyStudiedPage.tsx";
+import { QueryClient, QueryClientProvider } from "react-query";
 
 // TODO: Implement loader() for routing
 const router = createBrowserRouter([
@@ -74,10 +75,14 @@ const router = createBrowserRouter([
 	},
 ]);
 
+const queryClient = new QueryClient();
+
 const App = () => {
 	return (
 		<AuthProvider>
-			<RouterProvider router={router} />
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider router={router} />
+			</QueryClientProvider>
 		</AuthProvider>
 	);
 };
