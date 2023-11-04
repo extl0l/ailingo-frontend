@@ -1,8 +1,10 @@
 import { Definition, StudySet } from "../_shared/models/StudySet.tsx";
+import IconAddStar from "./assets/star_FILL0_wght600_GRAD0_opsz24.svg";
+import IconOpenFullscreen from "./assets/open_in_full_FILL0_wght400_GRAD0_opsz24.svg";
 import { Glyph } from "../_shared/components/Glyph.tsx";
-import IconStudy from "./assets/lightbulb_FILL0_wght400_GRAD0_opsz40.svg";
 
 import DUMMY_ICON from "../library/assets/arrow_upward_alt_FILL0_wght400_GRAD0_opsz40.svg";
+import { FlipCard } from "./components/FlipCard.tsx";
 
 const DUMMY_STUDY_SET: StudySet = {
   id: "study-set-1",
@@ -11,7 +13,7 @@ const DUMMY_STUDY_SET: StudySet = {
   color: "hsla(58, 63%, 53%, 1)",
 };
 
-const DUMMY_WORDS: Definition[] = [
+const DUMMY_DEFINITIONS: Definition[] = [
   {
     word: "look forward to something",
     definition: "oczekiwać na coś z niecierpliwością",
@@ -32,29 +34,56 @@ const DUMMY_WORDS: Definition[] = [
 
 export const StudySetDetailsPage = () => {
   const { title, icon, color } = DUMMY_STUDY_SET;
-  const words = DUMMY_WORDS;
+  const definitions = DUMMY_DEFINITIONS;
 
   return (
     <article className="font-medium text-theme-brown-light">
       <header className="bg-theme-background-light-variant">
-        <div className="p-8 max-w-3xl mx-auto flex gap-8 items-center">
-          <div
-            className="w-40 h-40 rounded-2xl flex items-center justify-center text-theme-background-light-variant flex-shrink-0"
-            style={{ backgroundColor: color }}
-          >
-            <Glyph src={icon} width="4rem" height="4rem" />
+        <div className="p-8 max-w-3xl mx-auto">
+          <div className="flex items-center gap-2.5 mb-3">
+            <h1 className="text-3xl">{title}</h1>
+            <button title="Star this study set">
+              <img src={IconAddStar} alt="" />
+            </button>
           </div>
-          <div>
-            <h1 className="text-4xl">{title}</h1>
-            <p className="opacity-50 mt-1">by Anonymous</p>
-            <div className="grid grid-cols-2 mt-3">
+          <div className="grid grid-cols-4 gap-3">
+            <div className="col-start-1 col-end-4 aspect-video relative">
               <button
-                className="border-2 p-3 pl-0 rounded-xl flex items-center gap-2 justify-center"
-                style={{ color, borderColor: color }}
+                className="absolute top-3.5 left-3.5 z-[1]"
+                title="Open fullscreen"
               >
-                <Glyph src={IconStudy} width="1.5rem" height="1.5rem" />
-                Study
+                <img src={IconOpenFullscreen} alt="" />
               </button>
+              <FlipCard
+                front={
+                  <div className="w-full h-full bg-white rounded-xl relative overflow-hidden flex items-center justify-center text-2xl pb-4">
+                    cabinet
+                    <div
+                      className="absolute bottom-0 left-0 w-full p-2 text-center text-theme-background-light-variant text-base"
+                      style={{ backgroundColor: color }}
+                    >
+                      tap to flip
+                    </div>
+                  </div>
+                }
+                back={
+                  <div className="w-full h-full bg-white rounded-xl overflow-hidden flex items-center justify-center text-2xl pb-4">
+                    szafka
+                  </div>
+                }
+              />
+            </div>
+            <div className="flex flex-col items-end">
+              <div
+                className="flex items-center justify-center aspect-square rounded-xl text-theme-background-light-variant w-full"
+                style={{ backgroundColor: color }}
+              >
+                <Glyph src={icon} />
+              </div>
+              <div className="flex items-center gap-2 mt-3">
+                <span className="opacity-50">by Anonymous</span>
+                <img className="w-8 h-8 rounded-full" src="" alt="" />
+              </div>
             </div>
           </div>
         </div>
@@ -63,12 +92,28 @@ export const StudySetDetailsPage = () => {
         <p className="font-medium text-theme-brown-light text-2xl py-6">
           Words
         </p>
-        {words.map((word) => (
-          <div key={word.word}>
-            <p>{word.word}</p>
-          </div>
+        {definitions.map((definition) => (
+          <WordDefinition
+            key={`${definition.word}:${definition.definition}`} // key="<word>:<definition>"
+            definition={definition}
+          />
         ))}
       </section>
     </article>
+  );
+};
+
+interface WordDefinitionProps {
+  definition: Definition;
+}
+
+const WordDefinition = (props: WordDefinitionProps) => {
+  const { word, definition } = props.definition;
+
+  return (
+    <div className="grid grid-cols-3 even:bg-theme-background-light-variant rounded-xl p-3">
+      <span>{word}</span>
+      <span className="col-span-2">{definition}</span>
+    </div>
   );
 };
