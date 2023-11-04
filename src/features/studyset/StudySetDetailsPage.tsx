@@ -1,17 +1,11 @@
-import { Definition, StudySet } from "../_shared/models/StudySet.tsx";
+import { Definition, StudySet } from "../_shared/models/StudySet.ts";
 import IconAddStar from "./assets/star_FILL0_wght600_GRAD0_opsz24.svg";
 import IconOpenFullscreen from "./assets/open_in_full_FILL0_wght400_GRAD0_opsz24.svg";
 import { Glyph } from "../_shared/components/Glyph.tsx";
-
-import DUMMY_ICON from "../library/assets/arrow_upward_alt_FILL0_wght400_GRAD0_opsz40.svg";
 import { FlipCard } from "./components/FlipCard.tsx";
-
-const DUMMY_STUDY_SET: StudySet = {
-  id: "study-set-1",
-  title: "Home and furniture",
-  icon: DUMMY_ICON,
-  color: "hsla(58, 63%, 53%, 1)",
-};
+import { useQuery } from "@tanstack/react-query";
+import { Navigate, useParams } from "react-router-dom";
+import axios from "axios";
 
 const DUMMY_DEFINITIONS: Definition[] = [
   {
@@ -33,15 +27,37 @@ const DUMMY_DEFINITIONS: Definition[] = [
 ];
 
 export const StudySetDetailsPage = () => {
-  const { title, icon, color } = DUMMY_STUDY_SET;
-  const definitions = DUMMY_DEFINITIONS;
+  const { studySetId } = useParams();
+
+  const query = useQuery<StudySet>({
+    queryKey: ["studySet", studySetId],
+    queryFn: async () => {
+      const response = await axios.get(
+        `https://ailingo-backend.azurewebsites.net/study-sets/${studySetId}`,
+      );
+      console.log(response.data);
+      return response.data;
+    },
+    retry: false,
+  });
+
+  if (query.isError) {
+    return <Navigate to="/library" />;
+  }
+
+  if (query.isPending) {
+    return <p>Loading...</p>;
+  }
+
+  const { name, icon } = query.data;
+  const color = query.data.color || "hsla(58, 63%, 53%, 1)";
 
   return (
     <article className="font-medium text-theme-brown-light">
       <header className="bg-theme-background-light-variant">
         <div className="p-8 max-w-3xl mx-auto">
           <div className="flex items-center gap-2.5 mb-3">
-            <h1 className="text-3xl">{title}</h1>
+            <h1 className="text-3xl">{name}</h1>
             <button title="Star this study set">
               <img src={IconAddStar} alt="" />
             </button>
@@ -92,7 +108,7 @@ export const StudySetDetailsPage = () => {
         <p className="font-medium text-theme-brown-light text-2xl py-6">
           Words
         </p>
-        {definitions.map((definition) => (
+        {DUMMY_DEFINITIONS.map((definition) => (
           <WordDefinition
             key={`${definition.word}:${definition.definition}`} // key="<word>:<definition>"
             definition={definition}
