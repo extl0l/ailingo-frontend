@@ -2,8 +2,11 @@ import { CreateNewStudySetCard } from "./components/NewStudySetCard.tsx";
 import IconFurniture from "../navigation/assets/search.svg";
 import { StudySetCard } from "../_shared/components/StudySetCard.tsx";
 import { Glyph } from "../_shared/components/Glyph.tsx";
-
 import IconSortDescending from "./assets/arrow_upward_alt_FILL0_wght400_GRAD0_opsz40.svg";
+import { useMutation } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { useAuth } from "@clerk/clerk-react";
 
 const mySets = [
   {
@@ -32,7 +35,45 @@ const mySets = [
   },
 ];
 
+interface StudySetCreatedPayload {
+  createdId: number;
+}
+
 export const MySetsPage = () => {
+  const navigate = useNavigate();
+
+  const { getToken } = useAuth();
+
+  const mutation = useMutation<StudySetCreatedPayload>({
+    mutationFn: async () => {
+      const response = await axios.post(
+        `https://ailingo-backend.azurewebsites.net/study-sets`,
+        {
+          name: "string",
+          description: "string",
+          phraseLanguage: "en-US",
+          definitionLanguage: "pl-PL",
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${await getToken()}`,
+          },
+        },
+      );
+      return response.data;
+    },
+    onSuccess: (createdStudySet: StudySetCreatedPayload) => {
+      navigate(`/sets/${createdStudySet.createdId}`);
+    },
+    onError: (error) => {
+      console.error("Unable to create new set:", error);
+    },
+  });
+
+  const handleNewStudySetClick = () => {
+    mutation.mutate();
+  };
+
   return (
     <>
       <div className="col-span-full mt-6 flex justify-between items-end">
@@ -44,7 +85,10 @@ export const MySetsPage = () => {
           <Glyph src={IconSortDescending} width="1.5rem" height="1.5rem" />
         </button>
       </div>
-      <CreateNewStudySetCard />
+      <CreateNewStudySetCard
+        onClick={handleNewStudySetClick}
+        disabled={mutation.isPending}
+      />
       {mySets.map((studySet) => (
         <StudySetCard key={studySet.id} studySet={studySet} />
       ))}
