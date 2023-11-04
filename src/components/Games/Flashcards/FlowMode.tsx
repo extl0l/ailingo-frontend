@@ -111,14 +111,15 @@ const FlowMode = ({ flashcards }: Props) => {
 		setLearnedFlashcardsPerRound((state) =>
 			state.map((s, i) => (i === round ? s + 1 : s))
 		);
-		controllRoundEnd();
 		setCurrentFlashcard((flashcard) => flashcard + 1);
 
-		const isGameFinished = knownFlashcards.length >= flashcardsToLearn.length;
+		const isGameFinished = flashcards.length - (knownFlashcards.length + 1) === 0;
 
 		if (isGameFinished) {
-			endGameHandler();
+			return endGameHandler();
 		}
+
+		controllRoundEnd();
 	};
 
 	const nextRound = () => {
