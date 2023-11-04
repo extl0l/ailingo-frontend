@@ -5,10 +5,7 @@ import CreateCourse from "./components/Course/index";
 import AuthProvider from "./features/auth/AuthProvider.tsx";
 import { HomePage } from "./features/home/HomePage.tsx";
 import { LibraryLayout } from "./features/library/LibraryLayout.tsx";
-import {
-	loader as mySetsLoader,
-	MySetsPage,
-} from "./features/library/MySetsPage.tsx";
+import { MySetsPage } from "./features/library/MySetsPage.tsx";
 import { StarredSetsPage } from "./features/library/StarredSetsPage.tsx";
 import { RecentlyStudiedPage } from "./features/library/RecentlyStudiedPage.tsx";
 import { QueryClient, QueryClientProvider } from "react-query";
@@ -30,7 +27,6 @@ const router = createBrowserRouter([
 					{
 						index: true,
 						element: <MySetsPage />,
-						loader: mySetsLoader,
 					},
 					{
 						path: "starred",
