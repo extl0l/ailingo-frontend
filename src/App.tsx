@@ -9,6 +9,7 @@ import { MySetsPage } from "./features/library/MySetsPage.tsx";
 import { StarredSetsPage } from "./features/library/StarredSetsPage.tsx";
 import { RecentlyStudiedPage } from "./features/library/RecentlyStudiedPage.tsx";
 import { StudySetDetailsPage } from "./features/studyset/StudySetDetailsPage.tsx";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // TODO: Implement loader() for routing
 const router = createBrowserRouter([
@@ -75,11 +76,15 @@ const router = createBrowserRouter([
   },
 ]);
 
+const queryClient = new QueryClient();
+
 const App = () => {
   return (
-    <AuthProvider>
-      <RouterProvider router={router} />
-    </AuthProvider>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <RouterProvider router={router} />
+      </AuthProvider>
+    </QueryClientProvider>
   );
 };
 
