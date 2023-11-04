@@ -1,8 +1,9 @@
 import Button from "../shared/Button";
 import Input from "../shared/Input";
 import { FormEvent, useState } from "react";
-import { PlusCircleIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { TrashIcon } from "@heroicons/react/24/solid";
 import Tooltip from "../shared/Tooltip";
+import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/outline";
 
 const CreateCourse = () => {
     const [title, setTitle] = useState("");
@@ -127,7 +128,7 @@ const CreateCourse = () => {
                             </div>
                             <Tooltip content="Auto generate sentence">
                                 <Button buttonStyle={"yellow"} className="w-24 sm:w-16 mx-1" onClick={(event) => { handleAutoGenerateSentence(event, index) }}>
-                                    <PlusCircleIcon className="w-w h-6" />
+                                    <ChatBubbleOvalLeftEllipsisIcon className="w-5 h-6" />
                                 </Button>
                             </Tooltip>
                             <Tooltip content="Discard flashcard">
