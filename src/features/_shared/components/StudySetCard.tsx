@@ -1,10 +1,12 @@
-import { StudySet } from "../models/StudySet.ts";
 import { cn } from "../../../utils/tailwind.ts";
 import { CSSProperties, useMemo } from "react";
 import { Glyph } from "./Glyph.tsx";
 
 export interface StudySetCardProps {
-  studySet: StudySet;
+  name: string;
+  icon: string;
+  color: string;
+  authorUsername: string;
   featured?: boolean;
   progress?: StudySetProgress;
 }
@@ -15,24 +17,25 @@ export interface StudySetProgress {
 }
 
 export const StudySetCard = (props: StudySetCardProps) => {
-  const { name, icon, color } = props.studySet;
+  const { name, icon, color, authorUsername, featured, progress } = props;
 
   return (
     <article
       className="font-medium text-theme-brown-light p-3 rounded-xl bg-theme-background-light-variant"
-      style={props.featured ? { backgroundColor: color } : {}}
+      style={featured ? { backgroundColor: color } : {}}
     >
       <StudySetCardDetails
         title={name}
         icon={icon}
         color={color}
-        featured={props.featured}
+        authorUsername={authorUsername}
+        featured={featured}
       />
-      {props.progress && (
+      {progress && (
         <StudySetCardProgressDetails
-          progress={props.progress}
+          progress={progress}
           color={color}
-          featured={props.featured}
+          featured={featured}
         />
       )}
     </article>
@@ -43,11 +46,12 @@ interface StudySetCardDetailsProps {
   title: string;
   icon: string;
   color: string;
+  authorUsername: string;
   featured?: boolean;
 }
 
 const StudySetCardDetails = (props: StudySetCardDetailsProps) => {
-  const { title, icon, color, featured } = props;
+  const { title, icon, color, featured, authorUsername } = props;
 
   const textColor = featured
     ? "text-theme-background-light"
@@ -60,8 +64,7 @@ const StudySetCardDetails = (props: StudySetCardDetailsProps) => {
       <Cover icon={icon} color={color} featured={featured} />
       <div>
         <p className="text-xl">{title}</p>
-        {/*TODO: Use the actual user*/}
-        <p className={authorTextOpacity}>by Unknown user</p>
+        <p className={authorTextOpacity}>by {authorUsername}</p>
       </div>
     </div>
   );

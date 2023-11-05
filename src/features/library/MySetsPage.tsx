@@ -1,29 +1,13 @@
 import { CreateNewStudySetCard } from "./components/NewStudySetCard.tsx";
-import IconFurniture from "../navigation/assets/search.svg";
 import { StudySetCard } from "../_shared/components/StudySetCard.tsx";
 import { Glyph } from "../_shared/components/Glyph.tsx";
 import IconSortDescending from "./assets/arrow_upward_alt_FILL0_wght400_GRAD0_opsz40.svg";
-import { useMutation } from "@tanstack/react-query";
-import { useNavigate } from "react-router-dom";
-import { useAuth } from "@clerk/clerk-react";
-import { Language, StudySet } from "../_shared/models/StudySet.ts";
+import IconBrokenImage from "./assets/broken_image_FILL0_wght400_GRAD0_opsz40.svg";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { Link, useNavigate } from "react-router-dom";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { Language } from "../_shared/models/StudySet.ts";
 import { backendClient } from "../_shared/api/backendClient.ts";
-
-const DUMMY_MY_SETS: StudySet[] = [
-  {
-    id: "sts-00",
-    name: "Gardening",
-    icon: IconFurniture,
-    color: "hsla(159, 39%, 55%, 1)",
-    author: {
-      id: "au-123",
-      imageUrl: "",
-      username: "test-test",
-    },
-    phraseLanguage: "en-US",
-    definitionLanguage: "pl-PL",
-  },
-];
 
 interface StudySetCreateRequest {
   name: string;
@@ -36,11 +20,23 @@ interface StudySetCreatedResponse {
   createdId: number;
 }
 
+type StudySetsCreatedByMeResponse = {
+  id: number;
+  name: string;
+  description: string;
+  phraseLanguage: Language;
+  definitionLanguage: Language;
+}[];
+
 export const MySetsPage = () => {
+  const queryClient = useQueryClient();
+
   const navigate = useNavigate();
+
+  const { user } = useUser();
   const { getToken } = useAuth();
 
-  const mutation = useMutation<StudySetCreatedResponse>({
+  const createSetMutation = useMutation<StudySetCreatedResponse>({
     mutationFn: async () => {
       const emptyStudySet: StudySetCreateRequest = {
         name: "Unnamed set",
@@ -54,6 +50,8 @@ export const MySetsPage = () => {
       return response.data;
     },
     onSuccess: (createdStudySet: StudySetCreatedResponse) => {
+      // noinspection JSIgnoredPromiseFromCall
+      queryClient.invalidateQueries({ queryKey: ["my-sets"] });
       navigate(`/sets/${createdStudySet.createdId}`);
     },
     onError: (error) => {
@@ -62,15 +60,26 @@ export const MySetsPage = () => {
   });
 
   const handleNewStudySetClick = () => {
-    mutation.mutate();
+    createSetMutation.mutate();
   };
+
+  const mySetsQuery = useQuery<StudySetsCreatedByMeResponse>({
+    queryKey: ["my-sets"],
+    queryFn: async () => {
+      const response = await backendClient.get("/me/study-sets/created", {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      return response.data;
+    },
+  });
 
   return (
     <>
-      <div className="col-span-full mt-6 flex justify-between items-end">
+      <div className="col-span-full mt-6 flex justify-between items-end text-theme-brown-light">
         <h1 className="font-medium text-theme-brown-light text-2xl">
           Created by me
         </h1>
+        {/*TODO: Add support for sorting*/}
         <button className="flex items-center gap-0.5 font-medium">
           Recent
           <Glyph src={IconSortDescending} width="1.5rem" height="1.5rem" />
@@ -78,11 +87,17 @@ export const MySetsPage = () => {
       </div>
       <CreateNewStudySetCard
         onClick={handleNewStudySetClick}
-        disabled={mutation.isPending}
+        disabled={createSetMutation.isPending}
       />
-      {/*TODO: Get all my sets*/}
-      {DUMMY_MY_SETS.map((studySet) => (
-        <StudySetCard key={studySet.id} studySet={studySet} />
+      {mySetsQuery.data?.map((studySet) => (
+        <Link key={studySet.id} to={`/sets/${studySet.id}`}>
+          <StudySetCard
+            name={studySet.name}
+            color="hsla(58, 63%, 53%, 1)"
+            icon={IconBrokenImage}
+            authorUsername={user?.username ?? "Unknown user"}
+          />
+        </Link>
       ))}
     </>
   );
