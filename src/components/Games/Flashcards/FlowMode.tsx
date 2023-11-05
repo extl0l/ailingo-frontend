@@ -173,9 +173,12 @@ const FlowMode = ({
 	if (isEndScreen) {
 		return (
 			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_rgba(66,68,90,1)]">
-				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-font-light">
+				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light">
 					<span className="text-3xl">GUT GEMACHT!</span>
-					<Button onClick={restartGame} variant="outline" className="text-lg py-2">
+					<Button
+						onClick={restartGame}
+						variant="outline"
+						className="text-lg py-2 text-theme-brown-light">
 						Try again
 					</Button>
 				</div>
@@ -186,9 +189,12 @@ const FlowMode = ({
 	if (isMiddleRound) {
 		return (
 			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_rgba(66,68,90,1)]">
-				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-font-light">
+				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light">
 					<span className="text-3xl">NEXT ROUND</span>
-					<Button onClick={nextRound} variant="outline" className="text-lg py-2">
+					<Button
+						onClick={nextRound}
+						variant="outline"
+						className="text-lg py-2 text-theme-brown-light">
 						Next round
 					</Button>
 				</div>

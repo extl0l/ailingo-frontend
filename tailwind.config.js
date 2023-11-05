@@ -65,6 +65,7 @@ export default {
 					// NEW THEME
 					brown: {
 						light: "hsla(23, 22%, 27%, 1)",
+						lighter: "hsla(23, 22%, 27%, .35)",
 					},
 					green: {
 						primary: "#18ae79", // TODO: Remove after the revamp is finished

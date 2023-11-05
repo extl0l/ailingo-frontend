@@ -23,7 +23,7 @@ const Flashcard = ({ flashcard }: Props) => {
 			<Panel
 				className={cn("flashcard-side", isFront ? "rotate-x-0" : "rotate-x-180")}>
 				<SpeachButton
-					className="absolute top-10 right-10"
+					className="absolute top-10 right-10 text-theme-brown-light"
 					language="pl-PL"
 					wordToRead={flashcard.word}
 				/>

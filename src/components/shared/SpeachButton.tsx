@@ -51,7 +51,10 @@ const SpeechButton = ({
 				variant="outline"
 				onClick={() => speakText(wordToRead, language)}>
 				<SpeakerWaveIcon
-					className={cn("min-w-[18px] min-h-[18px]", iconClassName)}
+					className={cn(
+						"min-w-[18px] min-h-[18px] text-theme-brown-light",
+						iconClassName
+					)}
 				/>
 			</Button>
 		</Tooltip>

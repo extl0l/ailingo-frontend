@@ -46,7 +46,7 @@ const FlashcardOptions = ({
 					</Button>
 				</Tooltip>
 			</div>
-			<div></div>
+			<div className="w-9"></div>
 		</div>
 	);
 };
