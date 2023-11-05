@@ -65,10 +65,6 @@ const router = createBrowserRouter([
 		path: "/:courseId/test",
 		element: <div>Test</div>,
 	},
-	{
-		path: "/login",
-		element: <div>Login</div>,
-	},
 ]);
 
 const queryClient = new QueryClient();

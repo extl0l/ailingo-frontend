@@ -2,6 +2,9 @@ import { useState } from "react";
 import FlashcardsGame from "../../components/Games/Flashcards";
 import FlashcardsMenu from "../../components/Games/Flashcards/FlashcardsMenu";
 import { Flashcard } from "../../types/Flashcard";
+import useAuthQuery from "../../hooks/useAuthQuery";
+import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const DUMMY_FLASHCARDS = [
 	{ examples: ["lubie piwo"], translation: "Beer", word: "Piwo", id: "1qf" },
@@ -20,6 +23,19 @@ const DUMMY_FLASHCARDS = [
 ] as Flashcard[];
 
 const Flashcards = () => {
+	const { courseId } = useParams();
+
+	const { queryFn } = useAuthQuery({
+		endpoint: `/study-sets/${courseId}/definitions`,
+	});
+
+	const { isLoading, data } = useQuery({
+		queryKey: [`flashcards-${courseId}`],
+		queryFn,
+	});
+
+	//TODO: Extract flashcards and name
+
 	const [currentFlashcard, setCurrentFlashcard] = useState(0);
 	const [learnedFlashcardsPerRound, setLearnedFlashcardsPerRound] = useState<
 		number[]
