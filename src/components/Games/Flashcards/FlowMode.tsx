@@ -9,11 +9,16 @@ import { useParams } from "react-router-dom";
 import { CourseProgress } from "../../../types/Course";
 type Props = {
 	flashcards: FlashcardType[];
+	currentFlashcard: number;
+	setCurrentFlashcard: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const FlowMode = ({ flashcards }: Props) => {
+const FlowMode = ({
+	flashcards,
+	currentFlashcard,
+	setCurrentFlashcard,
+}: Props) => {
 	const [knownFlashcards, setKnownFlashcards] = useState<string[]>([]);
-	const [currentFlashcard, setCurrentFlashcard] = useState(0);
 	const [round, setRound] = useState(0);
 	const [flashcardsToLearn, setFlashcardsToLearn] = useState<FlashcardType[]>(
 		[]
@@ -51,7 +56,11 @@ const FlowMode = ({ flashcards }: Props) => {
 			} as CourseProgress;
 
 			setCourseProgress(toSave);
+
+			return true;
 		}
+
+		return false;
 	};
 
 	const syncFlahcardsToLearn = (flashcards: FlashcardType[]) => {
@@ -111,7 +120,6 @@ const FlowMode = ({ flashcards }: Props) => {
 		setLearnedFlashcardsPerRound((state) =>
 			state.map((s, i) => (i === round ? s + 1 : s))
 		);
-		setCurrentFlashcard((flashcard) => flashcard + 1);
 
 		const isGameFinished = flashcards.length - (knownFlashcards.length + 1) === 0;
 
@@ -119,7 +127,9 @@ const FlowMode = ({ flashcards }: Props) => {
 			return endGameHandler();
 		}
 
-		controllRoundEnd();
+		if (!controllRoundEnd()) {
+			setCurrentFlashcard((flashcard) => flashcard + 1);
+		}
 	};
 
 	const nextRound = () => {

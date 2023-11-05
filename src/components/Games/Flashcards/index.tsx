@@ -6,11 +6,15 @@ import FlowMode from "./FlowMode";
 
 type Props = {
 	flashcards: FlashcardInfo[];
+	currentFlashcard: number;
+	setCurrentFlashcard: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const FlashcardsGame = ({
 	flashcards,
 	className,
+	currentFlashcard,
+	setCurrentFlashcard,
 	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
 	return (
@@ -20,7 +24,11 @@ const FlashcardsGame = ({
 				className
 			)}
 			{...props}>
-			<FlowMode flashcards={flashcards} />
+			<FlowMode
+				flashcards={flashcards}
+				currentFlashcard={currentFlashcard}
+				setCurrentFlashcard={setCurrentFlashcard}
+			/>
 		</div>
 	);
 };

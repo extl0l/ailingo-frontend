@@ -1,3 +1,4 @@
+import { useState } from "react";
 import FlashcardsGame from "../../components/Games/Flashcards";
 import FlashcardsMenu from "../../components/Games/Flashcards/FlashcardsMenu";
 import { Flashcard } from "../../types/Flashcard";
@@ -19,10 +20,19 @@ const DUMMY_FLASHCARDS = [
 ] as Flashcard[];
 
 const Flashcards = () => {
+	const [currentFlashcard, setCurrentFlashcard] = useState(0);
+
 	return (
 		<main className="grid gridLayout grid-rows-[80px_1fr] h-full bg-theme-background-light-variant">
-			<FlashcardsMenu />
-			<FlashcardsGame flashcards={DUMMY_FLASHCARDS} />
+			<FlashcardsMenu
+				currentFlashcard={currentFlashcard}
+				flashcards={DUMMY_FLASHCARDS.length}
+			/>
+			<FlashcardsGame
+				flashcards={DUMMY_FLASHCARDS}
+				currentFlashcard={currentFlashcard}
+				setCurrentFlashcard={setCurrentFlashcard}
+			/>
 		</main>
 	);
 };
