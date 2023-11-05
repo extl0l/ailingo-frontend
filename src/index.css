@@ -152,7 +152,7 @@
 }
 .flashcard-side {
 	@apply overflow-hidden absolute top-0 left-0 h-full w-full transition shadow-none p-0;
-	box-shadow: -4px 17px 63px -37px rgba(66, 68, 90, 1);
+	box-shadow: -4px 17px 63px -37px hsla(23, 22%, 27%, 1);
 	transition-duration: 0.3s;
 	backface-visibility: hidden;
 }

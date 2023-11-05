@@ -11,21 +11,25 @@ type Props = {
 	flashcards: FlashcardType[];
 	currentFlashcard: number;
 	setCurrentFlashcard: React.Dispatch<React.SetStateAction<number>>;
+	learnedFlashcardsPerRound: number[];
+	setLearnedFlashcardsPerRound: React.Dispatch<React.SetStateAction<number[]>>;
+	round: number;
+	setRound: React.Dispatch<React.SetStateAction<number>>;
 };
 
 const FlowMode = ({
 	flashcards,
 	currentFlashcard,
 	setCurrentFlashcard,
+	learnedFlashcardsPerRound,
+	setLearnedFlashcardsPerRound,
+	round,
+	setRound,
 }: Props) => {
 	const [knownFlashcards, setKnownFlashcards] = useState<string[]>([]);
-	const [round, setRound] = useState(0);
 	const [flashcardsToLearn, setFlashcardsToLearn] = useState<FlashcardType[]>(
 		[]
 	);
-	const [learnedFlashcardsPerRound, setLearnedFlashcardsPerRound] = useState([
-		0,
-	]);
 	const [isGameRunning, setIsGameRunning] = useState(false);
 	const [isMiddleRound, setIsMiddleRound] = useState(false);
 	const [isEndScreen, setIsEndScreen] = useState(false);
@@ -172,7 +176,7 @@ const FlowMode = ({
 
 	if (isEndScreen) {
 		return (
-			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_rgba(66,68,90,1)]">
+			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_hsla(23, 22%, 27%, 1)]">
 				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light">
 					<span className="text-3xl">GUT GEMACHT!</span>
 					<Button
@@ -188,8 +192,8 @@ const FlowMode = ({
 
 	if (isMiddleRound) {
 		return (
-			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_rgba(66,68,90,1)]">
-				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light">
+			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_hsla(23, 22%, 27%, 1)]">
+				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light ">
 					<span className="text-3xl">NEXT ROUND</span>
 					<Button
 						onClick={nextRound}
