@@ -16,7 +16,7 @@ const FlashcardsGame = ({
 	return (
 		<div
 			className={cn(
-				"col-[center-start/center-end] h-full flex flex-col",
+				"col-[center-start/center-end] h-full flex flex-col ",
 				className
 			)}
 			{...props}>

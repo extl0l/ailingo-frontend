@@ -8,7 +8,7 @@ export const buttonVariants = cva(
 	{
 		variants: {
 			variant: {
-				outline: "border-2 border-theme-blue-ghost hover:bg-theme-font-dark",
+				outline: "border-2 border-theme-brown-light hover:bg-theme-brown-light",
 				fill: "border-none",
 			},
 			rounded: {

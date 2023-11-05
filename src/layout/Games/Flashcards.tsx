@@ -20,7 +20,7 @@ const DUMMY_FLASHCARDS = [
 
 const Flashcards = () => {
 	return (
-		<main className="grid gridLayout grid-rows-[80px_1fr] h-full">
+		<main className="grid gridLayout grid-rows-[80px_1fr] h-full bg-theme-background-light-variant">
 			<FlashcardsMenu />
 			<FlashcardsGame flashcards={DUMMY_FLASHCARDS} />
 		</main>

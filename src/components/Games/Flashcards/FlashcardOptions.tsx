@@ -22,7 +22,7 @@ const FlashcardOptions = ({
 						rounded="full"
 						onClick={goBack}
 						className="p-1.5 border-none">
-						<ArrowUturnLeftIcon className="w-6 h-6 fill-theme-blue-ghost" />
+						<ArrowUturnLeftIcon className="w-6 h-6 fill-theme-brown-light" />
 					</Button>
 				</Tooltip>
 			</div>
@@ -46,7 +46,7 @@ const FlashcardOptions = ({
 					</Button>
 				</Tooltip>
 			</div>
-			<div>xd</div>
+			<div></div>
 		</div>
 	);
 };

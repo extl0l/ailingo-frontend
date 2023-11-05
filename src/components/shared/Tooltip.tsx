@@ -23,13 +23,13 @@ const Tooltip = ({
 				<RadixTooltip.Portal>
 					<RadixTooltip.Content
 						className={cn(
-							"[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade text-theme-font-light select-none rounded-md bg-theme-blue-ghost px-4 py-2.5 text-xs  shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]",
+							"[state=delayed-open]:data-[side=top]:animate-slideDownAndFade data-[state=delayed-open]:data-[side=right]:animate-slideLeftAndFade data-[state=delayed-open]:data-[side=left]:animate-slideRightAndFade data-[state=delayed-open]:data-[side=bottom]:animate-slideUpAndFade text-theme-font-light select-none rounded-md bg-theme-brown-light px-4 py-2.5 text-xs  shadow-[hsl(206_22%_7%_/_35%)_0px_10px_38px_-10px,_hsl(206_22%_7%_/_20%)_0px_10px_20px_-15px] will-change-[transform,opacity]",
 							className
 						)}
 						sideOffset={sideOffset}>
 						{content}
 						<RadixTooltip.Arrow
-							className={cn("fill-theme-blue-ghost", arrowClassName)}
+							className={cn("fill-theme-brown-light", arrowClassName)}
 						/>
 					</RadixTooltip.Content>
 				</RadixTooltip.Portal>
