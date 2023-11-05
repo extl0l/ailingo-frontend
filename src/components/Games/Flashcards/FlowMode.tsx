@@ -9,18 +9,27 @@ import { useParams } from "react-router-dom";
 import { CourseProgress } from "../../../types/Course";
 type Props = {
 	flashcards: FlashcardType[];
+	currentFlashcard: number;
+	setCurrentFlashcard: React.Dispatch<React.SetStateAction<number>>;
+	learnedFlashcardsPerRound: number[];
+	setLearnedFlashcardsPerRound: React.Dispatch<React.SetStateAction<number[]>>;
+	round: number;
+	setRound: React.Dispatch<React.SetStateAction<number>>;
 };
 
-const FlowMode = ({ flashcards }: Props) => {
+const FlowMode = ({
+	flashcards,
+	currentFlashcard,
+	setCurrentFlashcard,
+	learnedFlashcardsPerRound,
+	setLearnedFlashcardsPerRound,
+	round,
+	setRound,
+}: Props) => {
 	const [knownFlashcards, setKnownFlashcards] = useState<string[]>([]);
-	const [currentFlashcard, setCurrentFlashcard] = useState(0);
-	const [round, setRound] = useState(0);
 	const [flashcardsToLearn, setFlashcardsToLearn] = useState<FlashcardType[]>(
 		[]
 	);
-	const [learnedFlashcardsPerRound, setLearnedFlashcardsPerRound] = useState([
-		0,
-	]);
 	const [isGameRunning, setIsGameRunning] = useState(false);
 	const [isMiddleRound, setIsMiddleRound] = useState(false);
 	const [isEndScreen, setIsEndScreen] = useState(false);
@@ -51,7 +60,11 @@ const FlowMode = ({ flashcards }: Props) => {
 			} as CourseProgress;
 
 			setCourseProgress(toSave);
+
+			return true;
 		}
+
+		return false;
 	};
 
 	const syncFlahcardsToLearn = (flashcards: FlashcardType[]) => {
@@ -111,13 +124,15 @@ const FlowMode = ({ flashcards }: Props) => {
 		setLearnedFlashcardsPerRound((state) =>
 			state.map((s, i) => (i === round ? s + 1 : s))
 		);
-		controllRoundEnd();
-		setCurrentFlashcard((flashcard) => flashcard + 1);
 
-		const isGameFinished = knownFlashcards.length >= flashcardsToLearn.length;
+		const isGameFinished = flashcards.length - (knownFlashcards.length + 1) === 0;
 
 		if (isGameFinished) {
-			endGameHandler();
+			return endGameHandler();
+		}
+
+		if (!controllRoundEnd()) {
+			setCurrentFlashcard((flashcard) => flashcard + 1);
 		}
 	};
 
@@ -161,10 +176,13 @@ const FlowMode = ({ flashcards }: Props) => {
 
 	if (isEndScreen) {
 		return (
-			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_rgba(66,68,90,1)]">
-				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-font-light">
+			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_hsla(23, 22%, 27%, 1)]">
+				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light">
 					<span className="text-3xl">GUT GEMACHT!</span>
-					<Button onClick={restartGame} variant="outline" className="text-lg py-2">
+					<Button
+						onClick={restartGame}
+						variant="outline"
+						className="text-lg py-2 text-theme-brown-light">
 						Try again
 					</Button>
 				</div>
@@ -174,10 +192,13 @@ const FlowMode = ({ flashcards }: Props) => {
 
 	if (isMiddleRound) {
 		return (
-			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_rgba(66,68,90,1)]">
-				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-font-light">
+			<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_hsla(23, 22%, 27%, 1)]">
+				<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light ">
 					<span className="text-3xl">NEXT ROUND</span>
-					<Button onClick={nextRound} variant="outline" className="text-lg py-2">
+					<Button
+						onClick={nextRound}
+						variant="outline"
+						className="text-lg py-2 text-theme-brown-light">
 						Next round
 					</Button>
 				</div>

@@ -13,79 +13,75 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 // TODO: Implement loader() for routing
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <RootLayout />,
-    children: [
-      {
-        index: true,
-        element: <HomePage />,
-      },
-      {
-        path: "library",
-        element: <LibraryLayout />,
-        children: [
-          {
-            index: true,
-            element: <MySetsPage />,
-          },
-          {
-            path: "starred",
-            element: <StarredSetsPage />,
-          },
-          {
-            path: "recent",
-            element: <RecentlyStudiedPage />,
-          },
-        ],
-      },
-      {
-        path: "sets/:studySetId",
-        element: <StudySetDetailsPage />,
-      },
-      {
-        path: "courses/:courseId",
-        element: <div>CourseId</div>,
-      },
-      {
-        path: "courses/:courseId/edit",
-        element: <div>Edit course</div>,
-      },
-      {
-        path: "courses/new",
-        element: <CreateCourse />,
-      },
-    ],
-  },
-  {
-    path: "/:courseId",
-    element: <div>Learning methods list</div>,
-  },
+	{
+		path: "/",
+		element: <RootLayout />,
+		children: [
+			{
+				index: true,
+				element: <HomePage />,
+			},
+			{
+				path: "library",
+				element: <LibraryLayout />,
+				children: [
+					{
+						index: true,
+						element: <MySetsPage />,
+					},
+					{
+						path: "starred",
+						element: <StarredSetsPage />,
+					},
+					{
+						path: "recent",
+						element: <RecentlyStudiedPage />,
+					},
+				],
+			},
+			{
+				path: "sets/:studySetId",
+				element: <StudySetDetailsPage />,
+			},
+			{
+				path: "courses/:courseId",
+				element: <div>CourseId</div>,
+			},
+			{
+				path: "courses/:courseId/edit",
+				element: <div>Edit course</div>,
+			},
+			{
+				path: "courses/new",
+				element: <CreateCourse />,
+			},
+		],
+	},
+	{
+		path: "/:courseId",
+		element: <div>Learning methods list</div>,
+	},
 
-  {
-    path: "/:courseId/flashcards",
-    element: <Flashcards />,
-  },
-  {
-    path: "/:courseId/test",
-    element: <div>Test</div>,
-  },
-  {
-    path: "/login",
-    element: <div>Login</div>,
-  },
+	{
+		path: "/:courseId/flashcards",
+		element: <Flashcards />,
+	},
+	{
+		path: "/:courseId/test",
+		element: <div>Test</div>,
+	},
 ]);
 
 const queryClient = new QueryClient();
 
 const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <RouterProvider router={router} />
-      </AuthProvider>
-    </QueryClientProvider>
-  );
+	return (
+		<AuthProvider>
+			<QueryClientProvider client={queryClient}>
+				<RouterProvider router={router} />
+			</QueryClientProvider>
+		</AuthProvider>
+	);
 };
 
 export default App;
