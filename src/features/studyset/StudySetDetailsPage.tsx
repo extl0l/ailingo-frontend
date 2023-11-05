@@ -3,9 +3,12 @@ import IconAddStar from "./assets/star_FILL0_wght600_GRAD0_opsz24.svg";
 import IconOpenFullscreen from "./assets/open_in_full_FILL0_wght400_GRAD0_opsz24.svg";
 import { Glyph } from "../_shared/components/Glyph.tsx";
 import { FlipCard } from "./components/FlipCard.tsx";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Navigate, useParams } from "react-router-dom";
-import axios from "axios";
+import { useAuth, useUser } from "@clerk/clerk-react";
+import { EditableText } from "../_shared/components/EditableText.tsx";
+import { useState } from "react";
+import { backendClient } from "../_shared/api/backendClient.ts";
 
 const DUMMY_DEFINITIONS: Definition[] = [
   {
@@ -28,36 +31,80 @@ const DUMMY_DEFINITIONS: Definition[] = [
 
 export const StudySetDetailsPage = () => {
   const { studySetId } = useParams();
+  const { user } = useUser();
 
-  const query = useQuery<StudySet>({
-    queryKey: ["studySet", studySetId],
+  const [studySetEditValue, setStudySetEditValue] = useState<
+    StudySet | undefined
+  >();
+
+  const studySetDetailsQuery = useQuery<StudySet>({
+    queryKey: ["study-set", studySetId],
     queryFn: async () => {
-      const response = await axios.get(
-        `https://ailingo-backend.azurewebsites.net/study-sets/${studySetId}`,
-      );
-      console.log(response.data);
+      const response = await backendClient.get(`study-sets/${studySetId}`);
+      setStudySetEditValue(response.data);
       return response.data;
     },
     retry: false,
   });
 
-  if (query.isError) {
+  const { getToken } = useAuth();
+  const queryClient = useQueryClient();
+
+  const studySetUpdateMutation = useMutation({
+    mutationFn: async (studySet: StudySet) => {
+      const response = await backendClient.put(
+        `study-sets/${studySetId}`,
+        studySet,
+        {
+          headers: { Authorization: `Bearer ${await getToken()}` },
+        },
+      );
+      // noinspection ES6MissingAwait
+      queryClient.invalidateQueries({ queryKey: ["study-set", studySetId] });
+      return response.data;
+    },
+  });
+
+  if (studySetDetailsQuery.isError) {
     return <Navigate to="/library" />;
   }
 
-  if (query.isPending) {
+  if (studySetDetailsQuery.isPending || !studySetEditValue) {
     return <p>Loading...</p>;
   }
 
-  const { name, icon } = query.data;
-  const color = query.data.color || "hsla(58, 63%, 53%, 1)";
+  const studySet = studySetDetailsQuery.data;
+  const { icon, author } = studySet;
+  const color = studySet.color || "hsla(58, 63%, 53%, 1)";
+
+  const isEditable = user?.id === author.id;
+
+  const handleNameChange = (newName: string) => {
+    setStudySetEditValue({ ...studySetEditValue, name: newName });
+  };
+
+  const handleChangedNameSubmit = (newName: string) => {
+    if (!newName) {
+      // Revert empty name to the unedited version
+      setStudySetEditValue({ ...studySetEditValue, name: studySet.name });
+    } else {
+      studySetUpdateMutation.mutate({ ...studySet, name: newName });
+    }
+  };
 
   return (
     <article className="font-medium text-theme-brown-light">
       <header className="bg-theme-background-light-variant">
         <div className="p-8 max-w-3xl mx-auto">
           <div className="flex items-center gap-2.5 mb-3">
-            <h1 className="text-3xl">{name}</h1>
+            <h1 className="text-3xl">
+              <EditableText
+                value={studySetEditValue.name}
+                onChange={handleNameChange}
+                onSubmit={handleChangedNameSubmit}
+                editable={isEditable}
+              />
+            </h1>
             <button title="Star this study set">
               <img src={IconAddStar} alt="" />
             </button>
