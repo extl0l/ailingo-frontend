@@ -1,36 +1,36 @@
 import { Glyph } from "../_shared/components/Glyph.tsx";
 import IconSortDescending from "./assets/arrow_upward_alt_FILL0_wght400_GRAD0_opsz40.svg";
+import { useQuery } from "@tanstack/react-query";
+import { backendClient } from "../_shared/api/backendClient.ts";
+import { useAuth } from "@clerk/clerk-react";
+import { Language } from "../_shared/models/StudySet.ts";
+import { StudySetAuthor } from "../_shared/models/StudySetAuthor.ts";
 import { StudySetCard } from "../_shared/components/StudySetCard.tsx";
-import IconFurniture from "../navigation/assets/search.svg";
+import IconBrokenImage from "./assets/broken_image_FILL0_wght400_GRAD0_opsz40.svg";
+import { Link } from "react-router-dom";
 
-const starredSets = [
-  {
-    id: "sts-00",
-    title: "Gardening",
-    icon: IconFurniture,
-    color: "hsla(159, 39%, 55%, 1)",
-  },
-  {
-    id: "sts-01",
-    title: "At the airport",
-    icon: IconFurniture,
-    color: "hsla(58, 63%, 53%, 1)",
-  },
-  {
-    id: "sts-02",
-    title: "Biking in the suburbs",
-    icon: IconFurniture,
-    color: "hsla(24, 93%, 56%, 1)",
-  },
-  {
-    id: "sts-03",
-    title: "Home furnishings",
-    icon: IconFurniture,
-    color: "hsla(22,22%,27%,1)",
-  },
-];
+type StudySetsStarredByMeResponse = {
+  id: number;
+  author: StudySetAuthor;
+  name: string;
+  description: string;
+  phraseLanguage: Language;
+  definitionLanguage: Language;
+}[];
 
 export const StarredSetsPage = () => {
+  const { getToken } = useAuth();
+
+  const starredSetsQuery = useQuery<StudySetsStarredByMeResponse>({
+    queryKey: ["my-starred-sets"],
+    queryFn: async () => {
+      const response = await backendClient.get("/me/study-sets/starred", {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      return response.data;
+    },
+  });
+
   return (
     <>
       <div className="col-span-full mt-6 flex justify-between items-end">
@@ -42,8 +42,15 @@ export const StarredSetsPage = () => {
           <Glyph src={IconSortDescending} width="1.5rem" height="1.5rem" />
         </button>
       </div>
-      {starredSets.map((studySet) => (
-        <StudySetCard key={studySet.id} studySet={studySet} />
+      {starredSetsQuery.data?.map((studySet) => (
+        <Link key={studySet.id} to={`/sets/${studySet.id}`}>
+          <StudySetCard
+            name={studySet.name}
+            color="hsla(58, 63%, 53%, 1)"
+            icon={IconBrokenImage}
+            authorUsername={studySet.author?.username}
+          />
+        </Link>
       ))}
     </>
   );
