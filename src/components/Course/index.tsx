@@ -4,6 +4,8 @@ import { FormEvent, useState } from "react";
 import { TrashIcon } from "@heroicons/react/24/solid";
 import Tooltip from "../shared/Tooltip";
 import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/outline";
+import { useClerk, useUser } from "@clerk/clerk-react";
+
 
 const CreateCourse = () => {
     const [title, setTitle] = useState("");
@@ -11,6 +13,14 @@ const CreateCourse = () => {
     const [phraseLanguage, setPhraseLanguage] = useState("");
     const [definitionsLanguage, setDefinitionsLanguage] = useState("");
     const [prompts, setPrompts] = useState([{ phrase: '', definition: '', sentence: '' }]);
+
+    const clerk = useClerk();
+    const { isSignedIn } = useUser();
+
+    if (!isSignedIn) {
+        clerk.openSignIn();
+        return <p>User must be logged in to access this site</p>
+    }
 
     const addPrompt = (event: FormEvent) => {
         event.preventDefault();
