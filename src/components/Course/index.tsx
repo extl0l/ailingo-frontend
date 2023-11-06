@@ -17,10 +17,19 @@ const CreateCourse = () => {
     const clerk = useClerk();
     const { isSignedIn } = useUser();
 
+
     if (!isSignedIn) {
         clerk.openSignIn();
-        return <p>User must be logged in to access this site</p>
+        return (
+            <div>
+                <p className="text-center text-red-500 text-md sm:text-2xl lg:text-3xl">User must be signed in to access this site</p>
+                <Button buttonStyle={"yellow"} className="flex w-40 m-auto border-none justify-center my-2" onClick={() => clerk.openSignIn()}>
+                    Sign in
+                </Button>
+            </div>
+        )
     }
+
 
     const addPrompt = (event: FormEvent) => {
         event.preventDefault();
