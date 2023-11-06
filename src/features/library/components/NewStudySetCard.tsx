@@ -1,6 +1,7 @@
 import IconNew from "../assets/add_FILL0_wght400_GRAD0_opsz40.svg";
 import { Glyph } from "../../_shared/components/Glyph.tsx";
 import { cn } from "../../../utils/tailwind.ts";
+import { useClerk, useUser } from "@clerk/clerk-react";
 
 interface NewStudySetCardProps {
 	onClick?: () => void;
@@ -8,7 +9,14 @@ interface NewStudySetCardProps {
 }
 
 export const CreateNewStudySetCard = (props: NewStudySetCardProps) => {
+	const clerk = useClerk();
+	const { isSignedIn } = useUser();
+
 	const handleClick = () => {
+		if (!isSignedIn) {
+			clerk.openSignIn();
+			return;
+		}
 		props.onClick?.();
 	};
 
