@@ -2,6 +2,7 @@ import { EditableText } from "../../_shared/components/EditableText.tsx";
 import {
   ChangeEvent,
   FormEvent,
+  MouseEvent,
   useCallback,
   useEffect,
   useState,
@@ -48,6 +49,10 @@ export const DefinitionList = () => {
     number | undefined
   >();
 
+  const handleContainerClick = () => {
+    setExpandedDefinitionId(undefined);
+  };
+
   const handleDefinitionClick = (definitionId: number) => {
     setExpandedDefinitionId(definitionId);
   };
@@ -77,23 +82,25 @@ export const DefinitionList = () => {
   };
 
   return (
-    <section className="flex flex-col max-w-3xl px-4 mx-auto">
-      <p className="font-medium text-theme-brown-light text-2xl py-6 px-4">
-        Words
-      </p>
-      {definitions.map((definition) => (
-        <DefinitionListItem
-          key={definition.id}
-          definition={definition}
-          expanded={expandedDefinitionId === definition.id}
-          onClick={() => handleDefinitionClick(definition.id)}
-          onUpdate={handleDefinitionUpdate}
-          onDelete={() => handleDefinitionDelete(definition.id)}
-          editable={true} // TODO: This should be variable
-        />
-      ))}
-      <NewDefinitionListItem onCreate={handleDefinitionCreate} />
-    </section>
+    <div onClick={handleContainerClick}>
+      <section className="flex flex-col max-w-3xl px-4 mx-auto pb-12">
+        <p className="font-medium text-theme-brown-light text-2xl py-6 px-4">
+          Words
+        </p>
+        {definitions.map((definition) => (
+          <DefinitionListItem
+            key={definition.id}
+            definition={definition}
+            expanded={expandedDefinitionId === definition.id}
+            onClick={() => handleDefinitionClick(definition.id)}
+            onUpdate={handleDefinitionUpdate}
+            onDelete={() => handleDefinitionDelete(definition.id)}
+            editable={true} // TODO: This should be variable
+          />
+        ))}
+        <NewDefinitionListItem onCreate={handleDefinitionCreate} />
+      </section>
+    </div>
   );
 };
 
@@ -194,6 +201,11 @@ const DefinitionListItem = (props: DefinitionListItemProps) => {
     setMeaningEditText(meaning);
   }, [phrase, meaning]);
 
+  const handleDefinitionClick = (event: MouseEvent) => {
+    event.stopPropagation();
+    props.onClick?.();
+  };
+
   const handleDefinitionUpdate = useCallback(
     (newPhrase: string, newMeaning: string) => {
       const trimmedNewPhrase = newPhrase.trim();
@@ -229,7 +241,7 @@ const DefinitionListItem = (props: DefinitionListItemProps) => {
         "group even:bg-theme-background-light-variant rounded-xl px-6 transition-[margin]",
         props.expanded ? "mx-0" : "mx-4",
       )}
-      onClick={props.onClick}
+      onClick={handleDefinitionClick}
     >
       <div
         className={cn(
