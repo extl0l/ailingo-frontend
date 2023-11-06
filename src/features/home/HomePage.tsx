@@ -8,12 +8,14 @@ const featured = [
     title: "Home furnishings",
     icon: IconFurniture,
     color: "hsla(22,22%,27%,1)",
+    authorUsername: "John Doe",
   },
   {
     id: "sts-01",
     title: "At the airport",
     icon: IconFurniture,
     color: "hsla(58, 63%, 53%, 1)",
+    authorUsername: "Joe Rogan",
   },
 ];
 
@@ -28,6 +30,7 @@ const sections = [
         // description: "Taking care of plants. But in English.",
         icon: IconFurniture,
         color: "hsla(159, 39%, 55%, 1)",
+        authorUsername: "AI Generated",
         // phraseLanguage: "en-US",
         // definitionLanguage: "pl-PL",
         // words: [],
@@ -38,18 +41,21 @@ const sections = [
         title: "At the airport",
         icon: IconFurniture,
         color: "hsla(58, 63%, 53%, 1)",
+        authorUsername: "Ryanair",
       },
       {
         id: "sts-02",
         title: "Biking in the suburbs",
         icon: IconFurniture,
         color: "hsla(24, 93%, 56%, 1)",
+        authorUsername: "Louis Clutchstar",
       },
       {
         id: "sts-03",
         title: "Home furnishings",
         icon: IconFurniture,
         color: "hsla(22,22%,27%,1)",
+        authorUsername: "Mike Terryfield",
       },
     ],
   },
@@ -65,7 +71,11 @@ export const HomePage = () => {
             {featured.map((set) => (
               <StudySetCard
                 key={set.id}
-                studySet={set}
+                // studySet={set}
+                name={set.title}
+                icon={set.icon}
+                color={set.color}
+                authorUsername={set.authorUsername}
                 progress={{
                   totalWords: 1234,
                   learnedWords: 987,
@@ -83,7 +93,8 @@ export const HomePage = () => {
             description={section.description}
           >
             {section.sets.map((set) => (
-              <StudySetCard key={set.id} studySet={set} />
+              // <StudySetCard key={set.id} studySet={set} />
+              <StudySetCard key={set.id} name={set.title} icon={set.icon} color={set.color} authorUsername={set.authorUsername} />
             ))}
           </SectionWrapper>
         ))}
