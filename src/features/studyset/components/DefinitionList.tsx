@@ -1,5 +1,5 @@
 import { EditableText } from "../../_shared/components/EditableText.tsx";
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { cn } from "../../../utils/tailwind.ts";
 
 export interface Definition {
@@ -36,7 +36,7 @@ const DUMMY_DEFINITIONS: Definition[] = [
 ];
 
 export const DefinitionList = () => {
-  const definitions = DUMMY_DEFINITIONS;
+  const [definitions, setDefinitions] = useState(DUMMY_DEFINITIONS);
 
   const [expandedDefinitionId, setExpandedDefinitionId] = useState<
     number | undefined
@@ -44,6 +44,24 @@ export const DefinitionList = () => {
 
   const handleDefinitionClick = (definitionId: number) => {
     setExpandedDefinitionId(definitionId);
+  };
+
+  const handleDefinitionUpdate = (updatedDefinition: Definition) => {
+    const definitionsCopy = [...definitions];
+    const definitionIndex = definitionsCopy.findIndex(
+      (definition) => definition.id === updatedDefinition.id,
+    );
+    definitionsCopy.splice(definitionIndex, 1, updatedDefinition);
+    setDefinitions(definitionsCopy);
+  };
+
+  const handleDefinitionDelete = (definitionId: number) => {
+    const definitionsCopy = [...definitions];
+    const definitionIndex = definitionsCopy.findIndex(
+      (definition) => definition.id === definitionId,
+    );
+    definitionsCopy.splice(definitionIndex, 1);
+    setDefinitions(definitionsCopy);
   };
 
   return (
@@ -57,6 +75,8 @@ export const DefinitionList = () => {
           definition={definition}
           expanded={expandedDefinitionId === definition.id}
           onClick={() => handleDefinitionClick(definition.id)}
+          onUpdate={handleDefinitionUpdate}
+          onDelete={() => handleDefinitionDelete(definition.id)}
           editable={true} // TODO: This should be variable
         />
       ))}
@@ -69,20 +89,47 @@ interface DefinitionListItemProps {
   expanded?: boolean;
   editable?: boolean;
   onClick?: () => void;
+  onUpdate?: (updatedDefinition: Definition) => void;
+  onDelete?: () => void;
 }
 
 const DefinitionListItem = (props: DefinitionListItemProps) => {
-  const { phrase, meaning } = props.definition;
+  const { definition, onUpdate, onDelete } = props;
+  const { phrase, meaning } = definition;
 
   const [phraseEditText, setPhraseEditText] = useState(phrase);
   const [meaningEditText, setMeaningEditText] = useState(meaning);
 
+  useEffect(() => {
+    setPhraseEditText(phrase);
+    setMeaningEditText(meaning);
+  }, [phrase, meaning]);
+
+  const handleDefinitionUpdate = useCallback(
+    (newPhrase: string, newMeaning: string) => {
+      const trimmedNewPhrase = newPhrase.trim();
+      const trimmedNewMeaning = newMeaning.trim();
+
+      if (trimmedNewPhrase === "" || trimmedNewMeaning === "") {
+        onDelete?.();
+        return;
+      }
+      const updatedDefinition: Definition = {
+        ...definition,
+        phrase: trimmedNewPhrase,
+        meaning: trimmedNewMeaning,
+      };
+      onUpdate?.(updatedDefinition);
+    },
+    [definition, onUpdate, onDelete],
+  );
+
   const handlePhraseValueSubmit = (newPhrase: string) => {
-    console.log("should update PHRASE to", newPhrase);
+    handleDefinitionUpdate(newPhrase, meaning);
   };
 
   const handleMeaningValueSubmit = (newMeaning: string) => {
-    console.log("should update MEANING to", newMeaning);
+    handleDefinitionUpdate(phrase, newMeaning);
   };
 
   const isEditable = props.expanded && props.editable;
