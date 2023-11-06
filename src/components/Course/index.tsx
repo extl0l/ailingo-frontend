@@ -2,22 +2,24 @@ import Button from "../shared/Button";
 import Input from "../shared/Input";
 import { FormEvent, useState } from "react";
 import { TrashIcon } from "@heroicons/react/24/solid";
+import Tooltip from "../shared/Tooltip";
+import { ChatBubbleOvalLeftEllipsisIcon } from "@heroicons/react/24/outline";
 
 const CreateCourse = () => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [phraseLanguage, setPhraseLanguage] = useState("");
     const [definitionsLanguage, setDefinitionsLanguage] = useState("");
-    const [prompts, setPrompts] = useState([{ phrase: '', definition: '' }]);
+    const [prompts, setPrompts] = useState([{ phrase: '', definition: '', sentence: '' }]);
 
     const addPrompt = (event: FormEvent) => {
         event.preventDefault();
-        const newPrompt = { phrase: '', definition: '' }
+        const newPrompt = { phrase: '', definition: '', sentence: '' }
         setPrompts([...prompts, newPrompt]);
     }
 
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>, setStateFunction: (newValue: string) => void) => {
-        const newValue = e.target.value;
+        const newValue = e.target.value.trim();
         setStateFunction(newValue);
     }
 
@@ -27,10 +29,43 @@ const CreateCourse = () => {
         setPrompts(data);
     }
 
+    const trimPrompts = () => {
+        prompts.forEach(prompt => {
+            prompt.phrase = prompt.phrase.trim();
+            prompt.definition = prompt.definition.trim();
+            prompt.sentence = prompt.sentence.trim();
+        })
+    }
+
+    const validatePrompts = () => {
+        let valid = true;
+        prompts.forEach(prompt => {
+            if (prompt.phrase === '' || prompt.definition === '' || prompt.sentence === '') {
+                valid = false;
+            }
+        })
+        return valid;
+    }
+
+    const validateForm = () => {
+        return (title === '' || description === '' || phraseLanguage === '' || definitionsLanguage === '');
+    }
+
+    const validateEverything = () => {
+        return (!validateForm() && validatePrompts());
+    }
+
     const handleSubmit = (event: FormEvent) => {
         event.preventDefault();
+
+        trimPrompts();
+        if (!validateEverything()) {
+            alert("Please fill in all the prompts");
+            return;
+        }
+
         const data = { title, description, phraseLanguage, definitionsLanguage, prompts };
-        console.log(data)
+        console.table(data)
     }
 
     const removePrompt = (event: FormEvent, index: number) => {
@@ -45,6 +80,23 @@ const CreateCourse = () => {
             event.preventDefault();
             addPrompt(event);
         }
+    }
+
+    const phraseAndDefinitionIsEmpty = (index: number) => {
+        const data = [...prompts]
+        return (data[index].phrase === '' || data[index].definition === '');
+    }
+
+    const handleAutoGenerateSentence = (event: FormEvent, index: number) => {
+        event.preventDefault();
+        const data = [...prompts];
+
+        if (phraseAndDefinitionIsEmpty(index)) {
+            return;
+        }
+
+        data[index].sentence = "This is a sentence"; //replace with actual generated sentence
+        setPrompts(data);
     }
 
     return (
@@ -68,10 +120,22 @@ const CreateCourse = () => {
 
                 <div className="space-y-2 w-3/4 m-auto">
                     {prompts.map((prompt, index) => (
-                        <div key={index} className="flex flex-col lg:flex-row h-auto lg:h-20 items-center justify-between mb-2 panel lg:w-auto my-28 md:my-0 gap-1">
-                            <Input className="w-11/12 lg:w-96 mx-2" placeholder={"Enter phrase"} name="phrase" rounded={"large"} border={"white"} value={prompt.phrase} onChange={event => handleFormChange(index, event)} />
-                            <Input className="w-11/12 lg:w-96 mx-2" placeholder={"Enter definition"} name="definition" rounded={"large"} border={"white"} value={prompt.definition} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
-                            <Button buttonStyle={"transparent"} className="w-24 sm:w-16 bg-red-500 border-none" onClick={(event) => { if (prompts.length > 1) { removePrompt(event, index) } }}><TrashIcon className="w-5 h-6" /></Button>
+                        <div key={index} className="flex flex-col lg:flex-row h-auto lg:h-24 items-center justify-between mb-2 panel lg:w-auto my-28 md:my-0 gap-1">
+                            <div className="lg:grid lg:grid-rows-2 lg:grid-cols-2 w-11/12 flex-row gap-1">
+                                <Input className="w-full" placeholder={"Enter phrase"} name="phrase" rounded={"large"} border={"white"} value={prompt.phrase} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
+                                <Input className="w-full" placeholder={"Enter definition"} name="definition" rounded={"large"} border={"white"} value={prompt.definition} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
+                                <Input className="lg:col-span-2 w-full" placeholder={"Sentence"} name="sentence" rounded={"large"} border={"white"} value={prompt.sentence} onChange={event => handleFormChange(index, event)} onKeyDown={handleEnterKeyPress} />
+                            </div>
+                            <Tooltip content="Auto generate sentence">
+                                <Button buttonStyle={"yellow"} className="w-24 sm:w-16 mx-1" onClick={(event) => { handleAutoGenerateSentence(event, index) }}>
+                                    <ChatBubbleOvalLeftEllipsisIcon className="w-5 h-6" />
+                                </Button>
+                            </Tooltip>
+                            <Tooltip content="Discard flashcard">
+                                <Button buttonStyle={"transparent"} className="w-24 sm:w-16 bg-red-500 border-none" onClick={(event) => { if (prompts.length > 1) { removePrompt(event, index) } }}>
+                                    <TrashIcon className="w-5 h-6" />
+                                </Button>
+                            </Tooltip>
                         </div>
                     ))}
                 </div>
