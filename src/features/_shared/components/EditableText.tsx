@@ -1,10 +1,12 @@
 import { FocusEvent, FormEvent, KeyboardEvent, useEffect, useRef } from "react";
+import { cn } from "../../../utils/tailwind.ts";
 
 interface EditableTextProps {
   value: string;
-  onChange: (newValue: string) => void;
+  onChange?: (newValue: string) => void;
   editable?: boolean;
   onSubmit?: (value: string) => void;
+  className?: string;
 }
 
 export const EditableText = (props: EditableTextProps) => {
@@ -39,7 +41,7 @@ export const EditableText = (props: EditableTextProps) => {
 
   return (
     <span
-      className="min-w-[1ch] inline-block"
+      className={cn("min-w-[1ch] inline-block", props.className)}
       ref={ref}
       onInput={handleInput}
       onKeyDown={handleKeyDown}

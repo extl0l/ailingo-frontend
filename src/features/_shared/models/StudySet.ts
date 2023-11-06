@@ -14,8 +14,3 @@ export interface StudySet {
 }
 
 export type Language = "en-US" | "pl-PL";
-
-export interface Definition {
-  word: string;
-  definition: string;
-}

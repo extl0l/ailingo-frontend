@@ -1,4 +1,4 @@
-import { Definition, StudySet } from "../_shared/models/StudySet.ts";
+import { StudySet } from "../_shared/models/StudySet.ts";
 import IconAddStar from "./assets/star_FILL0_wght600_GRAD0_opsz24.svg";
 import IconOpenFullscreen from "./assets/open_in_full_FILL0_wght400_GRAD0_opsz24.svg";
 import { Glyph } from "../_shared/components/Glyph.tsx";
@@ -9,25 +9,7 @@ import { useAuth, useUser } from "@clerk/clerk-react";
 import { EditableText } from "../_shared/components/EditableText.tsx";
 import { useState } from "react";
 import { backendClient } from "../_shared/api/backendClient.ts";
-
-const DUMMY_DEFINITIONS: Definition[] = [
-  {
-    word: "look forward to something",
-    definition: "oczekiwać na coś z niecierpliwością",
-  },
-  {
-    word: "plan on something",
-    definition: "planować coś",
-  },
-  {
-    word: "throw a party",
-    definition: "zorganizować przyjęcie",
-  },
-  {
-    word: "housewarming party",
-    definition: "parapetówka",
-  },
-];
+import { DefinitionList } from "./components/DefinitionList.tsx";
 
 export const StudySetDetailsPage = () => {
   const { studySetId } = useParams();
@@ -151,32 +133,7 @@ export const StudySetDetailsPage = () => {
           </div>
         </div>
       </header>
-      <section className="flex flex-col max-w-3xl px-8 mx-auto">
-        <p className="font-medium text-theme-brown-light text-2xl py-6">
-          Words
-        </p>
-        {DUMMY_DEFINITIONS.map((definition) => (
-          <WordDefinition
-            key={`${definition.word}:${definition.definition}`} // key="<word>:<definition>"
-            definition={definition}
-          />
-        ))}
-      </section>
+      <DefinitionList />
     </article>
-  );
-};
-
-interface WordDefinitionProps {
-  definition: Definition;
-}
-
-const WordDefinition = (props: WordDefinitionProps) => {
-  const { word, definition } = props.definition;
-
-  return (
-    <div className="grid grid-cols-3 even:bg-theme-background-light-variant rounded-xl p-3">
-      <span>{word}</span>
-      <span className="col-span-2">{definition}</span>
-    </div>
   );
 };
