@@ -12,13 +12,15 @@ type Props = {
 };
 
 const Flashcard = ({ flashcard, lang }: Props) => {
-	const [isFront, setIsFront] = useState(true);
+	const [isFront, setIsFront] = useState(false);
 
 	const switchSides = () => {
 		setIsFront((prevState) => !prevState);
 	};
 
 	useKeyPress(" ", () => switchSides());
+
+	console.log(flashcard.sentences);
 
 	return (
 		<div className="flashcard no-scrollbar">
@@ -30,9 +32,15 @@ const Flashcard = ({ flashcard, lang }: Props) => {
 					wordToRead={flashcard.phrase}
 				/>
 				<div
-					className="w-full h-full  text-3xl flex justify-center items-center"
+					className="w-full h-full  text-4xl flex justify-center items-center  flex-col"
 					onClick={switchSides}>
 					{flashcard.phrase}
+					{flashcard.sentences.length !== 0 && (
+						<div className="px-24 text-center mt-8 text-xl break-words">
+							<div>{flashcard.sentences[0]}</div>
+							<div>{flashcard.sentences[1]}</div>
+						</div>
+					)}
 				</div>
 			</Panel>
 			<Panel
@@ -43,7 +51,7 @@ const Flashcard = ({ flashcard, lang }: Props) => {
 					wordToRead={flashcard.meaning}
 				/>
 				<div
-					className="w-full h-full  text-3xl flex justify-center items-center"
+					className="w-full h-full text-4xl flex justify-center items-center"
 					onClick={switchSides}>
 					{flashcard.meaning}
 				</div>
