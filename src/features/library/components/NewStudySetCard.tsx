@@ -23,10 +23,10 @@ export const CreateNewStudySetCard = (props: NewStudySetCardProps) => {
 	return (
 		<article
 			className={cn(
-				"font-medium text-theme-brown-light p-3 rounded-xl",
+				"font-medium text-theme-brown-light p-3 rounded-xl mx-auto px-8 ",
 				props.disabled
 					? "cursor-wait bg-theme-background-light-darker"
-					: "bg-theme-background-light-variant hover:bg-theme-background-light-darker cursor-pointer"
+					: "bg-theme-background-light-variant hover:bg-theme-background-light-darker cursor-pointer w-full "
 			)}
 			onClick={handleClick}>
 			<div className="flex items-center gap-2.5">
