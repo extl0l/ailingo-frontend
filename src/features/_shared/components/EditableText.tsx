@@ -41,7 +41,6 @@ export const EditableText = (props: EditableTextProps) => {
 
   return (
     <span
-      className={cn("min-w-[1ch] inline-block", props.className)}
       className={cn("min-w-[1ch] inline-block outline-0", props.className)}
       ref={ref}
       onInput={handleInput}

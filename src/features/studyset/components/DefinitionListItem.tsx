@@ -37,7 +37,7 @@ export const DefinitionListItem = (props: DefinitionListItemProps) => {
     >
       <div
         className={cn(
-          "grid grid-cols-3 py-3 transition-[padding]",
+          "grid grid-cols-3 transition-[padding] gap-2",
           props.expanded ? "px-4" : "px-0",
         )}
       >
@@ -102,13 +102,14 @@ const DefinitionEdit = (props: DefinitionEditProps) => {
   return (
     <>
       <EditableText
+        className="py-3"
         value={phrase}
         onChange={setPhrase}
         onSubmit={handleDefinitionUpdate}
         editable={props.editable}
       />
       <EditableText
-        className="col-span-2"
+        className="py-3 col-span-2"
         value={meaning}
         onChange={setMeaning}
         onSubmit={handleDefinitionUpdate}
