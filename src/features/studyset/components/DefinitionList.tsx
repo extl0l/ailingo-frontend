@@ -1,78 +1,88 @@
 import { useState } from "react";
 import { DefinitionListItem } from "./DefinitionListItem.tsx";
 import { NewDefinitionListItem } from "./NewDefinition.tsx";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { backendClient } from "../../_shared/api/backendClient.ts";
+import { useAuth } from "@clerk/clerk-react";
+import { Definition } from "../../_shared/models/StudySet.ts";
 
-export interface Definition {
-  readonly id: number;
-  phrase: string;
-  meaning: string;
-  sentences: string[];
+export interface DefinitionListProps {
+  studySetId: number;
+  editable?: boolean;
 }
 
-const DUMMY_DEFINITIONS: Definition[] = [
-  {
-    id: 0,
-    phrase: "look forward to something",
-    meaning: "oczekiwać na coś z niecierpliwością",
-    sentences: [
-      "I'm looking forward to the summer break. I've got so many holiday plans!",
-      "My brother says he's looking forward to Christmas. He loves receiving gifts.",
-    ],
-  },
-  {
-    id: 1,
-    phrase: "plan on something",
-    meaning: "planować coś",
-    sentences: [],
-  },
-  {
-    id: 2,
-    phrase: "throw a party",
-    meaning: "zorganizować przyjęcie",
-    sentences: [
-      "Catalina said that throwing a BBQ party with the new neighbours was a great idea.",
-    ],
-  },
-];
+export const DefinitionList = (props: DefinitionListProps) => {
+  const { getToken } = useAuth();
+  const queryClient = useQueryClient();
 
-export const DefinitionList = () => {
-  const [definitions, setDefinitions] = useState(DUMMY_DEFINITIONS);
+  const definitionsQuery = useQuery({
+    queryKey: ["study-sets", props.studySetId, "definitions"],
+    queryFn: async (): Promise<Definition[]> => {
+      const url = `/study-sets/${props.studySetId}/definitions`;
+      const definitions = await backendClient.get(url);
+      return definitions.data satisfies Definition[];
+    },
+  });
 
-  const [expandedDefinitionId, setExpandedDefinitionId] = useState<
-    number | undefined
-  >();
+  const newDefinitionMutation = useMutation({
+    mutationFn: async (newDefinition: Omit<Definition, "id">) => {
+      const url = `/study-sets/${props.studySetId}/definitions`;
+      await backendClient.post(url, newDefinition, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["study-sets", props.studySetId, "definitions"],
+      });
+    },
+  });
+
+  const handleDefinitionCreate = (definition: Omit<Definition, "id">) => {
+    newDefinitionMutation.mutate(definition);
+  };
+
+  const updateDefinitionMutation = useMutation({
+    mutationFn: async (updatedDefinition: Definition) => {
+      const url = `/study-sets/${props.studySetId}/definitions/${updatedDefinition.id}`;
+      await backendClient.put(url, updatedDefinition, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["study-sets", props.studySetId, "definitions"],
+      });
+    },
+  });
+
+  const handleDefinitionUpdate = (updatedDefinition: Definition) => {
+    updateDefinitionMutation.mutate(updatedDefinition);
+  };
+
+  const deleteDefinitionMutation = useMutation({
+    mutationFn: async (definitionId: number) => {
+      const url = `/study-sets/${props.studySetId}/definitions/${definitionId}`;
+      await backendClient.delete(url, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      await queryClient.invalidateQueries({
+        queryKey: ["study-sets", props.studySetId, "definitions"],
+      });
+    },
+  });
+
+  const handleDefinitionDelete = (definitionId: number) => {
+    deleteDefinitionMutation.mutate(definitionId);
+  };
+
+  const [expandedId, setExpandedId] = useState<number | undefined>();
 
   const handleContainerClick = () => {
-    setExpandedDefinitionId(undefined);
+    setExpandedId(undefined);
   };
 
   const handleDefinitionClick = (definitionId: number) => {
-    setExpandedDefinitionId(definitionId);
+    setExpandedId(definitionId);
   };
 
-  const handleDefinitionUpdate = (updatedDefinition: Definition) => {
-    const definitionsCopy = [...definitions];
-    const definitionIndex = definitionsCopy.findIndex(
-      (definition) => definition.id === updatedDefinition.id,
-    );
-    definitionsCopy.splice(definitionIndex, 1, updatedDefinition);
-    setDefinitions(definitionsCopy);
-  };
-
-  const handleDefinitionDelete = (definitionId: number) => {
-    const definitionsCopy = [...definitions];
-    const definitionIndex = definitionsCopy.findIndex(
-      (definition) => definition.id === definitionId,
-    );
-    definitionsCopy.splice(definitionIndex, 1);
-    setDefinitions(definitionsCopy);
-  };
-
-  const handleDefinitionCreate = (definition: Omit<Definition, "id">) => {
-    setDefinitions((definitions) => {
-      return [...definitions, { ...definition, id: Date.now() }];
-    });
-  };
+  const definitions = definitionsQuery.data;
 
   return (
     <div onClick={handleContainerClick}>
@@ -80,15 +90,15 @@ export const DefinitionList = () => {
         <p className="font-medium text-theme-brown-light text-2xl py-6 px-4">
           Words
         </p>
-        {definitions.map((definition) => (
+        {definitions?.map((definition) => (
           <DefinitionListItem
             key={definition.id}
             definition={definition}
-            expanded={expandedDefinitionId === definition.id}
+            expanded={expandedId === definition.id}
             onClick={() => handleDefinitionClick(definition.id)}
             onUpdate={handleDefinitionUpdate}
             onDelete={() => handleDefinitionDelete(definition.id)}
-            editable={true} // TODO: This should be variable
+            editable={props.editable}
           />
         ))}
         <NewDefinitionListItem onCreate={handleDefinitionCreate} />

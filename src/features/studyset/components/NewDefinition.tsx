@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from "react";
-import { Definition } from "./DefinitionList.tsx";
+import { Definition } from "../../_shared/models/StudySet.ts";
 
 export interface NewDefinitionListItemProps {
   onCreate?: (definition: Omit<Definition, "id">) => void;

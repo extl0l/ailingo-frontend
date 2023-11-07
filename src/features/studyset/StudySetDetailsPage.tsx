@@ -133,7 +133,7 @@ export const StudySetDetailsPage = () => {
           </div>
         </div>
       </header>
-      <DefinitionList />
+      <DefinitionList studySetId={studySet.id} editable={isEditable} />
     </article>
   );
 };

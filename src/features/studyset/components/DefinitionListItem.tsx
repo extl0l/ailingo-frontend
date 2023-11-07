@@ -1,8 +1,8 @@
 import { MouseEvent, useEffect, useState } from "react";
 import { cn } from "../../../utils/tailwind.ts";
 import { EditableText } from "../../_shared/components/EditableText.tsx";
-import { Definition } from "./DefinitionList.tsx";
 import { DefinitionSentenceList } from "./DefinitionSentenceList.tsx";
+import { Definition } from "../../_shared/models/StudySet.ts";
 
 export interface DefinitionListItemProps {
   definition: Definition;
@@ -40,10 +40,8 @@ export const DefinitionListItem = (props: DefinitionListItemProps) => {
         <DefinitionEdit
           definition={definition}
           editable={isEditable}
-          onUpdate={(updatedDefinition) =>
-            console.log("updated", updatedDefinition)
-          }
-          onDelete={() => console.log("deleted", definition)}
+          onUpdate={props.onUpdate}
+          onDelete={props.onDelete}
         />
       </div>
       <div
