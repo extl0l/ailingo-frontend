@@ -23,7 +23,7 @@ export const UserDetails = () => {
   };
 
   return (
-    <div className="flex items-center gap-4">
+    <div className="flex items-center gap-4 ">
       {user ? (
         <SignedInUserButton />
       ) : (
