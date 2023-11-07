@@ -34,7 +34,7 @@ const FlowMode = ({
 	const [isMiddleRound, setIsMiddleRound] = useState(false);
 	const [isEndScreen, setIsEndScreen] = useState(false);
 
-	const { courseId } = useParams();
+	const { setId } = useParams();
 
 	const defaultStorageState = {
 		currentFlashcard: 0,
@@ -44,7 +44,7 @@ const FlowMode = ({
 	} as CourseProgress;
 
 	const [courseProgress, setCourseProgress] = useLocalStorage<CourseProgress>(
-		`course-progress-${courseId}`,
+		`course-progress-${setId}`,
 		defaultStorageState
 	);
 
@@ -105,18 +105,6 @@ const FlowMode = ({
 		setIsEndScreen(true);
 		setIsMiddleRound(false);
 		setIsGameRunning(false);
-
-		const toSave = {
-			currentFlashcard: 0,
-			knownFlashcards,
-			learnedFlashcardsPerRound: [
-				...learnedFlashcardsPerRound.slice(0, -1),
-				learnedFlashcardsPerRound[learnedFlashcardsPerRound.length - 1] + 1,
-			],
-			round: round + 1,
-		} as CourseProgress;
-
-		setCourseProgress(toSave);
 	};
 
 	const markFlashcardAsKnown = (id: string) => {
@@ -128,6 +116,23 @@ const FlowMode = ({
 		const isGameFinished = flashcards.length - (knownFlashcards.length + 1) === 0;
 
 		if (isGameFinished) {
+			console.log("XD");
+			const knownFlashcardsToStorage = [...knownFlashcards, id];
+
+			console.log(knownFlashcardsToStorage);
+
+			const toSave = {
+				currentFlashcard: 0,
+				knownFlashcards: knownFlashcardsToStorage,
+				learnedFlashcardsPerRound: [
+					...learnedFlashcardsPerRound.slice(0, -1),
+					learnedFlashcardsPerRound[learnedFlashcardsPerRound.length - 1] + 1,
+				],
+				round: round + 1,
+			} as CourseProgress;
+
+			setCourseProgress(toSave);
+
 			return endGameHandler();
 		}
 
@@ -159,6 +164,11 @@ const FlowMode = ({
 
 	useEffect(() => {
 		syncFlahcardsToLearn(flashcards);
+
+		if (knownFlashcards.length === flashcards.length) {
+			endGameHandler();
+		}
+
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isMiddleRound, isGameRunning]);
 

@@ -5,7 +5,7 @@ import { Flashcard } from "../../types/Flashcard";
 import useAuthQuery from "../../hooks/useAuthQuery";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
+import Panel from "../../components/shared/Panel";
 
 const DUMMY_FLASHCARDS = [
 	{ examples: ["lubie piwo"], translation: "Beer", word: "Piwo", id: "1qf" },
@@ -35,7 +35,7 @@ const Flashcards = () => {
 		queryFn,
 	});
 
-	console.log(data);
+	const flashcardElements = data?.data;
 
 	const { queryFn: setAsLatestQuery } = useAuthQuery({
 		endpoint: `/me/study-sessions/${setId}`,
@@ -53,6 +53,14 @@ const Flashcards = () => {
 		number[]
 	>([0]);
 	const [round, setRound] = useState(0);
+
+	if (!flashcardElements) {
+		return (
+			<main className="grid gridLayout grid-rows-[80px_1fr] h-full bg-theme-background-light-variant">
+				<Panel>No flashcards</Panel>
+			</main>
+		);
+	}
 
 	return (
 		<main className="grid gridLayout grid-rows-[80px_1fr] h-full bg-theme-background-light-variant">

@@ -4,6 +4,7 @@ import { StudySetCard } from "../_shared/components/StudySetCard.tsx";
 import { SectionWrapper } from "./components/SectionWrapper.tsx";
 import { StudySet } from "../_shared/models/StudySet.ts";
 import { RecentStudySet } from "../_shared/models/RecentStudySet.ts";
+import { Link } from "react-router-dom";
 
 const categories: string[] = [];
 
@@ -38,9 +39,7 @@ export const HomePage = () => {
 		queryFn: queryRecentStudy,
 	});
 
-	const featured = (dataFeatured?.data as RecentStudySet[])
-		?.reverse()
-		.slice(0, 2);
+	const featured = (dataFeatured?.data as RecentStudySet[])?.slice(0, 2);
 
 	// Check if there are enough last sets to display suggested one
 
@@ -127,50 +126,64 @@ export const HomePage = () => {
 				{featured?.length !== 0 && (
 					<SectionWrapper title={"Continue learning"}>
 						{featured?.map(({ studySet }) => (
-							<StudySetCard
-								key={studySet.id}
-								progress={{
-									totalWords: 1234,
-									learnedWords: 987,
-								}}
-								featured
-								name={studySet.name}
-								icon={studySet.icon}
-								color={studySet.color}
-								authorUsername={studySet.author.username}
-							/>
+							<Link to={`/sets/${studySet.id}`} key={studySet.id}>
+								<StudySetCard
+									key={studySet.id}
+									progress={{
+										totalWords: 1234,
+										learnedWords: 987,
+									}}
+									featured
+									name={studySet.name}
+									icon={studySet.icon}
+									color={studySet.color}
+									authorUsername={studySet.author.username}
+								/>
+							</Link>
 						))}
 					</SectionWrapper>
 				)}
 				{/*Rest of the sets*/}
 				{featuredCoursesByCategory &&
 					featuredCoursesByCategory.length !== 0 &&
-					featuredCoursesByCategory.map((set, index) => (
-						<SectionWrapper
-							key={set.id + "-section"}
-							title={"Suggested"}
-							description={`Recently studied "${set.name}"`}>
-							{listCategories[index].map((set) => (
-								<StudySetCard
-									key={set.id}
-									studySet={{
-										name: set.name,
-										icon: set.icon,
-										color: set.color,
-										authorUsername: set.author.username,
-									}}
-								/>
-							))}
-						</SectionWrapper>
-					))}
+					featuredCoursesByCategory.map((set, index) => {
+						console.log(set.name, set.icon);
+						return (
+							<SectionWrapper
+								key={set.id + "-section"}
+								title={"Suggested"}
+								description={`Recently studied "${set.name}"`}>
+								{listCategories[index].map((set) => (
+									<Link to={`/sets/${set.id}`} key={set.id}>
+										<StudySetCard
+											key={set.id}
+											name={set.name}
+											color={set.color}
+											icon={set.icon}
+											authorUsername={set.author?.username ?? "Unknown user"}
+										/>
+										<p>{set.icon}</p>
+									</Link>
+								))}
+							</SectionWrapper>
+						);
+					})}
 
 				{best6Courses?.length > 0 && (
 					<SectionWrapper
 						key={"other-wrapper"}
 						title={"Courses"}
 						description={`Other interesting courses`}>
-						{best6Courses.map((set) => (
-							<StudySetCard key={set!.id} studySet={set} />
+						{best6Courses?.map((set) => (
+							<Link to={`/sets/${set?.id}`} key={set!.id}>
+								<StudySetCard
+									name={set!.name}
+									color={set!.color}
+									icon={set!.icon}
+									authorUsername={set!.author?.username ?? "Unknown user"}
+								/>
+								<p>{set!.icon}</p>
+							</Link>
 						))}
 					</SectionWrapper>
 				)}
