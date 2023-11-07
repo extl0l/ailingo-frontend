@@ -151,7 +151,6 @@ export const HomePage = () => {
 				{featuredCoursesByCategory &&
 					featuredCoursesByCategory.length !== 0 &&
 					featuredCoursesByCategory.map((set, index) => {
-						console.log(set.name, set.icon);
 						return (
 							<SectionWrapper
 								key={set.id + "-section"}
@@ -166,7 +165,6 @@ export const HomePage = () => {
 											icon={set.icon}
 											authorUsername={set.author?.username ?? "Unknown user"}
 										/>
-										<p>{set.icon}</p>
 									</Link>
 								))}
 							</SectionWrapper>
@@ -186,7 +184,6 @@ export const HomePage = () => {
 									icon={set!.icon}
 									authorUsername={set!.author?.username ?? "Unknown user"}
 								/>
-								<p>{set!.icon}</p>
 							</Link>
 						))}
 					</SectionWrapper>
