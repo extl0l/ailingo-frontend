@@ -50,7 +50,7 @@ export const DefinitionListItem = (props: DefinitionListItemProps) => {
       </div>
       <div
         className={cn(
-          "white bg-theme-background-light-variant group-even:bg-theme-background-light transition-[padding,margin,max-height] rounded-xl",
+          "bg-theme-background-light-variant group-even:bg-theme-background-light transition-[padding,margin,max-height] rounded-xl",
           props.expanded
             ? "pl-4 max-h-[260px] mb-4 overflow-auto"
             : "pl-0 max-h-0 mb-0 overflow-hidden",
@@ -59,6 +59,7 @@ export const DefinitionListItem = (props: DefinitionListItemProps) => {
         <DefinitionSentenceList
           sentences={definition.sentences}
           onUpdate={handleSentencesUpdate}
+          editable={props.editable}
         />
       </div>
     </div>

@@ -149,7 +149,9 @@ export const DefinitionList = (props: DefinitionListProps) => {
             editable={props.editable}
           />
         ))}
-        <NewDefinitionListItem onCreate={handleDefinitionCreate} />
+        {props.editable && (
+          <NewDefinitionListItem onCreate={handleDefinitionCreate} />
+        )}
       </section>
     </div>
   );

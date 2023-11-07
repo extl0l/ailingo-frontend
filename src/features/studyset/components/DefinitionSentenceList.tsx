@@ -3,6 +3,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 export interface DefinitionSentenceListProps {
   sentences: string[];
   onUpdate?: (newSentences: string[]) => void;
+  editable?: boolean;
 }
 
 export const DefinitionSentenceList = (props: DefinitionSentenceListProps) => {
@@ -25,24 +26,36 @@ export const DefinitionSentenceList = (props: DefinitionSentenceListProps) => {
     props.onUpdate?.(updatedSentences);
   };
 
+  if (!props.editable && sentences.length === 0) {
+    return (
+      <p className="py-2.5 pr-4 text-theme-brown-light opacity-50 cursor-not-allowed">
+        No sentences entered
+      </p>
+    );
+  }
+
   return (
     <ul>
       {sentences.map((sentence, index) => (
-        <li className="border-b" key={index}>
+        <li className="border-b last:border-b-0" key={index}>
           <DefinitionSentenceListItem
             sentence={sentence}
             onUpdate={(newSentence) => handleSentenceUpdate(index, newSentence)}
             onDelete={() => handleSentenceDelete(index)}
+            editable={props.editable}
           />
         </li>
       ))}
-      <li>
-        <DefinitionSentenceListItem
-          key={sentences.length}
-          sentence=""
-          onUpdate={handleSentenceCreate}
-        />
-      </li>
+      {props.editable && (
+        <li>
+          <DefinitionSentenceListItem
+            key={sentences.length}
+            sentence=""
+            onUpdate={handleSentenceCreate}
+            editable
+          />
+        </li>
+      )}
     </ul>
   );
 };
@@ -51,6 +64,7 @@ interface DefinitionSentenceListItemProps {
   sentence: string;
   onUpdate?: (newSentence: string) => void;
   onDelete?: () => void;
+  editable?: boolean;
 }
 
 const DefinitionSentenceListItem = (props: DefinitionSentenceListItemProps) => {
@@ -90,6 +104,7 @@ const DefinitionSentenceListItem = (props: DefinitionSentenceListItemProps) => {
       onKeyDown={handleKeyDown}
       onBlur={handleBlur}
       placeholder="Type sentence…"
+      disabled={!props.editable}
     />
   );
 };

@@ -59,7 +59,7 @@ export const StudySetDetailsPage = () => {
   const { icon, author } = studySet;
   const color = studySet.color || "hsla(58, 63%, 53%, 1)";
 
-  const isEditable = user?.id === author.id;
+  const isCurrentUserAuthor = user?.id === author.id;
 
   const handleNameChange = (newName: string) => {
     setStudySetEditValue({ ...studySetEditValue, name: newName });
@@ -84,7 +84,7 @@ export const StudySetDetailsPage = () => {
                 value={studySetEditValue.name}
                 onChange={handleNameChange}
                 onSubmit={handleChangedNameSubmit}
-                editable={isEditable}
+                editable={isCurrentUserAuthor}
               />
             </h1>
             <button title="Star this study set">
@@ -133,7 +133,7 @@ export const StudySetDetailsPage = () => {
           </div>
         </div>
       </header>
-      <DefinitionList studySetId={studySet.id} editable={isEditable} />
+      <DefinitionList studySetId={studySet.id} editable={isCurrentUserAuthor} />
     </article>
   );
 };
