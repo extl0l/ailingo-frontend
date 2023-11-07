@@ -1,11 +1,11 @@
 import { type HTMLAttributes } from "react";
-import { type Flashcard as FlashcardInfo } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
 
 import FlowMode from "./FlowMode";
+import { Definition } from "../../../features/_shared/models/StudySet";
 
 type Props = {
-	flashcards: FlashcardInfo[];
+	flashcards: Definition[];
 	currentFlashcard: number;
 	setCurrentFlashcard: React.Dispatch<React.SetStateAction<number>>;
 	learnedFlashcardsPerRound: number[];
