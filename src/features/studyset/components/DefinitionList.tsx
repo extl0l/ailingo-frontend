@@ -1,7 +1,12 @@
 import { useState } from "react";
 import { DefinitionListItem } from "./DefinitionListItem.tsx";
 import { NewDefinitionListItem } from "./NewDefinition.tsx";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  QueryKey,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
 import { backendClient } from "../../_shared/api/backendClient.ts";
 import { useAuth } from "@clerk/clerk-react";
 import { Definition } from "../../_shared/models/StudySet.ts";
@@ -15,8 +20,10 @@ export const DefinitionList = (props: DefinitionListProps) => {
   const { getToken } = useAuth();
   const queryClient = useQueryClient();
 
+  const queryKey: QueryKey = ["study-sets", props.studySetId, "definitions"];
+
   const definitionsQuery = useQuery({
-    queryKey: ["study-sets", props.studySetId, "definitions"],
+    queryKey: queryKey,
     queryFn: async (): Promise<Definition[]> => {
       const url = `/study-sets/${props.studySetId}/definitions`;
       const definitions = await backendClient.get(url);
@@ -30,9 +37,21 @@ export const DefinitionList = (props: DefinitionListProps) => {
       await backendClient.post(url, newDefinition, {
         headers: { Authorization: `Bearer ${await getToken()}` },
       });
-      await queryClient.invalidateQueries({
-        queryKey: ["study-sets", props.studySetId, "definitions"],
+    },
+    onMutate: async (newDefinition: Omit<Definition, "id">) => {
+      await queryClient.cancelQueries({ queryKey });
+      const previousDefinitions = queryClient.getQueryData(queryKey);
+      queryClient.setQueryData(queryKey, (oldDefinitions: Definition[]) => {
+        const newDefinitionId = `__unknown_id_${Date.now()}`;
+        return [...oldDefinitions, { ...newDefinition, id: newDefinitionId }];
       });
+      return { previousDefinitions };
+    },
+    onError: (_error, _variables, context) => {
+      queryClient.setQueryData(queryKey, context?.previousDefinitions);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey });
     },
   });
 
@@ -46,9 +65,25 @@ export const DefinitionList = (props: DefinitionListProps) => {
       await backendClient.put(url, updatedDefinition, {
         headers: { Authorization: `Bearer ${await getToken()}` },
       });
-      await queryClient.invalidateQueries({
-        queryKey: ["study-sets", props.studySetId, "definitions"],
+    },
+    onMutate: async (updatedDefinition: Definition) => {
+      await queryClient.cancelQueries({ queryKey });
+      const previousDefinitions = queryClient.getQueryData(queryKey);
+      queryClient.setQueryData(queryKey, (oldDefinitions: Definition[]) => {
+        return oldDefinitions.map((definition) => {
+          if (definition.id === updatedDefinition.id) {
+            return updatedDefinition;
+          }
+          return definition;
+        });
       });
+      return { previousDefinitions };
+    },
+    onError: (_error, _variables, context) => {
+      queryClient.setQueryData(queryKey, context?.previousDefinitions);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey });
     },
   });
 
@@ -62,9 +97,22 @@ export const DefinitionList = (props: DefinitionListProps) => {
       await backendClient.delete(url, {
         headers: { Authorization: `Bearer ${await getToken()}` },
       });
-      await queryClient.invalidateQueries({
-        queryKey: ["study-sets", props.studySetId, "definitions"],
+    },
+    onMutate: async (definitionId: number) => {
+      await queryClient.cancelQueries({ queryKey });
+      const previousDefinitions = queryClient.getQueryData(queryKey);
+      queryClient.setQueryData(queryKey, (oldDefinitions: Definition[]) => {
+        return oldDefinitions.filter(
+          (definition) => definition.id !== definitionId,
+        );
       });
+      return { previousDefinitions };
+    },
+    onError: (_error, _variables, context) => {
+      queryClient.setQueryData(queryKey, context?.previousDefinitions);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey });
     },
   });
 
