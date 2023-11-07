@@ -127,7 +127,7 @@ export const HomePage = () => {
 		<div className="relative bg-gradient-to-b from-theme-background-light-variant from-[10rem] to-transparent to-[10rem]">
 			<main className="grid grid-cols-2 gap-2.5 max-w-3xl mx-auto px-8 pb-12">
 				{/*Featured sets*/}
-				{featured?.length !== 0 && (
+				{featured && featured?.length !== 0 && (
 					<SectionWrapper title={"Continue learning"}>
 						{featured?.map(({ studySet }) => (
 							<Link to={`/sets/${studySet.id}`} key={studySet.id}>
