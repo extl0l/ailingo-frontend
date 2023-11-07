@@ -21,6 +21,10 @@ export const DefinitionListItem = (props: DefinitionListItemProps) => {
     props.onClick?.();
   };
 
+  const handleSentencesUpdate = (newSentences: string[]) => {
+    props.onUpdate?.({ ...props.definition, sentences: newSentences });
+  };
+
   const isEditable = props.expanded && props.editable;
 
   return (
@@ -54,9 +58,7 @@ export const DefinitionListItem = (props: DefinitionListItemProps) => {
       >
         <DefinitionSentenceList
           sentences={definition.sentences}
-          onUpdate={(newSentences) =>
-            console.log("updated sentences", newSentences)
-          }
+          onUpdate={handleSentencesUpdate}
         />
       </div>
     </div>
