@@ -1,28 +1,11 @@
 import { useEffect, useState } from "react";
 import FlashcardsGame from "../../components/Games/Flashcards";
 import FlashcardsMenu from "../../components/Games/Flashcards/FlashcardsMenu";
-// import { Flashcard } from "../../types/Flashcard";
 import useAuthQuery from "../../hooks/useAuthQuery";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import Panel from "../../components/shared/Panel";
-import { Definition } from "../../features/_shared/models/StudySet";
-
-// const DUMMY_FLASHCARDS = [
-// 	{ examples: ["lubie piwo"], translation: "Beer", word: "Piwo", id: "1qf" },
-// 	{
-// 		id: "253",
-// 		examples: ["woda jest w kranie", "woda w oceanie"],
-// 		translation: "Water",
-// 		word: "Woda",
-// 	},
-// 	{
-// 		id: "123",
-// 		examples: ["Mydło  myje"],
-// 		translation: "Soap",
-// 		word: "Mydło",
-// 	},
-// ] as Flashcard[];
+import { Definition, StudySet } from "../../features/_shared/models/StudySet";
 
 const Flashcards = () => {
 	const { setId } = useParams();
@@ -36,6 +19,19 @@ const Flashcards = () => {
 		queryFn,
 	});
 
+	const { queryFn: setQueryFn } = useAuthQuery({
+		endpoint: `/study-sets/${setId}`,
+	});
+
+	const { data: d } = useQuery({
+		queryKey: [`flashcards-${setId}-data`],
+		queryFn: setQueryFn,
+	});
+
+	const setData = d?.data as StudySet;
+
+	const lang = [setData?.phraseLanguage, setData?.definitionLanguage];
+
 	const flashcardElements = data?.data as Definition[];
 
 	const { queryFn: setAsLatestQuery } = useAuthQuery({
@@ -46,10 +42,6 @@ const Flashcards = () => {
 	useEffect(() => {
 		setAsLatestQuery();
 	}, []);
-
-	//TODO: Extract flashcards and name
-
-	console.log(flashcardElements);
 
 	const [currentFlashcard, setCurrentFlashcard] = useState(0);
 	const [learnedFlashcardsPerRound, setLearnedFlashcardsPerRound] = useState<
@@ -85,7 +77,7 @@ const Flashcards = () => {
 		<main className="grid gridLayout grid-rows-[80px_1fr] h-full bg-theme-background-light-variant">
 			<FlashcardsMenu
 				round={round}
-				courseName={"El courso numero uno"}
+				courseName={setData.name}
 				learnedFlashcardsPerRound={learnedFlashcardsPerRound}
 				currentFlashcard={currentFlashcard}
 				flashcards={flashcardElements.length}
@@ -98,6 +90,8 @@ const Flashcards = () => {
 				flashcards={flashcardElements}
 				currentFlashcard={currentFlashcard}
 				setCurrentFlashcard={setCurrentFlashcard}
+				// eslint-disable-next-line @typescript-eslint/no-explicit-any
+				lang={lang as any}
 			/>
 		</main>
 	);

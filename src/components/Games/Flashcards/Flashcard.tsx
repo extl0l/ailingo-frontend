@@ -1,15 +1,17 @@
 import { useState } from "react";
-import { type Flashcard as FlashcardType } from "../../../types/Flashcard";
 import { cn } from "../../../utils/tailwind";
 import Panel from "../../shared/Panel";
 import useKeyPress from "../../../hooks/useKeyPress";
 import SpeachButton from "../../shared/SpeachButton";
+import { type Definition } from "../../../features/_shared/models/StudySet";
+import { Language } from "../../../hooks/useSpeechSynthesis";
 
 type Props = {
-	flashcard: FlashcardType;
+	flashcard: Definition;
+	lang: [string, string];
 };
 
-const Flashcard = ({ flashcard }: Props) => {
+const Flashcard = ({ flashcard, lang }: Props) => {
 	const [isFront, setIsFront] = useState(true);
 
 	const switchSides = () => {
@@ -24,26 +26,26 @@ const Flashcard = ({ flashcard }: Props) => {
 				className={cn("flashcard-side", isFront ? "rotate-x-0" : "rotate-x-180")}>
 				<SpeachButton
 					className="absolute top-10 right-10 text-theme-brown-light"
-					language="pl-PL"
-					wordToRead={flashcard.word}
+					language={(lang[0] as Language) || "pl-PL"}
+					wordToRead={flashcard.phrase}
 				/>
 				<div
 					className="w-full h-full  text-3xl flex justify-center items-center"
 					onClick={switchSides}>
-					{flashcard.word}
+					{flashcard.phrase}
 				</div>
 			</Panel>
 			<Panel
 				className={cn("flashcard-side", isFront ? "-rotate-x-180" : "rotate-x-0")}>
 				<SpeachButton
 					className="absolute top-10 right-10"
-					language="en-US"
-					wordToRead={flashcard.translation}
+					language={(lang[1] as Language) || "en-US"}
+					wordToRead={flashcard.meaning}
 				/>
 				<div
 					className="w-full h-full  text-3xl flex justify-center items-center"
 					onClick={switchSides}>
-					{flashcard.translation}
+					{flashcard.meaning}
 				</div>
 			</Panel>
 		</div>

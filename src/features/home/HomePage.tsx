@@ -115,8 +115,6 @@ export const HomePage = () => {
 		})
 		.filter((course) => course);
 
-	console.log(outherCourses);
-
 	const best6Courses = outherCourses?.slice(0, 6);
 
 	return (

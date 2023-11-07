@@ -7,6 +7,7 @@ import { useLocalStorage } from "@uidotdev/usehooks";
 import { useParams } from "react-router-dom";
 import { CourseProgress } from "../../../types/Course";
 import { Definition } from "../../../features/_shared/models/StudySet";
+import { Language } from "../../../hooks/useSpeechSynthesis";
 
 type Props = {
 	flashcards: Definition[];
@@ -16,6 +17,7 @@ type Props = {
 	setLearnedFlashcardsPerRound: React.Dispatch<React.SetStateAction<number[]>>;
 	round: number;
 	setRound: React.Dispatch<React.SetStateAction<number>>;
+	lang: [Language, Language];
 };
 
 const FlowMode = ({
@@ -25,6 +27,7 @@ const FlowMode = ({
 	learnedFlashcardsPerRound,
 	setLearnedFlashcardsPerRound,
 	round,
+	lang,
 	setRound,
 }: Props) => {
 	const [knownFlashcards, setKnownFlashcards] = useState<string[]>([]);
@@ -68,7 +71,7 @@ const FlowMode = ({
 
 	const syncFlahcardsToLearn = (flashcards: Definition[]) => {
 		const flashcardsToLearn = flashcards.filter(
-			(flashcard) => !knownFlashcards.includes(flashcard)
+			(flashcard) => !knownFlashcards.includes(flashcard.id.toString())
 		);
 		setFlashcardsToLearn(flashcardsToLearn);
 	};
@@ -87,10 +90,14 @@ const FlowMode = ({
 			setCurrentFlashcard((flashcard) => flashcard - 1);
 			const flashcardToUndo = flashcardsToLearn[currentFlashcard - 1];
 			setKnownFlashcards((flashcardIds) =>
-				flashcardIds.filter((flashcardId) => flashcardId !== flashcardToUndo.id)
+				flashcardIds.filter(
+					(flashcardId) => flashcardId !== flashcardToUndo.id.toString()
+				)
 			);
 
-			const isMarkedAsKnown = knownFlashcards.includes(flashcardToUndo.id);
+			const isMarkedAsKnown = knownFlashcards.includes(
+				flashcardToUndo.id.toString()
+			);
 
 			if (isMarkedAsKnown) {
 				setLearnedFlashcardsPerRound((state) =>
@@ -227,12 +234,13 @@ const FlowMode = ({
 		<>
 			<Flashcard
 				flashcard={flashcardsToLearn[currentFlashcard]}
+				lang={lang}
 				key={`flashcard-${currentFlashcard}`}
 			/>
 
 			<FlashcardOptions
 				markFlashcardAsKnown={() =>
-					markFlashcardAsKnown(flashcardsToLearn[currentFlashcard].id)
+					markFlashcardAsKnown(flashcardsToLearn[currentFlashcard].id.toString())
 				}
 				goBack={goBack}
 				markFlashcardAsNotKnown={markFlashcardAsNotKnown}
