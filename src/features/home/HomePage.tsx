@@ -41,6 +41,12 @@ export const HomePage = () => {
 
 	const featured = (dataFeatured?.data as RecentStudySet[])?.slice(0, 2);
 
+	const featuredCourses =
+		featured?.length === 2
+			? [featured[0].studySet.icon, featured[1].studySet.icon]
+			: featured?.length === 1
+			? [featured[0].studySet.icon]
+			: [];
 	// Check if there are enough last sets to display suggested one
 
 	// skullEmoji
@@ -77,9 +83,9 @@ export const HomePage = () => {
 
 	const listCategories: [StudySet[], StudySet[]] = [[], []];
 
-	if (filteredCategory[0]) {
+	if (featuredCourses[0]) {
 		studySets.forEach((set) => {
-			if (set.icon === filteredCategory[0]) {
+			if (set.icon === featuredCourses[0]) {
 				if (listCategories[0].length < 4) {
 					listCategories[0].push(set);
 				}
@@ -87,9 +93,9 @@ export const HomePage = () => {
 		});
 	}
 
-	if (filteredCategory[1]) {
+	if (featuredCourses[1]) {
 		studySets.forEach((set) => {
-			if (set.icon === filteredCategory[1]) {
+			if (set.icon === featuredCourses[1]) {
 				if (listCategories[1].length < 4) {
 					listCategories[1].push(set);
 				}
