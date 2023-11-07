@@ -12,6 +12,8 @@ type Props = {
 	setLearnedFlashcardsPerRound: React.Dispatch<React.SetStateAction<number[]>>;
 	round: number;
 	setRound: React.Dispatch<React.SetStateAction<number>>;
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	lang: any;
 };
 
 const FlashcardsGame = ({
@@ -22,6 +24,7 @@ const FlashcardsGame = ({
 	setLearnedFlashcardsPerRound,
 	setCurrentFlashcard,
 	round,
+	lang,
 	setRound,
 	...props
 }: Props & HTMLAttributes<HTMLDivElement>) => {
@@ -40,6 +43,7 @@ const FlashcardsGame = ({
 				flashcards={flashcards}
 				currentFlashcard={currentFlashcard}
 				setCurrentFlashcard={setCurrentFlashcard}
+				lang={lang}
 			/>
 		</div>
 	);
