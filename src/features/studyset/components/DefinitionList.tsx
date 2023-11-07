@@ -238,7 +238,7 @@ const DefinitionListItem = (props: DefinitionListItemProps) => {
   return (
     <div
       className={cn(
-        "group even:bg-theme-background-light-variant rounded-xl px-6 transition-[margin]",
+        "group even:bg-theme-background-light-variant rounded-xl px-6 transition-[margin,background-color]",
         props.expanded ? "mx-0" : "mx-4",
       )}
       onClick={handleDefinitionClick}
@@ -262,6 +262,40 @@ const DefinitionListItem = (props: DefinitionListItemProps) => {
           onSubmit={handleMeaningValueSubmit}
           editable={isEditable}
         />
+      </div>
+      <div
+        className={cn(
+          "white bg-theme-background-light-variant group-even:bg-theme-background-light transition-[padding,margin,max-height] rounded-xl",
+          props.expanded
+            ? "pl-4 max-h-[260px] mb-4 overflow-auto"
+            : "pl-0 max-h-0 mb-0 overflow-hidden",
+        )}
+      >
+        <input
+          className="w-full py-2.5 pr-4 bg-transparent outline-0 border-b"
+          type="text"
+          value="A few life vests failed and some of the crew members drowned. A few life vests failed and some of the crew members drowned."
+        />
+        <input
+          className="w-full py-2.5 pr-4 bg-transparent outline-0 border-b"
+          type="text"
+          value="A few life vests failed and some of the crew members drowned. A few life vests failed and some of the crew members drowned."
+        />
+        <div className="relative">
+          <input
+            className="w-full py-2.5 pr-4 bg-transparent outline-0"
+            type="text"
+            placeholder="Start typing or…"
+            value=""
+          />
+          <button
+            className="bg-theme-ai-light text-white text-sm py-1 px-5 rounded-full absolute left-[14ch] top-1/2 -translate-y-1/2 disabled:bg-theme-ai-light-variant"
+            // disabled={phrase === ""}
+            // hidden={meaning !== ""}
+          >
+            Generate with AI
+          </button>
+        </div>
       </div>
     </div>
   );
