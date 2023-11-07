@@ -157,15 +157,13 @@ export const HomePage = () => {
 								title={"Suggested"}
 								description={`Recently studied "${set.name}"`}>
 								{listCategories[index].map((set) => (
-									<Link to={`/sets/${set.id}`} key={set.id}>
-										<StudySetCard
-											key={set.id}
-											name={set.name}
-											color={set.color}
-											icon={set.icon}
-											authorUsername={set.author?.username ?? "Unknown user"}
-										/>
-									</Link>
+									<StudySetCard
+										key={set.id}
+										name={set.name}
+										color={set.color}
+										icon={set.icon}
+										authorUsername={set.author?.username ?? "Unknown user"}
+									/>
 								))}
 							</SectionWrapper>
 						);
