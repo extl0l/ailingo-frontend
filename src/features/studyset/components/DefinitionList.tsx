@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DefinitionListItem } from "./DefinitionListItem.tsx";
 import { NewDefinitionListItem } from "./NewDefinition.tsx";
 import {
@@ -132,6 +132,52 @@ export const DefinitionList = (props: DefinitionListProps) => {
 
   const definitions = definitionsQuery.data;
 
+  const [isAiGeneratingDefinitions, setIsAiGeneratingDefinitions] =
+    useState<boolean>(false);
+  const [currentGenerationJobId, setCurrentGenerationJobId] = useState<
+    number | undefined
+  >();
+
+  useEffect(() => {
+    if (!currentGenerationJobId) {
+      return;
+    }
+    const intervalId = setInterval(async () => {
+      const response = await backendClient
+        .get(`/task/${currentGenerationJobId}`, {
+          headers: { Authorization: `Bearer ${await getToken()}` },
+        })
+        .catch(() => undefined);
+      const status = response?.data?.finished;
+      if (status === "DONE" || status === "FAILED") {
+        setCurrentGenerationJobId(undefined);
+        setIsAiGeneratingDefinitions(false);
+        // noinspection ES6MissingAwait
+        queryClient.invalidateQueries({ queryKey });
+      }
+    }, 1000);
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [getToken, currentGenerationJobId]);
+
+  const handleGenerativeFillDefinitions = async () => {
+    setIsAiGeneratingDefinitions(true);
+    const response = await backendClient
+      .post(`/study-sets/${props.studySetId}/definitions/fill`, undefined, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      })
+      .catch(() => undefined);
+    const taskId = response?.data?.["taskId"];
+    if (taskId) {
+      setCurrentGenerationJobId(taskId);
+      console.log("started job", taskId);
+      // The button status is cleared in useEffect
+    } else {
+      setIsAiGeneratingDefinitions(false);
+    }
+  };
+
   return (
     <div onClick={handleContainerClick}>
       <section className="flex flex-col max-w-3xl px-4 mx-auto pb-12">
@@ -150,7 +196,16 @@ export const DefinitionList = (props: DefinitionListProps) => {
           />
         ))}
         {props.editable && (
-          <NewDefinitionListItem onCreate={handleDefinitionCreate} />
+          <>
+            <NewDefinitionListItem onCreate={handleDefinitionCreate} />
+            <button
+              className="px-6 m-4 bg-theme-ai-light text-white text-sm py-1 rounded-full disabled:bg-theme-ai-light-variant w-max"
+              disabled={isAiGeneratingDefinitions}
+              onClick={handleGenerativeFillDefinitions}
+            >
+              Suggest new phrases with AI
+            </button>
+          </>
         )}
       </section>
     </div>
