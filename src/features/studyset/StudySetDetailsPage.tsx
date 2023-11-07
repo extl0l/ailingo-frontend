@@ -126,8 +126,12 @@ export const StudySetDetailsPage = () => {
                 <Glyph src={icon} />
               </div>
               <div className="flex items-center gap-2 mt-3">
-                <span className="opacity-50">by Anonymous</span>
-                <img className="w-8 h-8 rounded-full" src="" alt="" />
+                <span className="opacity-50">by {author.username}</span>
+                <img
+                  className="w-8 h-8 rounded-full"
+                  src={author.imageUrl}
+                  alt=""
+                />
               </div>
             </div>
           </div>
