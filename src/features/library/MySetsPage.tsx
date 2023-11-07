@@ -14,6 +14,8 @@ interface StudySetCreateRequest {
 	description: string;
 	phraseLanguage: Language;
 	definitionLanguage: Language;
+	color: string;
+	icon: string;
 }
 
 interface StudySetCreatedResponse {
@@ -43,6 +45,8 @@ export const MySetsPage = () => {
 				description: "A brief overview of the set content",
 				phraseLanguage: "en-US",
 				definitionLanguage: "pl-PL",
+				color: "blue",
+				icon: "clock",
 			};
 			const response = await backendClient.post("/study-sets", emptyStudySet, {
 				headers: { Authorization: `Bearer ${await getToken()}` },

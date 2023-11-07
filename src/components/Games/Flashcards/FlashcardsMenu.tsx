@@ -19,10 +19,10 @@ const FlashcardsMenu = ({
 	round,
 	courseName,
 }: Props) => {
-	const { courseId } = useParams();
+	const { setId } = useParams();
 	const navigate = useNavigate();
 
-	const redirectToCourse = () => navigate(`/sets/${courseId}`);
+	const redirectToCourse = () => navigate(`/sets/${setId}`);
 
 	const flashcardsToLearn = useMemo(() => {
 		const learnedFlashcards = learnedFlashcardsPerRound.reduce(

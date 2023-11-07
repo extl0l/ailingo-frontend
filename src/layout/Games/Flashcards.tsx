@@ -1,10 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FlashcardsGame from "../../components/Games/Flashcards";
 import FlashcardsMenu from "../../components/Games/Flashcards/FlashcardsMenu";
 import { Flashcard } from "../../types/Flashcard";
 import useAuthQuery from "../../hooks/useAuthQuery";
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 
 const DUMMY_FLASHCARDS = [
 	{ examples: ["lubie piwo"], translation: "Beer", word: "Piwo", id: "1qf" },
@@ -23,16 +24,27 @@ const DUMMY_FLASHCARDS = [
 ] as Flashcard[];
 
 const Flashcards = () => {
-	const { courseId } = useParams();
+	const { setId } = useParams();
 
 	const { queryFn } = useAuthQuery({
-		endpoint: `/study-sets/${courseId}/definitions`,
+		endpoint: `/study-sets/${setId}/definitions`,
 	});
 
 	const { isLoading, data } = useQuery({
-		queryKey: [`flashcards-${courseId}`],
+		queryKey: [`flashcards-${setId}`],
 		queryFn,
 	});
+
+	console.log(data);
+
+	const { queryFn: setAsLatestQuery } = useAuthQuery({
+		endpoint: `/me/study-sessions/${setId}`,
+		method: "PATCH",
+	});
+
+	useEffect(() => {
+		setAsLatestQuery().then((d) => console.log(d));
+	}, []);
 
 	//TODO: Extract flashcards and name
 

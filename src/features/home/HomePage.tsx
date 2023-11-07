@@ -1,68 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import useAuthQuery from "../../hooks/useAuthQuery.ts";
-import {
-	StudySetCard,
-	StudySetCardProps,
-} from "../_shared/components/StudySetCard.tsx";
-import IconFurniture from "../navigation/assets/search.svg";
+import { StudySetCard } from "../_shared/components/StudySetCard.tsx";
 import { SectionWrapper } from "./components/SectionWrapper.tsx";
 import { StudySet } from "../_shared/models/StudySet.ts";
+import { RecentStudySet } from "../_shared/models/RecentStudySet.ts";
 
-const featured = [
-	{
-		id: "sts-03",
-		title: "Home furnishings",
-		icon: IconFurniture,
-		color: "hsla(22,22%,27%,1)",
-	},
-	{
-		id: "sts-01",
-		title: "At the airport",
-		icon: IconFurniture,
-		color: "hsla(58, 63%, 53%, 1)",
-	},
-];
-
-const sections = [
-	{
-		title: "Suggested",
-		description: 'Recently studied "Home furnishings"',
-		sets: [
-			{
-				id: "sts-00",
-				title: "Gardening",
-				// description: "Taking care of plants. But in English.",
-				icon: IconFurniture,
-				color: "hsla(159, 39%, 55%, 1)",
-				// phraseLanguage: "en-US",
-				// definitionLanguage: "pl-PL",
-				// words: [],
-				// authorId: "usr-01",
-			},
-			{
-				id: "sts-01",
-				title: "At the airport",
-				icon: IconFurniture,
-				color: "hsla(58, 63%, 53%, 1)",
-			},
-			{
-				id: "sts-02",
-				title: "Biking in the suburbs",
-				icon: IconFurniture,
-				color: "hsla(24, 93%, 56%, 1)",
-			},
-			{
-				id: "sts-03",
-				title: "Home furnishings",
-				icon: IconFurniture,
-				color: "hsla(22,22%,27%,1)",
-			},
-		],
-	},
-];
+const categories: string[] = [];
 
 export const HomePage = () => {
-	const featuredCoursesByCategory = [];
+	const featuredCoursesByCategory: StudySet[] = [];
 
 	const { queryFn } = useAuthQuery({
 		endpoint: "/study-sets",
@@ -75,6 +21,12 @@ export const HomePage = () => {
 
 	const studySets = dataStudySets?.data as StudySet[];
 
+	studySets?.forEach((set) => {
+		if (!categories.includes(set?.icon)) {
+			categories.push(set.icon);
+		}
+	});
+
 	////////////////////////////////////////////////////
 
 	const { queryFn: queryRecentStudy } = useAuthQuery({
@@ -86,51 +38,142 @@ export const HomePage = () => {
 		queryFn: queryRecentStudy,
 	});
 
-	const featured = dataFeatured?.data as StudySetCardProps[];
+	const featured = (dataFeatured?.data as RecentStudySet[])
+		?.reverse()
+		.slice(0, 2);
 
 	// Check if there are enough last sets to display suggested one
 
+	// skullEmoji
 	if (featured && featured?.length !== 0) {
 		studySets?.forEach((set) => {
-			if (set.icon === featured[0]?.icon) {
-				featuredCoursesByCategory.push(set);
+			if (set.icon === featured[0].studySet?.icon) {
+				const hasCategory = featuredCoursesByCategory.find(
+					(set) => set.icon === featured[0].studySet?.icon
+				);
+
+				if (!hasCategory) {
+					if (featuredCoursesByCategory.length < 3) {
+						featuredCoursesByCategory.push(set);
+					}
+				}
+			}
+			if (set.icon === featured[1].studySet?.icon) {
+				const hasCategory = featuredCoursesByCategory.find(
+					(set) => set.icon === featured[1].studySet?.icon
+				);
+
+				if (!hasCategory) {
+					if (featuredCoursesByCategory.length < 3) {
+						featuredCoursesByCategory.push(set);
+					}
+				}
 			}
 		});
 	}
 
+	const filteredCategory = categories.filter(
+		(category) => category !== featuredCoursesByCategory[0]?.icon
+	);
+
+	const listCategories: [StudySet[], StudySet[]] = [[], []];
+
+	if (filteredCategory[0]) {
+		studySets.forEach((set) => {
+			if (set.icon === filteredCategory[0]) {
+				if (listCategories[0].length < 4) {
+					listCategories[0].push(set);
+				}
+			}
+		});
+	}
+
+	if (filteredCategory[1]) {
+		studySets.forEach((set) => {
+			if (set.icon === filteredCategory[1]) {
+				if (listCategories[1].length < 4) {
+					listCategories[1].push(set);
+				}
+			}
+		});
+	}
+
+	const outherCourses = studySets
+		?.map((studySet) => {
+			if (filteredCategory[1].length > 0) {
+				if (studySet.icon !== filteredCategory[1]) {
+					if (studySet.icon !== filteredCategory[0]) {
+						return studySet;
+					}
+				}
+			} else {
+				if (filteredCategory[0].length > 0) {
+					if (studySet.icon !== filteredCategory[0]) {
+						return studySet;
+					}
+				}
+			}
+		})
+		.filter((course) => course);
+
+	console.log(outherCourses);
+
+	const best6Courses = outherCourses?.slice(0, 6);
+
 	return (
 		<div className="relative bg-gradient-to-b from-theme-background-light-variant from-[10rem] to-transparent to-[10rem]">
-			<main className="grid grid-cols-2 gap-2.5 max-w-3xl mx-auto px-8">
+			<main className="grid grid-cols-2 gap-2.5 max-w-3xl mx-auto px-8 pb-12">
 				{/*Featured sets*/}
 				{featured?.length !== 0 && (
 					<SectionWrapper title={"Continue learning"}>
-						{featured?.map((set) => (
+						{featured?.map(({ studySet }) => (
 							<StudySetCard
-								key={set.id}
+								key={studySet.id}
 								progress={{
 									totalWords: 1234,
 									learnedWords: 987,
 								}}
 								featured
-								name={set.name}
-								icon={set.icon}
-								color={set.color}
-								authorUsername={set.author.username}
+								name={studySet.name}
+								icon={studySet.icon}
+								color={studySet.color}
+								authorUsername={studySet.author.username}
 							/>
 						))}
 					</SectionWrapper>
 				)}
 				{/*Rest of the sets*/}
-				{sections.map((section) => (
+				{featuredCoursesByCategory &&
+					featuredCoursesByCategory.length !== 0 &&
+					featuredCoursesByCategory.map((set, index) => (
+						<SectionWrapper
+							key={set.id + "-section"}
+							title={"Suggested"}
+							description={`Recently studied "${set.name}"`}>
+							{listCategories[index].map((set) => (
+								<StudySetCard
+									key={set.id}
+									studySet={{
+										name: set.name,
+										icon: set.icon,
+										color: set.color,
+										authorUsername: set.author.username,
+									}}
+								/>
+							))}
+						</SectionWrapper>
+					))}
+
+				{best6Courses?.length > 0 && (
 					<SectionWrapper
-						key={section.title}
-						title={section.title}
-						description={section.description}>
-						{section.sets.map((set) => (
-							<StudySetCard key={set.id} studySet={set} />
+						key={"other-wrapper"}
+						title={"Courses"}
+						description={`Other interesting courses`}>
+						{best6Courses.map((set) => (
+							<StudySetCard key={set!.id} studySet={set} />
 						))}
 					</SectionWrapper>
-				))}
+				)}
 			</main>
 		</div>
 	);
