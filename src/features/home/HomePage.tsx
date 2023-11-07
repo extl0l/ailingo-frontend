@@ -99,8 +99,8 @@ export const HomePage = () => {
 	}
 
 	return (
-		<div className="relative bg-gradient-to-b from-theme-background-light-variant from-[10rem] to-transparent to-[10rem]">
-			<main className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-sm sm:max-w-3xl mx-auto px-8">
+		<div className="relative bg-gradient-to-b from-theme-background-light-variant from-[10rem] to-transparent to-[10rem] w-full sm:w-auto">
+			<main className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 sm:max-w-3xl mx-auto px-8 w-full">
 				{/*Featured sets*/}
 				{featured?.length !== 0 && (
 					<SectionWrapper title={"Continue learning"}>
