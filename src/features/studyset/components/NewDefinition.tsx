@@ -1,5 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from "react";
 import { Definition } from "../../_shared/models/StudySet.ts";
+import { backendClient } from "../../_shared/api/backendClient.ts";
+import { useAuth } from "@clerk/clerk-react";
 
 export interface NewDefinitionListItemProps {
   onCreate?: (definition: Omit<Definition, "id">) => void;
@@ -17,7 +19,7 @@ export const NewDefinitionListItem = (props: NewDefinitionListItemProps) => {
     setMeaning(event.target.value);
   };
 
-  const handleDefinitionSubmit = () => {
+  const createDefinition = (phrase: string, meaning: string) => {
     const trimmedPhrase = phrase.trim();
     const trimmedMeaning = meaning.trim();
 
@@ -35,6 +37,10 @@ export const NewDefinitionListItem = (props: NewDefinitionListItemProps) => {
     setMeaning("");
   };
 
+  const handleDefinitionSubmit = () => {
+    createDefinition(phrase, meaning);
+  };
+
   const handleDefinitionFormSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     handleDefinitionSubmit();
@@ -42,6 +48,37 @@ export const NewDefinitionListItem = (props: NewDefinitionListItemProps) => {
 
   const handleFieldBlur = () => {
     handleDefinitionSubmit();
+  };
+
+  const [isAiProcessing, setIsAiProcessing] = useState<boolean>(false);
+  const { getToken } = useAuth();
+
+  const translatePhrase = async (
+    phrase: string,
+  ): Promise<string | undefined> => {
+    const userToken = await getToken();
+    if (!userToken) return;
+
+    const response = await backendClient
+      .post(
+        "/ai/translate",
+        { phrase },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        },
+      )
+      .catch(() => undefined);
+    return response?.data?.definition;
+  };
+
+  const handleTranslateWithAi = async () => {
+    setIsAiProcessing(true);
+    const translation = await translatePhrase(phrase);
+    setIsAiProcessing(false);
+
+    if (translation) {
+      createDefinition(phrase, translation);
+    }
   };
 
   return (
@@ -66,10 +103,11 @@ export const NewDefinitionListItem = (props: NewDefinitionListItemProps) => {
           />
           <button
             className="bg-theme-ai-light text-white text-sm py-1 px-5 rounded-full absolute left-[16ch] top-1/2 -translate-y-1/2 disabled:bg-theme-ai-light-variant"
-            disabled={phrase === ""}
+            disabled={phrase === "" || isAiProcessing}
             hidden={meaning !== ""}
+            onClick={handleTranslateWithAi}
           >
-            Generate with AI
+            {isAiProcessing ? "Translating with AI…" : "Translate with AI"}
           </button>
         </div>
       </form>
