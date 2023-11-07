@@ -84,7 +84,7 @@ export const HomePage = () => {
 	const listCategories: [StudySet[], StudySet[]] = [[], []];
 
 	if (featuredCourses[0]) {
-		studySets.forEach((set) => {
+		studySets?.forEach((set) => {
 			if (set.icon === featuredCourses[0]) {
 				if (listCategories[0].length < 4) {
 					listCategories[0].push(set);
