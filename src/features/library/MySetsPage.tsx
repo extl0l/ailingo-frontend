@@ -77,8 +77,6 @@ export const MySetsPage = () => {
 		},
 	});
 
-	console.log(mySetsQuery);
-
 	return (
 		<>
 			<div className="col-span-full mt-6 flex justify-between items-end text-theme-brown-light">
