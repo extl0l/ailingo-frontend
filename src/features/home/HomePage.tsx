@@ -94,7 +94,7 @@ export const HomePage = () => {
 	}
 
 	if (featuredCourses[1]) {
-		studySets.forEach((set) => {
+		studySets?.forEach((set) => {
 			if (set.icon === featuredCourses[1]) {
 				if (listCategories[1].length < 4) {
 					listCategories[1].push(set);
@@ -158,14 +158,16 @@ export const HomePage = () => {
 								title={"Suggested"}
 								description={`Recently studied "${set.name}"`}>
 								{listCategories[index].map((set) => (
-									<StudySetCard
-										key={set.id}
-										id={set.id.toString()}
-										name={set.name}
-										color={set.color}
-										icon={set.icon}
-										authorUsername={set.author?.username ?? "Unknown user"}
-									/>
+									<Link to={`/sets/${set.id}`} key={set.id}>
+										<StudySetCard
+											key={set.id}
+											id={set.id.toString()}
+											name={set.name}
+											color={set.color}
+											icon={set.icon}
+											authorUsername={set.author?.username ?? "Unknown user"}
+										/>
+									</Link>
 								))}
 							</SectionWrapper>
 						);

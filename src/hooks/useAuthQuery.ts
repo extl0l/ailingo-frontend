@@ -21,6 +21,7 @@ const useAuthQuery = <T>({ endpoint, method = "GET", body }: Props) => {
 			url: queryUrl,
 			method,
 			headers: {
+				"Content-Type": "application/json",
 				Authorization: `Bearer ${token}`,
 			},
 			data: body,

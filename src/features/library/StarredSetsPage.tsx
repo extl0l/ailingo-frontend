@@ -46,6 +46,7 @@ export const StarredSetsPage = () => {
 				<Link key={studySet.id} to={`/sets/${studySet.id}`}>
 					<StudySetCard
 						id={studySet.id.toString()}
+						starred={true}
 						name={studySet.name}
 						color="hsla(58, 63%, 53%, 1)"
 						icon={IconBrokenImage}

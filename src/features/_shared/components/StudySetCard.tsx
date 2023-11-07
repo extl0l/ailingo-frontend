@@ -12,6 +12,7 @@ export interface StudySetCardProps {
 	icon: string;
 	color: string;
 	authorUsername: string;
+	starred?: boolean;
 	featured?: boolean;
 	progress?: StudySetProgress;
 }
@@ -22,7 +23,16 @@ export interface StudySetProgress {
 }
 
 export const StudySetCard = (props: StudySetCardProps) => {
-	const { name, icon, color, authorUsername, featured, progress, id } = props;
+	const {
+		name,
+		icon,
+		color,
+		authorUsername,
+		featured,
+		progress,
+		id,
+		starred = false,
+	} = props;
 
 	return (
 		<article
@@ -30,6 +40,7 @@ export const StudySetCard = (props: StudySetCardProps) => {
 			style={featured ? { backgroundColor: color } : {}}>
 			<StudySetCardDetails
 				id={id}
+				starred={starred}
 				title={name}
 				icon={icon}
 				color={color}
@@ -52,15 +63,19 @@ interface StudySetCardDetailsProps {
 	title: string;
 	icon: string;
 	color: string;
+	starred: boolean;
 	authorUsername: string;
 	featured?: boolean;
 }
 
 const StudySetCardDetails = (props: StudySetCardDetailsProps) => {
-	const [isStarred, setIsStarred] = useState(false);
+	const [isStarred, setIsStarred] = useState(props.starred);
 
 	const { queryFn } = useAuthQuery({
-		endpoint: `/me/study-sets/starred/${props.id}`,
+		endpoint: `/me/study-sets/starred`,
+		body: {
+			id: +props.id,
+		},
 		method: "POST",
 	});
 
