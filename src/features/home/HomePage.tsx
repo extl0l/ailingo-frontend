@@ -100,22 +100,19 @@ export const HomePage = () => {
 
 	return (
 		<div className="relative bg-gradient-to-b from-theme-background-light-variant from-[10rem] to-transparent to-[10rem]">
-			<main className="grid grid-cols-2 gap-2.5 max-w-3xl mx-auto px-8">
+			<main className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 max-w-sm sm:max-w-3xl mx-auto px-8">
 				{/*Featured sets*/}
 				{featured?.length !== 0 && (
 					<SectionWrapper title={"Continue learning"}>
 						{featured?.map((set) => (
 							<StudySetCard
 								key={set.id}
+								studySet={set}
 								progress={{
 									totalWords: 1234,
 									learnedWords: 987,
 								}}
 								featured
-								name={set.name}
-								icon={set.icon}
-								color={set.color}
-								authorUsername={set.author.username}
 							/>
 						))}
 					</SectionWrapper>
@@ -127,6 +124,7 @@ export const HomePage = () => {
 						title={section.title}
 						description={section.description}>
 						{section.sets.map((set) => (
+							// <StudySetCard key={set.id} name={set.title} icon={set.icon} color={set.color} authorUsername={set.a} />
 							<StudySetCard key={set.id} studySet={set} />
 						))}
 					</SectionWrapper>
