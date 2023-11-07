@@ -1,13 +1,16 @@
 import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
+import { backendClient } from "../../_shared/api/backendClient.ts";
+import { useAuth } from "@clerk/clerk-react";
+import { Definition } from "../../_shared/models/StudySet.ts";
 
 export interface DefinitionSentenceListProps {
-  sentences: string[];
+  definition: Definition;
   onUpdate?: (newSentences: string[]) => void;
   editable?: boolean;
 }
 
 export const DefinitionSentenceList = (props: DefinitionSentenceListProps) => {
-  const { sentences } = props;
+  const { sentences } = props.definition;
 
   const handleSentenceUpdate = (index: number, newSentence: string) => {
     const updatedSentences = [...sentences];
@@ -48,11 +51,9 @@ export const DefinitionSentenceList = (props: DefinitionSentenceListProps) => {
       ))}
       {props.editable && (
         <li>
-          <DefinitionSentenceListItem
-            key={sentences.length}
-            sentence=""
-            onUpdate={handleSentenceCreate}
-            editable
+          <NewDefinitionSentence
+            definition={props.definition}
+            onCreate={handleSentenceCreate}
           />
         </li>
       )}
@@ -106,5 +107,91 @@ const DefinitionSentenceListItem = (props: DefinitionSentenceListItemProps) => {
       placeholder="Type sentence…"
       disabled={!props.editable}
     />
+  );
+};
+
+interface NewDefinitionSentenceProps {
+  definition: Definition;
+  onCreate: (createdSentence: string) => void;
+}
+
+const NewDefinitionSentence = (props: NewDefinitionSentenceProps) => {
+  const ref = useRef<HTMLInputElement>(null);
+  const [value, setValue] = useState("");
+  const [isAiProcessing, setIsAiProcessing] = useState<boolean>(false);
+
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value);
+  };
+
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.key === "Enter") {
+      ref.current?.blur();
+    }
+  };
+
+  const handleBlur = () => {
+    const trimmedValue = value.trim();
+    if (trimmedValue !== "") {
+      props.onCreate(trimmedValue);
+      setValue("");
+    }
+  };
+
+  const { getToken } = useAuth();
+
+  const generateSentence = async (
+    phrase: string,
+    meaning: string,
+  ): Promise<string | undefined> => {
+    const userToken = await getToken();
+    if (!userToken) return;
+
+    const response = await backendClient
+      .post(
+        "/ai/sentence",
+        { phrase, meaning },
+        {
+          headers: { Authorization: `Bearer ${userToken}` },
+        },
+      )
+      .catch(() => undefined);
+    return response?.data?.sentence;
+  };
+
+  const handleGenerateWithAiClick = async () => {
+    setIsAiProcessing(true);
+    const { phrase, meaning } = props.definition;
+    const sentence = await generateSentence(phrase, meaning);
+    setIsAiProcessing(false);
+
+    if (sentence) {
+      props.onCreate(sentence);
+      setValue("");
+    }
+  };
+
+  return (
+    <div className="relative">
+      <input
+        ref={ref}
+        className="w-full py-2.5 pr-4 bg-transparent outline-0"
+        type="text"
+        value={value}
+        onChange={handleInputChange}
+        onKeyDown={handleKeyDown}
+        onBlur={handleBlur}
+        placeholder="Type sentence…"
+        disabled={isAiProcessing}
+      />
+      <button
+        className="bg-theme-ai-light text-white text-sm py-1 px-5 rounded-full absolute left-[16ch] top-1/2 -translate-y-1/2 disabled:bg-theme-ai-light-variant"
+        hidden={value !== ""}
+        disabled={isAiProcessing}
+        onClick={handleGenerateWithAiClick}
+      >
+        {isAiProcessing ? "Generating with AI…" : "Generate with AI"}
+      </button>
+    </div>
   );
 };
