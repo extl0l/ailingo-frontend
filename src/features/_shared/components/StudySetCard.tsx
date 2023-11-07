@@ -57,6 +57,7 @@ const StudySetCardDetails = (props: StudySetCardDetailsProps) => {
 
 	const starClickHandle = (event: React.MouseEvent<SVGSVGElement>) => {
 		event.stopPropagation();
+		event.preventDefault();
 		setIsStarred((prev) => !prev);
 	};
 
