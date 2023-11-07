@@ -40,34 +40,30 @@ const router = createBrowserRouter([
 				],
 			},
 			{
-				path: "sets/:studySetId",
+				path: "sets/:setId",
 				element: <StudySetDetailsPage />,
 			},
 			{
-				path: "courses/:courseId",
-				element: <div>CourseId</div>,
-			},
-			{
-				path: "courses/:courseId/edit",
+				path: "sets/:setId/edit",
 				element: <div>Edit course</div>,
 			},
 			{
-				path: "courses/new",
+				path: "sets/new",
 				element: <CreateCourse />,
 			},
 		],
 	},
 	{
-		path: "/:courseId",
+		path: "/:setId",
 		element: <div>Learning methods list</div>,
 	},
 
 	{
-		path: "/:courseId/flashcards",
+		path: "/:setId/flashcards",
 		element: <Flashcards />,
 	},
 	{
-		path: "/:courseId/test",
+		path: "/:setId/test",
 		element: <div>Test</div>,
 	},
 ]);

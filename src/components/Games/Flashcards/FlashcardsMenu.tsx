@@ -19,10 +19,10 @@ const FlashcardsMenu = ({
 	round,
 	courseName,
 }: Props) => {
-	const { courseId } = useParams();
+	const { setId } = useParams();
 	const navigate = useNavigate();
 
-	const redirectToCourse = () => navigate(`/courses/${courseId}`);
+	const redirectToCourse = () => navigate(`/sets/${setId}`);
 
 	const flashcardsToLearn = useMemo(() => {
 		const learnedFlashcards = learnedFlashcardsPerRound.reduce(
@@ -47,7 +47,11 @@ const FlashcardsMenu = ({
 				<div onClick={redirectToCourse}>{courseName}</div>
 			</div>
 			<Tooltip content="Close">
-				<Button className="p-0.5" variant={"outline"} onClick={redirectToCourse}>
+				<Button
+					className="p-1 border-none"
+					variant="outline"
+					rounded="full"
+					onClick={redirectToCourse}>
 					<XMarkIcon className="w-6 h-6" />
 				</Button>
 			</Tooltip>

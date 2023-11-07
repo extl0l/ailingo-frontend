@@ -3,7 +3,7 @@ import axios from "axios";
 
 type Props = {
 	endpoint: string;
-	method?: "GET" | "POST" | "PUT" | "DELETE";
+	method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
 	body?: unknown;
 };
 

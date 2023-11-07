@@ -21,7 +21,7 @@ export const StudySetCard = (props: StudySetCardProps) => {
 
   return (
     <article
-      className="font-medium text-theme-brown-light p-3 rounded-xl bg-theme-background-light-variant"
+      className="font-medium text-theme-brown-light p-3 rounded-xl bg-theme-background-light-variant w-full sm:max-w-3xl"
       style={featured ? { backgroundColor: color } : {}}
     >
       <StudySetCardDetails

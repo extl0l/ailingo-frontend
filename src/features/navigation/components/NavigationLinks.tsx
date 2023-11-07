@@ -26,7 +26,7 @@ export const NavigationLinks = () => {
 
   return (
     <nav>
-      <ul className="flex gap-3.5 items-center">
+      <ul className="flex gap-3.5 items-center ">
         {defaultNavigationLinks.map((link) => (
           <li key={link.to}>
             <StyledNavigationLink

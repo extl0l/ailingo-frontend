@@ -14,6 +14,8 @@ interface StudySetCreateRequest {
 	description: string;
 	phraseLanguage: Language;
 	definitionLanguage: Language;
+	color: string;
+	icon: string;
 }
 
 interface StudySetCreatedResponse {
@@ -43,6 +45,8 @@ export const MySetsPage = () => {
 				description: "A brief overview of the set content",
 				phraseLanguage: "en-US",
 				definitionLanguage: "pl-PL",
+				color: "blue",
+				icon: "clock",
 			};
 			const response = await backendClient.post("/study-sets", emptyStudySet, {
 				headers: { Authorization: `Bearer ${await getToken()}` },
@@ -73,6 +77,8 @@ export const MySetsPage = () => {
 		},
 	});
 
+	console.log(mySetsQuery);
+
 	return (
 		<>
 			<div className="col-span-full mt-6 flex justify-between items-end text-theme-brown-light">
@@ -102,50 +108,3 @@ export const MySetsPage = () => {
 		</>
 	);
 };
-
-// I will keep it for now just in case lmao
-
-// eslint-disable-next-line react-refresh/only-export-components
-// export const loader = async () => {
-// console.log(data);
-
-// const url = `${import.meta.env.VITE_BACKEND_URL}/me/studysets/created`;
-
-// const token = ""
-
-// const config = {
-// 	headers: { Authorization: `Bearer ${token}` },
-// };
-
-// const data = await axios.get(url, config);
-// console.log(data);
-
-// 	const mySets = [
-// 		{
-// 			id: "sts-00",
-// 			title: "Gardening",
-// 			icon: IconFurniture,
-// 			color: "hsla(159, 39%, 55%, 1)",
-// 		},
-// 		{
-// 			id: "sts-01",
-// 			title: "At the airport",
-// 			icon: IconFurniture,
-// 			color: "hsla(58, 63%, 53%, 1)",
-// 		},
-// 		{
-// 			id: "sts-02",
-// 			title: "Biking in the suburbs",
-// 			icon: IconFurniture,
-// 			color: "hsla(24, 93%, 56%, 1)",
-// 		},
-// 		{
-// 			id: "sts-03",
-// 			title: "Home furnishings",
-// 			icon: IconFurniture,
-// 			color: "hsla(22,22%,27%,1)",
-// 		},
-// 	];
-
-// 	return json(mySets);
-// };
