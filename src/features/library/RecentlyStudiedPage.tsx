@@ -33,6 +33,7 @@ export const RecentlyStudiedPage = () => {
 				return (
 					<Link to={`/sets/${studySet.id}`} key={studySet.id}>
 						<StudySetCard
+							id={studySet.id.toString()}
 							name={studySet.name}
 							icon={studySet.icon}
 							color={studySet.color}

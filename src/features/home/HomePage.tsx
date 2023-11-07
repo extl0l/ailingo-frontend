@@ -133,6 +133,7 @@ export const HomePage = () => {
 							<Link to={`/sets/${studySet.id}`} key={studySet.id}>
 								<StudySetCard
 									key={studySet.id}
+									id={studySet.id.toString()}
 									progress={{
 										totalWords: 1234,
 										learnedWords: 987,
@@ -159,6 +160,7 @@ export const HomePage = () => {
 								{listCategories[index].map((set) => (
 									<StudySetCard
 										key={set.id}
+										id={set.id.toString()}
 										name={set.name}
 										color={set.color}
 										icon={set.icon}
@@ -177,6 +179,7 @@ export const HomePage = () => {
 						{best6Courses?.map((set) => (
 							<Link to={`/sets/${set?.id}`} key={set!.id}>
 								<StudySetCard
+									id={set!.id.toString()}
 									name={set!.name}
 									color={set!.color}
 									icon={set!.icon}

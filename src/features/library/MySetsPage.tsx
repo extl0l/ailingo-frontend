@@ -96,6 +96,7 @@ export const MySetsPage = () => {
 			{mySetsQuery.data?.map((studySet) => (
 				<Link key={studySet.id} to={`/sets/${studySet.id}`}>
 					<StudySetCard
+						id={studySet.id.toString()}
 						name={studySet.name}
 						color="hsla(58, 63%, 53%, 1)"
 						icon={IconBrokenImage}

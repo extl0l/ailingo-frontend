@@ -4,8 +4,10 @@ import { Glyph } from "./Glyph.tsx";
 import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconFill } from "@heroicons/react/24/solid";
 import { useState } from "react";
+import useAuthQuery from "../../../hooks/useAuthQuery.ts";
 
 export interface StudySetCardProps {
+	id: string;
 	name: string;
 	icon: string;
 	color: string;
@@ -20,13 +22,14 @@ export interface StudySetProgress {
 }
 
 export const StudySetCard = (props: StudySetCardProps) => {
-	const { name, icon, color, authorUsername, featured, progress } = props;
+	const { name, icon, color, authorUsername, featured, progress, id } = props;
 
 	return (
 		<article
 			className="font-medium text-theme-brown-light p-3 rounded-xl bg-theme-background-light-variant w-full sm:max-w-3xl"
 			style={featured ? { backgroundColor: color } : {}}>
 			<StudySetCardDetails
+				id={id}
 				title={name}
 				icon={icon}
 				color={color}
@@ -45,6 +48,7 @@ export const StudySetCard = (props: StudySetCardProps) => {
 };
 
 interface StudySetCardDetailsProps {
+	id: string;
 	title: string;
 	icon: string;
 	color: string;
@@ -55,9 +59,26 @@ interface StudySetCardDetailsProps {
 const StudySetCardDetails = (props: StudySetCardDetailsProps) => {
 	const [isStarred, setIsStarred] = useState(false);
 
+	const { queryFn } = useAuthQuery({
+		endpoint: `/me/study-sets/starred/${props.id}`,
+		method: "POST",
+	});
+
+	const { queryFn: queryDelete } = useAuthQuery({
+		endpoint: `/me/study-sets/starred/${props.id}`,
+		method: "DELETE",
+	});
+
 	const starClickHandle = (event: React.MouseEvent<SVGSVGElement>) => {
 		event.stopPropagation();
 		event.preventDefault();
+
+		if (isStarred) {
+			queryDelete();
+		} else {
+			queryFn();
+		}
+
 		setIsStarred((prev) => !prev);
 	};
 
