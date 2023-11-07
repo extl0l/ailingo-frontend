@@ -43,7 +43,7 @@ export const RecentlyStudiedPage = () => {
                 icon={studySet.icon}
                 color={studySet.color}
 
-                authorUsername="fgds"
+                authorUsername={studySet.author.username}
               />
             </Link>
           </div>
