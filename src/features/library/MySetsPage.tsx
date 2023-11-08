@@ -10,100 +10,100 @@ import { Language } from "../_shared/models/StudySet.ts";
 import { backendClient } from "../_shared/api/backendClient.ts";
 
 interface StudySetCreateRequest {
-	name: string;
-	description: string;
-	phraseLanguage: Language;
-	definitionLanguage: Language;
-	color: string;
-	icon: string;
+  name: string;
+  description: string;
+  phraseLanguage: Language;
+  definitionLanguage: Language;
+  color: string;
+  icon: string;
 }
 
 interface StudySetCreatedResponse {
-	createdId: number;
+  createdId: number;
 }
 
 type StudySetsCreatedByMeResponse = {
-	id: number;
-	name: string;
-	description: string;
-	phraseLanguage: Language;
-	definitionLanguage: Language;
+  id: number;
+  name: string;
+  description: string;
+  phraseLanguage: Language;
+  definitionLanguage: Language;
 }[];
 
 export const MySetsPage = () => {
-	const queryClient = useQueryClient();
+  const queryClient = useQueryClient();
 
-	const navigate = useNavigate();
+  const navigate = useNavigate();
 
-	const { user } = useUser();
-	const { getToken } = useAuth();
+  const { user } = useUser();
+  const { getToken } = useAuth();
 
-	const createSetMutation = useMutation<StudySetCreatedResponse>({
-		mutationFn: async () => {
-			const emptyStudySet: StudySetCreateRequest = {
-				name: "Unnamed set",
-				description: "A brief overview of the set content",
-				phraseLanguage: "en-US",
-				definitionLanguage: "pl-PL",
-				color: "blue",
-				icon: "clock",
-			};
-			const response = await backendClient.post("/study-sets", emptyStudySet, {
-				headers: { Authorization: `Bearer ${await getToken()}` },
-			});
-			return response.data;
-		},
-		onSuccess: (createdStudySet: StudySetCreatedResponse) => {
-			// noinspection JSIgnoredPromiseFromCall
-			queryClient.invalidateQueries({ queryKey: ["my-sets"] });
-			navigate(`/sets/${createdStudySet.createdId}`);
-		},
-		onError: (error) => {
-			console.error("Unable to create new set:", error);
-		},
-	});
+  const createSetMutation = useMutation<StudySetCreatedResponse>({
+    mutationFn: async () => {
+      const emptyStudySet: StudySetCreateRequest = {
+        name: "Unnamed set",
+        description: "A brief overview of the set content",
+        phraseLanguage: "en-US",
+        definitionLanguage: "pl-PL",
+        color: "#d3ce3c",
+        icon: "clock",
+      };
+      const response = await backendClient.post("/study-sets", emptyStudySet, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      return response.data;
+    },
+    onSuccess: (createdStudySet: StudySetCreatedResponse) => {
+      // noinspection JSIgnoredPromiseFromCall
+      queryClient.invalidateQueries({ queryKey: ["my-sets"] });
+      navigate(`/sets/${createdStudySet.createdId}`);
+    },
+    onError: (error) => {
+      console.error("Unable to create new set:", error);
+    },
+  });
 
-	const handleNewStudySetClick = () => {
-		createSetMutation.mutate();
-	};
+  const handleNewStudySetClick = () => {
+    createSetMutation.mutate();
+  };
 
-	const mySetsQuery = useQuery<StudySetsCreatedByMeResponse>({
-		queryKey: ["my-sets"],
-		queryFn: async () => {
-			const response = await backendClient.get("/me/study-sets/created", {
-				headers: { Authorization: `Bearer ${await getToken()}` },
-			});
-			return response.data;
-		},
-	});
+  const mySetsQuery = useQuery<StudySetsCreatedByMeResponse>({
+    queryKey: ["my-sets"],
+    queryFn: async () => {
+      const response = await backendClient.get("/me/study-sets/created", {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      return response.data;
+    },
+  });
 
-	return (
-		<>
-			<div className="col-span-full mt-6 flex justify-between items-end text-theme-brown-light">
-				<h1 className="font-medium text-theme-brown-light text-2xl">
-					Created by me
-				</h1>
-				{/*TODO: Add support for sorting*/}
-				<button className="flex items-center gap-0.5 font-medium">
-					Recent
-					<Glyph src={IconSortDescending} width="1.5rem" height="1.5rem" />
-				</button>
-			</div>
-			<CreateNewStudySetCard
-				onClick={handleNewStudySetClick}
-				disabled={createSetMutation.isPending}
-			/>
-			{mySetsQuery.data?.map((studySet) => (
-				<Link key={studySet.id} to={`/sets/${studySet.id}`}>
-					<StudySetCard
-						id={studySet.id.toString()}
-						name={studySet.name}
-						color="hsla(58, 63%, 53%, 1)"
-						icon={IconBrokenImage}
-						authorUsername={user?.username ?? "Unknown user"}
-					/>
-				</Link>
-			))}
-		</>
-	);
+  return (
+    <>
+      <div className="col-span-full mt-6 flex justify-between items-end text-theme-brown-light">
+        <h1 className="font-medium text-theme-brown-light text-2xl">
+          Created by me
+        </h1>
+        {/*TODO: Add support for sorting*/}
+        <button className="flex items-center gap-0.5 font-medium">
+          Recent
+          <Glyph src={IconSortDescending} width="1.5rem" height="1.5rem" />
+        </button>
+      </div>
+      <CreateNewStudySetCard
+        onClick={handleNewStudySetClick}
+        disabled={createSetMutation.isPending}
+      />
+      {mySetsQuery.data?.map((studySet) => (
+        <Link key={studySet.id} to={`/sets/${studySet.id}`}>
+          <StudySetCard
+            id={studySet.id.toString()}
+            name={studySet.name}
+            color="hsla(58, 63%, 53%, 1)"
+            icon={IconBrokenImage}
+            authorUsername={user?.username ?? "Unknown user"}
+          />
+        </Link>
+      ))}
+    </>
+  );
 };

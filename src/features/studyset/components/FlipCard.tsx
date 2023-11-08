@@ -1,4 +1,4 @@
-import "./FlipCard.css";
+import "../styles/FlipCard.css";
 import { ReactNode, useState } from "react";
 
 export interface FlipCardProps {
