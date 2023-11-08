@@ -5,6 +5,7 @@ import { StarIcon as StarIconOutline } from "@heroicons/react/24/outline";
 import { StarIcon as StarIconFill } from "@heroicons/react/24/solid";
 import { useState } from "react";
 import useAuthQuery from "../../../hooks/useAuthQuery.ts";
+import { useAuth } from "@clerk/clerk-react";
 
 export interface StudySetCardProps {
 	id: string;
@@ -71,6 +72,8 @@ interface StudySetCardDetailsProps {
 const StudySetCardDetails = (props: StudySetCardDetailsProps) => {
 	const [isStarred, setIsStarred] = useState(props.starred);
 
+	const { isSignedIn } = useAuth();
+
 	const { queryFn } = useAuthQuery({
 		endpoint: `/me/study-sets/starred`,
 		body: {
@@ -107,13 +110,15 @@ const StudySetCardDetails = (props: StudySetCardDetailsProps) => {
 
 	return (
 		<div className="relative">
-			<div className="absolute right-1.5 top-1.5 w-5 h-5">
-				{isStarred ? (
-					<StarIconFill className="fill-yellow-500" onClick={starClickHandle} />
-				) : (
-					<StarIconOutline onClick={starClickHandle} />
-				)}
-			</div>
+			{isSignedIn && (
+				<div className="absolute right-1.5 top-1.5 w-5 h-5">
+					{isStarred ? (
+						<StarIconFill className="fill-yellow-500" onClick={starClickHandle} />
+					) : (
+						<StarIconOutline onClick={starClickHandle} />
+					)}
+				</div>
+			)}
 			<div className={cn("flex items-center gap-2.5 ", textColor)}>
 				<Cover icon={icon} color={color} featured={featured} />
 				<div>
