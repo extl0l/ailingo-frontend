@@ -135,6 +135,7 @@ export const StudySetDetailsPage = () => {
                 <ColorPicker
                   color={studySet.color}
                   onSelect={handleColorChange}
+                  editable={isCurrentUserAuthor}
                 />
                 <Glyph src={icon} />
               </div>

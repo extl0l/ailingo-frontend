@@ -3,6 +3,7 @@ import { ChangeEvent, useEffect, useState } from "react";
 export interface ColorPickerProps {
   color: string;
   onSelect?: (newColor: string) => void;
+  editable?: boolean;
 }
 
 export const ColorPicker = (props: ColorPickerProps) => {
@@ -23,11 +24,12 @@ export const ColorPicker = (props: ColorPickerProps) => {
 
   return (
     <input
-      className="absolute top-4 right-4 w-8 h-8 rounded-full border-2 border-theme-background-light"
+      className="absolute top-4 right-4 w-8 h-8 rounded-full border-2 border-theme-background-light cursor-pointer disabled:cursor-default"
       type="color"
       value={value}
       onChange={handleColorChange}
       onBlur={handleBlur}
+      disabled={!props.editable}
     />
   );
 };
