@@ -2,7 +2,6 @@ import { CreateNewStudySetCard } from "./components/NewStudySetCard.tsx";
 import { StudySetCard } from "../_shared/components/StudySetCard.tsx";
 import { Glyph } from "../_shared/components/Glyph.tsx";
 import IconSortDescending from "./assets/arrow_upward_alt_FILL0_wght400_GRAD0_opsz40.svg";
-import IconBrokenImage from "./assets/broken_image_FILL0_wght400_GRAD0_opsz40.svg";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/clerk-react";
@@ -28,6 +27,8 @@ type StudySetsCreatedByMeResponse = {
   description: string;
   phraseLanguage: Language;
   definitionLanguage: Language;
+  color: string;
+  icon: string;
 }[];
 
 export const MySetsPage = () => {
@@ -98,8 +99,8 @@ export const MySetsPage = () => {
           <StudySetCard
             id={studySet.id.toString()}
             name={studySet.name}
-            color="hsla(58, 63%, 53%, 1)"
-            icon={IconBrokenImage}
+            color={studySet.color}
+            icon={studySet.icon}
             authorUsername={user?.username ?? "Unknown user"}
           />
         </Link>
