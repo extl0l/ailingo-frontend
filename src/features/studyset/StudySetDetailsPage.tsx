@@ -1,8 +1,7 @@
-import { StudySet } from "../_shared/models/StudySet.ts";
+import { Definition, StudySet } from "../_shared/models/StudySet.ts";
 import IconAddStar from "./assets/star_FILL0_wght600_GRAD0_opsz24.svg";
 import IconOpenFullscreen from "./assets/open_in_full_FILL0_wght400_GRAD0_opsz24.svg";
 import { Glyph } from "../_shared/components/Glyph.tsx";
-import { FlipCard } from "./components/FlipCard.tsx";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Navigate, useNavigate, useParams } from "react-router-dom";
 import { useAuth, useUser } from "@clerk/clerk-react";
@@ -12,6 +11,7 @@ import { backendClient } from "../_shared/api/backendClient.ts";
 import { DefinitionList } from "./components/DefinitionList.tsx";
 import "./styles/ColorPicker.css";
 import { ColorPicker } from "./components/ColorPicker.tsx";
+import { FlipCard } from "./components/FlipCard.tsx";
 
 export const StudySetDetailsPage = () => {
   const { setId } = useParams();
@@ -31,6 +31,15 @@ export const StudySetDetailsPage = () => {
       return response.data;
     },
     retry: false,
+  });
+
+  const definitionsQuery = useQuery({
+    queryKey: ["study-sets", parseInt(setId ?? "-1"), "definitions"],
+    queryFn: async (): Promise<Definition[]> => {
+      const url = `/study-sets/${setId}/definitions`;
+      const definitions = await backendClient.get(url);
+      return definitions.data satisfies Definition[];
+    },
   });
 
   const { getToken } = useAuth();
@@ -113,23 +122,9 @@ export const StudySetDetailsPage = () => {
                   }}
                 />
               </button>
-              <FlipCard
-                front={
-                  <div className="w-full h-full bg-white rounded-xl relative overflow-hidden flex items-center justify-center text-2xl pb-4">
-                    cabinet
-                    <div
-                      className="absolute bottom-0 left-0 w-full p-2 text-center text-theme-background-light-variant text-base"
-                      style={{ backgroundColor: color }}
-                    >
-                      tap to flip
-                    </div>
-                  </div>
-                }
-                back={
-                  <div className="w-full h-full bg-white rounded-xl overflow-hidden flex items-center justify-center text-2xl pb-4">
-                    szafka
-                  </div>
-                }
+              <FlashCardTeaser
+                definition={definitionsQuery.data?.[0]}
+                color={studySet.color}
               />
             </div>
             <div className="flex flex-col items-end">
@@ -157,5 +152,43 @@ export const StudySetDetailsPage = () => {
       </header>
       <DefinitionList studySetId={studySet.id} editable={isCurrentUserAuthor} />
     </article>
+  );
+};
+
+interface FlashCardTeaserProps {
+  definition?: Definition;
+  color: string;
+}
+
+const FlashCardTeaser = (props: FlashCardTeaserProps) => {
+  if (!props.definition) {
+    return (
+      <div className="h-full w-full bg-white rounded-xl flex items-center justify-center text-2xl">
+        <span className="opacity-50 select-none">No flashcards</span>
+      </div>
+    );
+  }
+
+  const { phrase, meaning } = props.definition;
+
+  return (
+    <FlipCard
+      front={
+        <div className="w-full h-full bg-white rounded-xl relative overflow-hidden flex items-center justify-center text-2xl pb-4">
+          {phrase}
+          <div
+            className="absolute bottom-0 left-0 w-full p-2 text-center text-theme-background-light-variant text-base"
+            style={{ backgroundColor: props.color }}
+          >
+            tap to flip
+          </div>
+        </div>
+      }
+      back={
+        <div className="w-full h-full bg-white rounded-xl overflow-hidden flex items-center justify-center text-2xl pb-4">
+          {meaning}
+        </div>
+      }
+    />
   );
 };
