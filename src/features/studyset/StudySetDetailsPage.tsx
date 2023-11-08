@@ -12,6 +12,8 @@ import { DefinitionList } from "./components/DefinitionList.tsx";
 import "./styles/ColorPicker.css";
 import { ColorPicker } from "./components/ColorPicker.tsx";
 import { FlipCard } from "./components/FlipCard.tsx";
+import { availableIcons, getIconPath } from "../_shared/utils/icons.ts";
+import { cn } from "../../utils/tailwind.ts";
 
 export const StudySetDetailsPage = () => {
   const { setId } = useParams();
@@ -69,8 +71,7 @@ export const StudySetDetailsPage = () => {
   }
 
   const studySet = studySetDetailsQuery.data;
-  const { icon, author } = studySet;
-  const color = studySet.color || "hsla(58, 63%, 53%, 1)";
+  const { author, color = "#d3ce3c", icon } = studySet;
 
   const isCurrentUserAuthor = user?.id === author.id;
 
@@ -89,6 +90,10 @@ export const StudySetDetailsPage = () => {
 
   const handleColorChange = (newColor: string) => {
     studySetUpdateMutation.mutate({ ...studySet, color: newColor });
+  };
+
+  const handleIconChange = (newIcon: string) => {
+    studySetUpdateMutation.mutate({ ...studySet, icon: newIcon });
   };
 
   return (
@@ -140,7 +145,12 @@ export const StudySetDetailsPage = () => {
                     />
                   </div>
                 )}
-                <Glyph src={icon} />
+                <GlyphWithPicker
+                  icon={icon}
+                  color={color}
+                  availableIcons={[...availableIcons]}
+                  onChange={handleIconChange}
+                />
               </div>
               <div className="flex items-center gap-2 mt-3">
                 <span className="opacity-50">by {author.username}</span>
@@ -156,6 +166,57 @@ export const StudySetDetailsPage = () => {
       </header>
       <DefinitionList studySetId={studySet.id} editable={isCurrentUserAuthor} />
     </article>
+  );
+};
+
+interface GlyphWithPickerProps {
+  icon: string;
+  availableIcons: string[];
+  color: string;
+  onChange?: (newIcon: string) => void;
+}
+
+const GlyphWithPicker = (props: GlyphWithPickerProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+
+  const handleIconClick = (newIcon: string) => {
+    props.onChange?.(newIcon);
+    setIsOpen(false);
+  };
+
+  const handleGlyphClick = () => {
+    setIsOpen((open) => !open);
+  };
+
+  return (
+    <div className="relative">
+      <div onClick={handleGlyphClick}>
+        <Glyph src={getIconPath(props.icon)} />
+      </div>
+      <div
+        className="absolute bottom-0 translate-y-[calc(100%+1rem)] left-1/2 -translate-x-1/2 z-20 bg-[#FCFBE9] rounded-xl p-4 max-h-60 overflow-auto w-max h-max"
+        hidden={!isOpen}
+      >
+        <ul className="grid grid-cols-3">
+          {props.availableIcons.map((icon) => (
+            <li
+              className={cn(
+                "rounded-xl p-2 transition-[background-color] hover:bg-theme-background-light-variant text-theme-brown-light",
+                props.icon === icon && "text-theme-background-light-variant",
+              )}
+              style={{
+                backgroundColor: props.icon === icon ? props.color : undefined,
+              }}
+              role="button"
+              key={icon}
+              onClick={() => handleIconClick(icon)}
+            >
+              <Glyph src={getIconPath(icon)} />
+            </li>
+          ))}
+        </ul>
+      </div>
+    </div>
   );
 };
 
