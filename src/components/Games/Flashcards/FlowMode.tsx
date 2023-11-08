@@ -122,10 +122,7 @@ const FlowMode = ({
 		const isGameFinished = flashcards.length - (knownFlashcards.length + 1) === 0;
 
 		if (isGameFinished) {
-			console.log("XD");
 			const knownFlashcardsToStorage = [...knownFlashcards, id];
-
-			console.log(knownFlashcardsToStorage);
 
 			const toSave = {
 				currentFlashcard: 0,

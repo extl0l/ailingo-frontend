@@ -21,7 +21,6 @@ export const SignedInScreen = () => {
 	});
 
 	const studySets = dataStudySets?.data as StudySet[];
-	console.log(studySets);
 
 	studySets?.forEach((set) => {
 		if (!categories.includes(set?.icon)) {

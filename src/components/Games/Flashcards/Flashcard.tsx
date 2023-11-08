@@ -20,8 +20,6 @@ const Flashcard = ({ flashcard, lang }: Props) => {
 
 	useKeyPress(" ", () => switchSides());
 
-	console.log(flashcard.sentences);
-
 	return (
 		<div className="flashcard no-scrollbar">
 			<Panel
