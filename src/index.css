@@ -124,8 +124,9 @@
 /*		@apply left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 absolute;*/
 /*	}*/
 .gridLayout {
-	@apply grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout;
+    @apply grid-cols-mobileLayout sm:grid-cols-smallLayout lg:grid-cols-defaultLayout;
 }
+
 /*	.no-scrollbar::-webkit-scrollbar {*/
 /*		display: none;*/
 /*	}*/
@@ -143,31 +144,37 @@
 /*	.link-active {*/
 /*		@apply after:bg-theme-blue-pitch after:h-1 after:w-full after:absolute after:bottom-0.5 after:rounded-t-full after:left-0 after after:transition;*/
 /*	}*/
+
 .panel {
-	@apply bg-theme-background-light p-4 shadow-sm relative rounded-xl;
+    @apply bg-theme-background-light p-4 shadow-sm relative rounded-xl;
 }
+
 .flashcard {
-	@apply text-theme-brown-light flex-1 relative max-w-5xl mx-auto w-full;
-	perspective: 3000px;
+    @apply text-theme-brown-light flex-1 relative max-w-5xl mx-auto w-full;
+    perspective: 3000px;
 }
+
 .flashcard-side {
-	@apply overflow-hidden absolute top-0 left-0 h-full w-full transition shadow-none p-0;
-	box-shadow: -4px 17px 63px -37px hsla(23, 22%, 27%, 1);
-	transition-duration: 0.3s;
-	backface-visibility: hidden;
+    @apply overflow-hidden absolute top-0 left-0 h-full w-full transition shadow-none p-0;
+    box-shadow: -4px 17px 63px -37px hsla(23, 22%, 27%, 1);
+    transition-duration: 0.3s;
+    backface-visibility: hidden;
 }
-/*}*/
 
 @layer base {
-	*,
-	*::before,
-	*::after {
-		@apply m-0 p-0 box-border;
-	}
+    *,
+    *::before,
+    *::after {
+        @apply m-0 p-0 box-border;
+    }
 
-	html,
-	body,
-	#root {
-		@apply h-full;
-	}
+    html,
+    body,
+    #root {
+        @apply h-full;
+    }
+
+    body {
+        background-color: #FCFBE9;
+    }
 }
