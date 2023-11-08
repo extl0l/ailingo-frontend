@@ -86,7 +86,12 @@ export const StudySetDetailsPage = () => {
     },
   });
 
-  const handleStudySetDelete = () => [studySetDeleteMutation.mutate()];
+  const handleStudySetDelete = () => {
+    const confirmed = confirm("Are you sure you want to delete this set");
+    if (confirmed) {
+      studySetDeleteMutation.mutate();
+    }
+  };
 
   const studySetUpdateMutation = useMutation({
     mutationFn: async (updatedStudySet: StudySet) => {
@@ -246,9 +251,9 @@ const GlyphWithPicker = (props: GlyphWithPickerProps) => {
 
   return (
     <div className="relative">
-      <div onClick={handleGlyphClick}>
+      <button onClick={handleGlyphClick}>
         <Glyph src={getIconPath(props.icon)} />
-      </div>
+      </button>
       <div
         className="absolute bottom-0 translate-y-[calc(100%+1rem)] left-1/2 -translate-x-1/2 z-20 bg-[#FCFBE9] rounded-xl p-4 max-h-60 overflow-auto w-max h-max"
         hidden={!isOpen}
