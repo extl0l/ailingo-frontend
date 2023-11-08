@@ -1,11 +1,14 @@
-import { useClerk, UserButton, useUser } from "@clerk/clerk-react";
+import { useAuth, useClerk, UserButton, useUser } from "@clerk/clerk-react";
 import { useMemo } from "react";
 import Avatar from "boring-avatars";
 import IconExperiencePoints from "../assets/keyboard_double_arrow_up_FILL0_wght400_GRAD0_opsz24.svg";
+import { useQuery } from "@tanstack/react-query";
+import { backendClient } from "../../_shared/api/backendClient.ts";
 
 export const UserDetails = () => {
   const clerk = useClerk();
   const { user, isSignedIn } = useUser();
+  const { getToken } = useAuth();
 
   const displayName = useMemo(() => {
     if (user) {
@@ -22,6 +25,17 @@ export const UserDetails = () => {
     }
   };
 
+  const queryRecentStudySessions = useQuery({
+    queryKey: ["recent-study-sessions"],
+    queryFn: async () => {
+      const response = await backendClient.get("/me/study-sessions", {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+      return response.data;
+    },
+  });
+  const studiedSetsCount = queryRecentStudySessions.data?.length;
+
   return (
     <div className="flex items-center gap-4 ">
       {user ? (
@@ -31,10 +45,14 @@ export const UserDetails = () => {
       )}
       <div className="font-medium">
         <p className="text-2xl">{displayName}</p>
-        <p className="flex items-center text-theme-orange-light">
-          <img className="-ml-1" src={IconExperiencePoints} alt="" />
-          <span>5921 XP</span>
-        </p>
+        {studiedSetsCount !== undefined && (
+          <p className="flex items-center text-theme-orange-light">
+            <img className="-ml-1" src={IconExperiencePoints} alt="" />
+            <span>
+              {studiedSetsCount} set{studiedSetsCount === 1 ? "" : "s"}
+            </span>
+          </p>
+        )}
       </div>
     </div>
   );
