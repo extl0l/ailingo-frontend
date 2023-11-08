@@ -23,10 +23,10 @@ export const CreateNewStudySetCard = (props: NewStudySetCardProps) => {
   return (
     <article
       className={cn(
-        "font-medium text-theme-brown-light p-3 rounded-xl mx-auto",
+        "font-medium text-theme-brown-light p-3 rounded-xl mx-auto w-full",
         props.disabled
           ? "cursor-wait bg-theme-background-light-darker"
-          : "bg-theme-background-light-variant hover:bg-theme-background-light-darker cursor-pointer w-full ",
+          : "bg-theme-background-light-variant hover:bg-theme-background-light-darker cursor-pointer",
       )}
       onClick={handleClick}
     >
