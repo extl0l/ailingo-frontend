@@ -132,11 +132,14 @@ export const StudySetDetailsPage = () => {
                 className="flex items-center justify-center aspect-square rounded-xl text-theme-background-light-variant w-full relative"
                 style={{ backgroundColor: color }}
               >
-                <ColorPicker
-                  color={studySet.color}
-                  onSelect={handleColorChange}
-                  editable={isCurrentUserAuthor}
-                />
+                {isCurrentUserAuthor && (
+                  <div className="absolute top-4 right-4">
+                    <ColorPicker
+                      color={studySet.color}
+                      onSelect={handleColorChange}
+                    />
+                  </div>
+                )}
                 <Glyph src={icon} />
               </div>
               <div className="flex items-center gap-2 mt-3">
