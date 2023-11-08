@@ -21,12 +21,17 @@ export const StudySetDetailsPage = () => {
 
   const navigate = useNavigate();
 
+  const setNumberId = setId ? parseInt(setId) : -1;
+  const libraryMySetsQueryKey = ["library", "my-sets"];
+  const currentSetDetailsQueryKey = ["set", setNumberId, "details"];
+  const currentSetDefinitionsQueryKey = ["set", setNumberId, "definitions"];
+
   const [studySetEditValue, setStudySetEditValue] = useState<
     StudySet | undefined
   >();
 
   const studySetDetailsQuery = useQuery<StudySet>({
-    queryKey: ["study-set", setId],
+    queryKey: currentSetDetailsQueryKey,
     queryFn: async () => {
       const response = await backendClient.get(`study-sets/${setId}`);
       setStudySetEditValue(response.data);
@@ -36,7 +41,7 @@ export const StudySetDetailsPage = () => {
   });
 
   const definitionsQuery = useQuery({
-    queryKey: ["study-set", parseInt(setId ?? "-1"), "definitions"],
+    queryKey: currentSetDefinitionsQueryKey,
     queryFn: async (): Promise<Definition[]> => {
       const url = `/study-sets/${setId}/definitions`;
       const definitions = await backendClient.get(url);
@@ -47,25 +52,61 @@ export const StudySetDetailsPage = () => {
   const { getToken } = useAuth();
   const queryClient = useQueryClient();
 
+  const studySetDeleteMutation = useMutation({
+    mutationFn: async () => {
+      const url = `/study-sets/${setId}`;
+      await backendClient.delete(url, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
+    },
+    onMutate: async () => {
+      await queryClient.cancelQueries({ queryKey: libraryMySetsQueryKey });
+      const previousLibraryMySets = queryClient.getQueryData(
+        libraryMySetsQueryKey,
+      );
+      queryClient.setQueryData(
+        libraryMySetsQueryKey,
+        (libraryMySets: StudySet[]) => {
+          return libraryMySets.filter((set) => set.id !== setNumberId);
+        },
+      );
+      return { previousLibraryMySets };
+    },
+    onSuccess: () => {
+      navigate("/library");
+    },
+    onError: (_error, _variables, context) => {
+      queryClient.setQueryData(
+        libraryMySetsQueryKey,
+        context?.previousLibraryMySets,
+      );
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["library", "my-sets"] });
+    },
+  });
+
+  const handleStudySetDelete = () => [studySetDeleteMutation.mutate()];
+
   const studySetUpdateMutation = useMutation({
     mutationFn: async (updatedStudySet: StudySet) => {
-      const url = `study-sets/${setId}`;
+      const url = `/study-sets/${setId}`;
       const response = await backendClient.put(url, updatedStudySet, {
         headers: { Authorization: `Bearer ${await getToken()}` },
       });
       return response.data;
     },
     onMutate: async (updatedStudySet: StudySet) => {
-      await queryClient.cancelQueries({ queryKey: ["study-set", setId] });
-      const previousSet = queryClient.getQueryData(["study-set", setId]);
-      queryClient.setQueryData(["study-set", setId], updatedStudySet);
+      await queryClient.cancelQueries({ queryKey: currentSetDetailsQueryKey });
+      const previousSet = queryClient.getQueryData(currentSetDetailsQueryKey);
+      queryClient.setQueryData(currentSetDetailsQueryKey, updatedStudySet);
       return { previousSet };
     },
     onError: (_error, _variables, context) => {
-      queryClient.setQueryData(["study-set", setId], context?.previousSet);
+      queryClient.setQueryData(currentSetDetailsQueryKey, context?.previousSet);
     },
     onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ["study-set", setId] });
+      queryClient.invalidateQueries({ queryKey: currentSetDetailsQueryKey });
     },
   });
 
@@ -116,7 +157,7 @@ export const StudySetDetailsPage = () => {
                 editable={isCurrentUserAuthor}
               />
             </h1>
-            <button title="Star this study set">
+            <button title="Add to favorites">
               <img src={IconAddStar} alt="" />
             </button>
           </div>
@@ -159,6 +200,14 @@ export const StudySetDetailsPage = () => {
                   onChange={handleIconChange}
                 />
               </div>
+              {isCurrentUserAuthor && (
+                <button
+                  className="mt-2 w-full p-3 rounded-xl text-theme-background-light-variant bg-white hover:bg-gray-100 text-[rgb(255,98,81)]"
+                  onClick={handleStudySetDelete}
+                >
+                  Delete this set
+                </button>
+              )}
               <div className="flex items-center gap-2 mt-3">
                 <span className="opacity-50">by {author.username}</span>
                 <img

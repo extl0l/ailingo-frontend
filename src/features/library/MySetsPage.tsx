@@ -69,7 +69,7 @@ export const MySetsPage = () => {
   };
 
   const mySetsQuery = useQuery<StudySetsCreatedByMeResponse>({
-    queryKey: ["my-sets"],
+    queryKey: ["library", "my-sets"],
     queryFn: async () => {
       const response = await backendClient.get("/me/study-sets/created", {
         headers: { Authorization: `Bearer ${await getToken()}` },
