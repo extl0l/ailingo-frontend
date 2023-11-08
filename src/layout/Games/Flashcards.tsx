@@ -7,6 +7,7 @@ import { useQuery } from "@tanstack/react-query";
 import Panel from "../../components/shared/Panel";
 import { Definition, StudySet } from "../../features/_shared/models/StudySet";
 import CloseFlashcardsButton from "../../components/Games/Flashcards/CloseFlashcardsButton";
+import Tooltip from "../../components/shared/Tooltip";
 
 const Flashcards = () => {
 	const { setId } = useParams();
@@ -53,7 +54,11 @@ const Flashcards = () => {
 	if (isLoading) {
 		return (
 			<main className="grid gridLayout grid-rows-[80px_1fr] h-full bg-theme-background-light-variant">
-				<CloseFlashcardsButton />
+				<div className="col-[center-start/center-end] flex max-w-5xl mx-auto w-full items-center justify-end">
+					<Tooltip content="Close">
+						<CloseFlashcardsButton />
+					</Tooltip>
+				</div>
 				<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_hsla(23, 22%, 27%, 1)] col-[full-start/full-end] row-[2/3]">
 					<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light">
 						<span className="text-3xl">Loading...</span>
@@ -66,7 +71,12 @@ const Flashcards = () => {
 	if (!flashcardElements || flashcardElements.length === 0) {
 		return (
 			<main className="grid gridLayout grid-rows-[80px_1fr] h-full bg-theme-background-light-variant">
-				<CloseFlashcardsButton />
+				<div className="col-[center-start/center-end] flex max-w-5xl mx-auto w-full items-center justify-end">
+					<Tooltip content="Close">
+						<CloseFlashcardsButton />
+					</Tooltip>
+				</div>
+
 				<Panel className="flex-1 relative max-w-5xl mx-auto w-full mb-20 shadow-[-4px_17px_63px_-37px_hsla(23, 22%, 27%, 1)] col-[full-start/full-end] row-[2/3]">
 					<div className="w-full h-full flex justify-center items-center flex-col gap-8 text-theme-brown-light">
 						<span className="text-3xl">No flashcards</span>

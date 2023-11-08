@@ -3,7 +3,6 @@ import Button from "../../shared/Button";
 import { useNavigate, useParams } from "react-router-dom";
 import Tooltip from "../../shared/Tooltip";
 import { useMemo } from "react";
-import CloseFlashcardsButton from "./CloseFlashcardsButton";
 
 type Props = {
 	currentFlashcard: number;
@@ -48,7 +47,13 @@ const FlashcardsMenu = ({
 				<div onClick={redirectToCourse}>{courseName}</div>
 			</div>
 			<Tooltip content="Close">
-				<CloseFlashcardsButton />
+				<Button
+					className="p-1 border-none"
+					variant="outline"
+					rounded="full"
+					onClick={redirectToCourse}>
+					<XMarkIcon className="w-6 h-6" />
+				</Button>
 			</Tooltip>
 		</div>
 	);
