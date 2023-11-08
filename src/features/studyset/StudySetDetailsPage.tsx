@@ -36,7 +36,7 @@ export const StudySetDetailsPage = () => {
   });
 
   const definitionsQuery = useQuery({
-    queryKey: ["study-sets", parseInt(setId ?? "-1"), "definitions"],
+    queryKey: ["study-set", parseInt(setId ?? "-1"), "definitions"],
     queryFn: async (): Promise<Definition[]> => {
       const url = `/study-sets/${setId}/definitions`;
       const definitions = await backendClient.get(url);
@@ -48,17 +48,24 @@ export const StudySetDetailsPage = () => {
   const queryClient = useQueryClient();
 
   const studySetUpdateMutation = useMutation({
-    mutationFn: async (studySet: StudySet) => {
-      const response = await backendClient.put(
-        `study-sets/${setId}`,
-        studySet,
-        {
-          headers: { Authorization: `Bearer ${await getToken()}` },
-        },
-      );
-      // noinspection ES6MissingAwait
-      queryClient.invalidateQueries({ queryKey: ["study-set", setId] });
+    mutationFn: async (updatedStudySet: StudySet) => {
+      const url = `study-sets/${setId}`;
+      const response = await backendClient.put(url, updatedStudySet, {
+        headers: { Authorization: `Bearer ${await getToken()}` },
+      });
       return response.data;
+    },
+    onMutate: async (updatedStudySet: StudySet) => {
+      await queryClient.cancelQueries({ queryKey: ["study-set", setId] });
+      const previousSet = queryClient.getQueryData(["study-set", setId]);
+      queryClient.setQueryData(["study-set", setId], updatedStudySet);
+      return { previousSet };
+    },
+    onError: (_error, _variables, context) => {
+      queryClient.setQueryData(["study-set", setId], context?.previousSet);
+    },
+    onSettled: () => {
+      queryClient.invalidateQueries({ queryKey: ["study-set", setId] });
     },
   });
 
