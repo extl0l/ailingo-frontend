@@ -8,12 +8,13 @@ Aby zarządzać swoim kontem lub się wylogować, kliknij obraz logo zalogowaneg
 ![user-button](https://github.com/extl0l/ailingo-frontend/assets/73280945/0ae3130c-0143-4e90-bc26-98f86299fedf)
 
 ## Fiszki
-Aby edytować tytuł zestawu, naciśnij jego nazwę. 
+Aby edytować tytuł zestawu, naciśnij jego nazwę.
 ![flashcards-title](https://github.com/extl0l/ailingo-frontend/assets/73280945/07c1e33b-7656-4b26-849e-11cee10d38e0)
 
 ### Edytowanie ikony zestawu
 Aby dostosować kolor ikony grupy, kliknij kółko w prawym górnym rogu tła obrazka.
-Kliknij obraz, aby zmienić ustawioną ikonę.
+Kliknij obraz, aby zmienić ustawioną ikonę. 
+
 ![edit-flashcards-icon](https://github.com/extl0l/ailingo-frontend/assets/73280945/f35692ab-cb67-4327-984f-f8c9e8beedd3)
 
 ### Dodanie słówek i zdań
