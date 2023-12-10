@@ -9,6 +9,7 @@ Aby zarządzać swoim kontem lub się wylogować, kliknij obraz logo zalogowaneg
 
 ## Fiszki
 Aby edytować tytuł zestawu, naciśnij jego nazwę.
+
 ![flashcards-title](https://github.com/extl0l/ailingo-frontend/assets/73280945/07c1e33b-7656-4b26-849e-11cee10d38e0)
 
 ### Edytowanie ikony zestawu
